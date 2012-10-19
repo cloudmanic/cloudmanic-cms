@@ -1,1 +1,0 @@
-<?=$name?> kljkl;jk;ljkl

@@ -5,6 +5,8 @@
 // Date: 10/18/2012
 //
 
+//use CMS\Core\Routes;
+
 class CMS
 {
 	public static $slim = null; 
@@ -33,13 +35,12 @@ class CMS
 		self::$slim = new \Slim\Slim();
 		
 		// Set the directory where we store view files.
-		self::$slim->config('templates.path', self::$_vendor_dir . '/cloudmanic/cloudcms/src/views');
+		self::$slim->config('templates.path', self::$_vendor_dir . '/cloudmanic/cloudcms/src/CMS/views');
+
+		// Get the Routes
+		CMS\Core\Routes::set_routes();
 		
-		self::$slim->get('/hello/:name', function ($name) {
-			//echo "Hello, $name";
-			CMS::$slim->render('foo.php', array('name' => $name));
-		});
-		
+		// Run slim framework.
 		self::$slim->run();
 	}
 	
