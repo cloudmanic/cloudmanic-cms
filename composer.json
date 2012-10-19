@@ -1,7 +1,13 @@
 {
-    "name": "cloudmanic/cloudcms",
-    "version": "1.0.0",
-    "autoload": {
-	    "psr-0": {"CMS": "src/"}
-    }
+	"name": "cloudmanic/cloudcms",
+	
+	"version": "1.0.0",
+	
+	"require": {
+		"slim/slim": "2.*"
+	},
+	
+	"autoload": {
+		"psr-0": {"CMS": "src/"}
+	}
 }
