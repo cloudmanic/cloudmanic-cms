@@ -4,7 +4,7 @@
 
 * Add the following to your composer.json and install.
 
-`
+```
 {	
 	"repositories": [
 		{
@@ -18,14 +18,18 @@
 		"slim/slim": "2.*"
 	}
 }
-`
+```
 
 * cd /path/to/your/document/root
 * mkdir cms
 * Using your favorite editor create a file called "index.php" and add the following lines.
 
-`<?php
+```
+<?php
 require '../vendor/autoload.php';
-CMS::boostrap('../vendor');`
+require CMS::boostrap('../vendor');
+```
+
+* ln -s ../vendor/cloudmanic/cloudcms/assets .
 
 * Now you can access your CMS via http://yourdomain.com/cms
