@@ -5,56 +5,25 @@
 // Date: 10/18/2012
 //
 
-//use CMS\Core\Routes;
-
 class CMS
 {
-	public static $slim = null; 
-	private static $_vendor_dir = '';
-
 	//
 	// We call this to bootstrap the CMS.
 	// Typically we put this in the index.php file.
 	// We pass in the vendor path so we can find 
-	// our view files and other files we want to 
-	// directly access.
+	// our php framework and kick off the app. We
+	// return the path to included from the index.php
+	//
+	// <code>
+	// require '../vendor/autoload.php';
+	// include_once CMS::boostrap('../vendor');
+	// </code>
 	//
 	public static function boostrap($vendor = './')
 	{
-		self::_set_vendor_path($vendor);
-		self::_bootstrap_slim();
-	}
-	
-	// -------------- Private Helper Functions ------------------- //
-	
-	//
-	// Setup the Slim Framework. We use Slim to manage our routing.
-	//
-	private static function _bootstrap_slim()
-	{
-		self::$slim = new \Slim\Slim();
-		
-		// Set the directory where we store view files.
-		self::$slim->config('templates.path', self::$_vendor_dir . '/cloudmanic/cloudcms/src/CMS/views');
-
-		// Get the Routes
-		CMS\Core\Routes::set_routes();
-		
-		// Run slim framework.
-		self::$slim->run();
-	}
-	
-	//
-	// Validate and set our vendor path.
-	//
-	private static function _set_vendor_path($path)
-	{
-		if(! is_dir($path))
-		{
-			die('Vendor path is not correct.');
-		}
-		
-		self::$_vendor_dir = $path;
+		define('ENVIRONMENT', 'development');
+		define('VENDOR_PATH', $vendor);
+		return $vendor . '/cloudmanic/cloudcms/src/start.php';
 	}
 }
 
