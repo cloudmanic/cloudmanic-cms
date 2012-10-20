@@ -4,7 +4,8 @@
 	"version": "1.0.0",
 	
 	"require": {
-		"slim/slim": "2.*"
+		"slim/slim": "2.*",
+		"illuminate/config": "dev-master"
 	},
 	
 	"autoload": {
