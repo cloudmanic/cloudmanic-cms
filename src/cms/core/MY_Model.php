@@ -103,9 +103,8 @@ class MY_Model extends CI_Model
  	function delete_all()
  	{
  		$this->db->delete($this->table); 	
-
- 		$this->load->library('cms_admin');
-		$this->cms_admin->clear_ci_cache_check();
+ 		
+		//$this->cms_admin->clear_ci_cache_check();
  	}
 
  	//
@@ -116,8 +115,8 @@ class MY_Model extends CI_Model
  		$this->db->where($this->table_base . 'Id', $id);
  		$this->db->delete($this->table); 
 
- 		$this->load->library('CMS_Admin');
-		$this->cms_admin->clear_ci_cache_check();
+
+		//$this->cms_admin->clear_ci_cache_check();
  	}
  
  	//
@@ -166,8 +165,7 @@ class MY_Model extends CI_Model
  		$this->db->insert($this->table, $q);
 		$id = $this->db->insert_id();
 		
- 		$this->load->library('CMS_Admin');
-		$this->cms_admin->clear_ci_cache_check();
+		//$this->cms_admin->clear_ci_cache_check();
 		
 		return $id;
  	}
