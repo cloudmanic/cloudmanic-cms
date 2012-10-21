@@ -104,7 +104,8 @@ class MY_Model extends CI_Model
  	{
  		$this->db->delete($this->table); 	
  		
-		//$this->cms_admin->clear_ci_cache_check();
+		// Fire after event.		
+		CMS\Libraries\Event::fire('after.deleteall', array($this->table));
  	}
 
  	//
@@ -115,8 +116,8 @@ class MY_Model extends CI_Model
  		$this->db->where($this->table_base . 'Id', $id);
  		$this->db->delete($this->table); 
 
-
-		//$this->cms_admin->clear_ci_cache_check();
+		// Fire after event.		
+		CMS\Libraries\Event::fire('after.delete', array($this->table, $id));
  	}
  
  	//
@@ -164,8 +165,9 @@ class MY_Model extends CI_Model
  		
  		$this->db->insert($this->table, $q);
 		$id = $this->db->insert_id();
-		
-		//$this->cms_admin->clear_ci_cache_check();
+
+		// Fire after event.		
+		CMS\Libraries\Event::fire('after.insert', array($this->table, $id, 'data' => $data));
 		
 		return $id;
  	}
@@ -180,7 +182,8 @@ class MY_Model extends CI_Model
  		$this->db->where($this->table_base . 'Id', $id);
  		$this->db->update($this->table, $q);
 		
-		//$this->cms_admin->clear_ci_cache_check();
+		// Fire after event.		
+		CMS\Libraries\Event::fire('after.update', array($this->table, $id, 'data' => $data));
 		
  		return 1;
  	}

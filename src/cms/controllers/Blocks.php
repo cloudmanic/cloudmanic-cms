@@ -22,7 +22,7 @@ class Blocks extends MY_Controller
 	// Add a post ...
 	//
 	function add()
-	{
+	{	
 		$this->data['widgettext'] = 'Add New Block';
 		$this->data['helpertext'] = 'To add a new block fill out the field below and click "save"';
 		$this->data['type'] = 'add';
