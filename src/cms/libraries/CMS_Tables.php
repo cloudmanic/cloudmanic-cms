@@ -24,15 +24,58 @@ class CMS_Tables
 		$this->_bucket_check();
 		$this->_media_check();
 		$this->_relations_check();
-		$this->_Nav_check();
+		$this->_nav_check();
+		$this->_configs_check();
 	}
 	
 	// ----------------- Manage All The DB Tables --------------------- //
 
 	//
+	// Configs table check.
+	//
+	private function _configs_check()
+	{
+		// Setup Configs Table
+		if(! $this->_ci->db->table_exists($this->_ci->data['cms']['table_base'] . 'Configs')) 
+		{
+			$this->_ci->load->dbforge();
+			
+			$cols = array(
+				'ConfigsId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),			
+				'ConfigsTitle' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => FALSE),
+				'ConfigsKey' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => FALSE),
+				'ConfigsValue' => array('type' => 'TEXT', 'null' => FALSE),
+				'ConfigsField' => array('type' => "enum('text','textarea','select')", 'null' => FALSE, 'default' => 'text'),
+				'ConfigsSystem' => array('type' => 'INT', 'constraint' => 1, 'unsigned' => TRUE, 'default' => 0)
+			);
+			
+			$this->_ci->dbforge->add_key('ConfigsId', TRUE);
+			$this->_ci->dbforge->add_key('ConfigsKey');
+    	$this->_ci->dbforge->add_field($cols);
+    	$this->_ci->dbforge->add_field("ConfigsUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
+    	$this->_ci->dbforge->add_field("ConfigsCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
+    	$this->_ci->dbforge->create_table($this->_ci->data['cms']['table_base'] . 'Configs', TRUE);
+    	
+    	// Load default settings.
+    	foreach(CMS\Libraries\Config::get_defaults() AS $key => $row)
+    	{
+				$q = array();
+				$q['ConfigsTitle'] = $row['ConfigsTitle'];
+				$q['ConfigsKey'] = $row['ConfigsKey'];
+				$q['ConfigsValue'] = $row['ConfigsValue'];
+				$q['ConfigsField'] = $row['ConfigsField'];
+				$q['ConfigsSystem'] = $row['ConfigsSystem'];
+				$q['ConfigsUpdatedAt'] = date('Y-m-d G:i:s');
+				$q['ConfigsCreatedAt'] = date('Y-m-d G:i:s');
+				$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Configs', $q);
+			}
+		}
+	}
+
+	//
 	// Build the Control Panel nav table if it is not installed already.
 	//
-	private function _Nav_check()
+	private function _nav_check()
 	{	
 		// Setup Blocks Table
 		if(! $this->_ci->db->table_exists($this->_ci->data['cms']['table_base'] . 'Nav')) 

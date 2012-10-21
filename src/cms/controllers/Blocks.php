@@ -15,7 +15,7 @@ class Blocks extends MY_Controller
 		parent::__construct();
 		$this->load->helper('array');
 		$this->load->helper('form');
-		$this->load->model('blocks_model');
+		$this->load->model('blocks_model');		
 	}
 	
 	//

@@ -8,7 +8,6 @@
 class CMS
 {
 	public static $env = 'production';
-	private static $_config = array();
 	private static $_root_path = '';
 
 	//
@@ -31,6 +30,10 @@ class CMS
 
 		// Setup paths
 		self::$_root_path = getcwd();
+		
+		// If we passed in a file we also load that.
+		// A file passed in trumps everything.
+		CMS\Libraries\Config::load_configs_from_file();
 
 		return $vendor . '/cloudmanic/cloudmanic-cms/src/start.php';
 	}
@@ -70,35 +73,37 @@ class CMS
 	// ---------------- Public Helper Functions ------------------- //	 
 	
 	//
-	// Set a config value.
+	// Set external config file.
 	//
-	public static function config_set($key, $val)
+	public static function config_file($file)
 	{
-		self::$_config[$key] = $val;
+		CMS\Libraries\Config::set_config_file($file);
 	}
 	
 	//
-	// Get a config value.
+	// Set a config value. More or less a more direct way to 
+	// access the config library.
+	//
+	public static function config_set($key, $val)
+	{
+		return CMS\Libraries\Config::set($key, $val);
+	}
+	
+	//
+	// Get a config value. More or less a more direct way to 
+	// access the config library.
 	//
 	public static function config_get($key = '')
 	{
-		if(empty($key))
-		{
-			return self::$_config;
-		} 
-		
-		if(! isset(self::$_config[$key]))
-		{
-			return '';
-		}
-		
-		return self::$_config[$key]; 
+		return CMS\Libraries\Config::get($key); 
 	}
+	
+	// ---------------- Private Helper Functions ------------------- //
 	
 	//
 	// Detect the current environment from an environment configuration.
 	//
-	public static function detect_env($environments, $uri)
+	private static function detect_env($environments, $uri)
 	{
 		foreach($environments AS $key => $row)
 		{
@@ -114,8 +119,6 @@ class CMS
 			}
 		}
 	}	
-	
-	// ---------------- Private Helper Functions ------------------- //
 	
 	//
 	// Checkout the config directories in laravel and set our configs.
@@ -155,12 +158,10 @@ class CMS
 		} 
 		
 		// Set the database configs we sucked out of Laravel
-		self::config_set('db_host', $database['host']);
-		self::config_set('db_database', $database['database']);
-		self::config_set('db_username', $database['username']);
-		self::config_set('db_password', $database['password']);
-		
-		// ----------- Grab The CMS Config ----------------- //
+		CMS\Libraries\Config::set('db_host', $database['host']);
+		CMS\Libraries\Config::set('db_database', $database['database']);
+		CMS\Libraries\Config::set('db_username', $database['username']);
+		CMS\Libraries\Config::set('db_password', $database['password']);
 	}
 }
 

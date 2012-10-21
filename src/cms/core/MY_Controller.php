@@ -7,7 +7,7 @@
 
 class MY_Controller extends CI_Controller
 {
-	public $data = array('data' => array());
+	public $data = array('data' => array(), 'cms' => array());
 
 	//
 	// Constructor …
@@ -17,9 +17,7 @@ class MY_Controller extends CI_Controller
 		parent::__construct();
 		
 		// Bootstrap
-		$this->load->config('cms', TRUE);
-		$this->data['cms'] = $this->config->item('cms');
-		$this->load->library('CMS_Tables');
+		$this->_load_configs();
 		$this->load->model('nav_model');
 		
 		// Set system wide vars.
@@ -86,6 +84,37 @@ class MY_Controller extends CI_Controller
 				
 	// --------------- Private Helper Functions ------------ //
 	
+	//
+	// Load configs. (this functionality should go away when we move away from CI)
+	//
+	private function _load_configs()
+	{	
+		// Get bootstrap configs.
+		$this->load->config('cms', TRUE);
+		$this->data['cms'] = $this->config->item('cms');
+		
+		// Load configs from database.
+		$this->load->model('configs_model');
+		$cfg = $this->configs_model->get();
+		
+		// Set the config data.
+		foreach($cfg AS $key => $row)
+		{
+			$this->data['cms'][str_replace('-', '_', $row['ConfigsKey'])] = $row['ConfigsValue'];
+		}
+		
+		// Load configs from file passed in.
+		$configs = CMS\Libraries\Config::load_configs_from_file();
+		
+		foreach($configs AS $key => $row)
+		{
+			$this->data['cms'][$key] = $row;
+		}
+		
+		// Make sure our tables are built
+		$this->load->library('CMS_Tables');
+	}
+	
  	//
  	// Get the contents of a no listing file.
  	//
@@ -114,8 +143,8 @@ class MY_Controller extends CI_Controller
 		}
 		
 		// Refresh the session.
-		$this->load->model('cms_users_model');
-		$this->data['me'] = $this->cms_users_model->get_by_id($user['UsersId']);
+		$this->load->model('users_model');
+		$this->data['me'] = $this->users_model->get_by_id($user['UsersId']);
 	}
 	
 	//

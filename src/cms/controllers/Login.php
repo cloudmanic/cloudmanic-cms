@@ -13,10 +13,8 @@ class Login extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->config('cms', true);
-		$this->data['cms'] = $this->config->item('cms');
+		$this->_load_configs();
 		
-		$this->load->library('CMS_Tables');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->library('session');
@@ -44,8 +42,8 @@ class Login extends CI_Controller
 			// If we validated now see if there is really an account.
 			if($this->form_validation->run() == TRUE)
 			{
-				$this->load->model('cms_users_model');
-				if($user = $this->cms_users_model->get_by_email($this->input->post('UsersEmail')))
+				$this->load->model('users_model');
+				if($user = $this->users_model->get_by_email($this->input->post('UsersEmail')))
 				{
 					if($user['UsersPassword'] == md5($this->input->post('UsersPassword') . $user['UsersSalt']))
 					{
@@ -74,6 +72,37 @@ class Login extends CI_Controller
 	{
 		$this->session->unset_userdata('CmsLoggedIn');
 		redirect($this->data['cms']['cp_base']);
+	}
+	
+	//
+	// Load configs. (this functionality should go away when we move away from CI)
+	//
+	private function _load_configs()
+	{	
+		// Get bootstrap configs.
+		$this->load->config('cms', TRUE);
+		$this->data['cms'] = $this->config->item('cms');
+		
+		// Load configs from database.
+		$this->load->model('configs_model');
+		$cfg = $this->configs_model->get();
+		
+		// Set the config data.
+		foreach($cfg AS $key => $row)
+		{
+			$this->data['cms'][str_replace('-', '_', $row['ConfigsKey'])] = $row['ConfigsValue'];
+		}
+		
+		// Load configs from file passed in.
+		$configs = CMS\Libraries\Config::load_configs_from_file();
+		
+		foreach($configs AS $key => $row)
+		{
+			$this->data['cms'][$key] = $row;
+		}
+		
+		// Make sure our tables are built
+		$this->load->library('CMS_Tables');
 	}
 }
 

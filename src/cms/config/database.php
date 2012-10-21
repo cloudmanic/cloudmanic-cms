@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = CMS::config_get('db_host');
-$db['default']['username'] = CMS::config_get('db_username');
-$db['default']['password'] = CMS::config_get('db_password');
-$db['default']['database'] = CMS::config_get('db_database');
+$db['default']['hostname'] = CMS\Libraries\Config::get('db_host');
+$db['default']['username'] = CMS\Libraries\Config::get('db_username');
+$db['default']['password'] = CMS\Libraries\Config::get('db_password');
+$db['default']['database'] = CMS\Libraries\Config::get('db_database');
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
