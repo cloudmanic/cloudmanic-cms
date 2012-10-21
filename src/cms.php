@@ -31,6 +31,9 @@ class CMS
 		// Setup paths
 		self::$_root_path = getcwd();
 		
+		// We set the default CMS prefix because the frameworks will not do this.
+		CMS\Libraries\Config::set('table_base', 'CMS_');
+		
 		// If we passed in a file we also load that.
 		// A file passed in trumps everything.
 		CMS\Libraries\Config::load_configs_from_file();

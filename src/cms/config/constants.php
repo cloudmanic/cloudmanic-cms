@@ -37,5 +37,14 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
+/* Cloudmanic Labs' Special Magic */
+define('SPARKPATH', APPPATH . '../sparks/');
+
+// Define Ajax Request
+define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+
+// Define Flash Requests ---- $_SERVER['HTTP_USER_AGENT'] == 'Adobe Flash Player 10')
+define('IS_FLASH', isset($_SERVER['HTTP_USER_AGENT']) && (stripos($_SERVER['HTTP_USER_AGENT'], 'Flash') == TRUE));
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

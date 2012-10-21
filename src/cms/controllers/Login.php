@@ -82,6 +82,17 @@ class Login extends CI_Controller
 		// Get bootstrap configs.
 		$this->load->config('cms', TRUE);
 		$this->data['cms'] = $this->config->item('cms');
+	
+		// Load configs from file passed in.
+		$configs = CMS\Libraries\Config::load_configs_from_file();
+		
+		foreach($configs AS $key => $row)
+		{
+			$this->data['cms'][$key] = $row;
+		}
+	
+		// Make sure our tables are built
+		$this->load->library('CMS_Tables');
 		
 		// Load configs from database.
 		$this->load->model('configs_model');
@@ -90,19 +101,8 @@ class Login extends CI_Controller
 		// Set the config data.
 		foreach($cfg AS $key => $row)
 		{
-			$this->data['cms'][str_replace('-', '_', $row['ConfigsKey'])] = $row['ConfigsValue'];
+			$this->data['cms'][$row['ConfigsKey']] = $row['ConfigsValue'];
 		}
-		
-		// Load configs from file passed in.
-		$configs = CMS\Libraries\Config::load_configs_from_file();
-		
-		foreach($configs AS $key => $row)
-		{
-			$this->data['cms'][$key] = $row;
-		}
-		
-		// Make sure our tables are built
-		$this->load->library('CMS_Tables');
 	}
 }
 

@@ -86,29 +86,29 @@ class Config
 	{
 		// Default settings.
 		$cfg = array(
-			self::_cfg('Website Title', 'site-name', 'Website Title', 'text'),
-			self::_cfg('Assets Base', 'assets-base', site_url() . 'assets', 'text'),
-			self::_cfg('Force SSL', 'cp-force-ssl', (ENVIRONMENT == 'development') ? 0 : 1, 'select'),
-			self::_cfg('CP Login Type', 'cp-login-type', 'default', 'text'),
-			self::_cfg('CP Home', 'cp-home', 'blocks', 'text'),													
-			self::_cfg('Thumb Width', 'cp-thumb-width', '100', 'text'),
-			self::_cfg('Thumb Height', 'cp-thumb-height', '100', 'text'),
-			self::_cfg('Clear Cache', 'cp-clear-ci-page-cache', 0, 'select'),
-			self::_cfg('Media Driver', 'cp-media-driver', 'local-files', 'text'),
-			self::_cfg('Media Types', 'cp-media-file-types', 'gif|jpg|jpeg|png|pdf|mov|avi|mp4', 'text'),
-			self::_cfg('Max File Size', 'cp-media-file-max-size', '102400', 'text'),	
-			self::_cfg('Upload URL', 'cp-media-local-path', 'uploads/', 'text'),													
-			self::_cfg('Upload Local', 'cp-media-local-dir', './uploads/', 'text'),
-			self::_cfg('Local Dir', 'cp-media-local-url', base_url(), 'text'),
-			self::_cfg('SSL URL', 'cp-media-local-ssl-url', base_url(), 'text'),
-			self::_cfg('AWS S3 Container', 'cp-media-amazon-s3-container', '', 'text'),
-			self::_cfg('AWS S3 Path', 'cp-media-amazon-s3-path', 'cms/', 'text'),
-			self::_cfg('AWS S3 URL', 'cp-media-amazon-s3-url', '', 'text'), // trailing slash
-			self::_cfg('AWS S3 SSL URL', 'cp-media-amazon-s3-ssl-url', '', 'text'), // trailing slash
-			self::_cfg('Rackspace Container', 'cp-media-rackspace-container', '', 'text'),
-			self::_cfg('Rackspace Path', 'cp-media-rackspace-path', 'cms/', 'text'),
-			self::_cfg('Rackspace URL', 'cp-media-rackspace-url', '', 'text'), // trailing slash
-			self::_cfg('Rackspace SSL URL', 'cp-media-rackspace-ssl_url', '', 'text') // trailing slash
+			self::_cfg('Website Title', 'site_name', 'Website Title', 'text'),
+			self::_cfg('Assets Base', 'assets_base', site_url() . 'assets', 'text'),
+			self::_cfg('Force SSL', 'cp_force_ssl', (ENVIRONMENT == 'development') ? 0 : 1, 'select'),
+			self::_cfg('CP Login Type', 'cp_login_type', 'default', 'text'),
+			self::_cfg('CP Home', 'cp_home', 'blocks', 'text'),													
+			self::_cfg('Thumb Width', 'cp_thumb_width', '100', 'text'),
+			self::_cfg('Thumb Height', 'cp_thumb_height', '100', 'text'),
+			self::_cfg('Clear Cache', 'cp_clear_ci_page_cache', 0, 'select'),
+			self::_cfg('Media Driver', 'cp_media_driver', 'local-files', 'text'),
+			self::_cfg('Media Types', 'cp_media_file_types', 'gif|jpg|jpeg|png|pdf|mov|avi|mp4', 'text'),
+			self::_cfg('Max File Size', 'cp_media_file_max_size', '102400', 'text'),	
+			self::_cfg('Upload URL', 'cp_media_local_path', 'uploads/', 'text'),													
+			self::_cfg('Upload Local', 'cp_media_local_dir', './uploads/', 'text'),
+			self::_cfg('Local Dir', 'cp_media_local_url', base_url(), 'text'),
+			self::_cfg('SSL URL', 'cp_media_local_ssl_url', base_url(), 'text'),
+			self::_cfg('AWS S3 Container', 'cp_media_amazon_s3_container', '', 'text'),
+			self::_cfg('AWS S3 Path', 'cp_media_amazon_s3_path', 'cms/', 'text'),
+			self::_cfg('AWS S3 URL', 'cp_media_amazon_s3_url', '', 'text'), // trailing slash
+			self::_cfg('AWS S3 SSL URL', 'cp_media_amazon_s3_ssl_url', '', 'text'), // trailing slash
+			self::_cfg('Rackspace Container', 'cp_media_rackspace_container', '', 'text'),
+			self::_cfg('Rackspace Path', 'cp_media_rackspace_path', 'cms/', 'text'),
+			self::_cfg('Rackspace URL', 'cp_media_rackspace_url', '', 'text'), // trailing slash
+			self::_cfg('Rackspace SSL URL', 'cp_media_rackspace_ssl_url', '', 'text') // trailing slash
 		);
 		
 		return $cfg;

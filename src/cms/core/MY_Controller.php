@@ -18,6 +18,7 @@ class MY_Controller extends CI_Controller
 		
 		// Bootstrap
 		$this->_load_configs();
+		$this->_check_auth();
 		$this->load->model('nav_model');
 		
 		// Set system wide vars.
@@ -100,7 +101,7 @@ class MY_Controller extends CI_Controller
 		// Set the config data.
 		foreach($cfg AS $key => $row)
 		{
-			$this->data['cms'][str_replace('-', '_', $row['ConfigsKey'])] = $row['ConfigsValue'];
+			$this->data['cms'][$row['ConfigsKey']] = $row['ConfigsValue'];
 		}
 		
 		// Load configs from file passed in.

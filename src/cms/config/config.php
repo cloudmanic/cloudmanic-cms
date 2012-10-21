@@ -244,12 +244,12 @@ $config['encryption_key'] = 'jkl87$%9kjhjkhj**^$#gf';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'CloudCms';
+$config['sess_cookie_name']		= 'CloudmanicCms';
 $config['sess_expiration']		= 0;
 $config['sess_expire_on_close']	= FALSE;
 $config['sess_encrypt_cookie']	= FALSE;
-$config['sess_use_database']	= FALSE;
-$config['sess_table_name']		= 'Sessions';
+$config['sess_use_database']	= TRUE;
+$config['sess_table_name']		= CMS\Libraries\Config::get('table_base') . 'Sessions';
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 300;

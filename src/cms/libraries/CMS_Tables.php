@@ -286,6 +286,21 @@ class CMS_Tables
     	$this->_ci->dbforge->add_field("UsersUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
     	$this->_ci->dbforge->add_field("UsersCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
     	$this->_ci->dbforge->create_table($this->_ci->data['cms']['table_base'] . 'Users', TRUE);
+    	
+			// Insert first user.
+			$q = array();
+			$q['UsersTitle'] = 'Delete Me';
+			$q['UsersDisplayName'] = 'Delete Me User';
+			$q['UsersFirstName'] = 'Delete';
+			$q['UsersLastName'] = 'Me';
+			$q['UsersEmail'] = 'delete@me.com';
+			$q['UsersPassword'] = 'cf3eb00dfff3144acfda0a0f4fd8e43f';
+			$q['UsersSalt'] = 'f42Fr&';
+			$q['UsersOrder'] = '0';
+			$q['UsersStatus'] = 'Active';
+			$q['UsersUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['UsersCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Users', $q);
 		}
 	}
 	
