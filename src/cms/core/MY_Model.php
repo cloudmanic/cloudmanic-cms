@@ -180,8 +180,7 @@ class MY_Model extends CI_Model
  		$this->db->where($this->table_base . 'Id', $id);
  		$this->db->update($this->table, $q);
 		
- 		$this->load->library('CMS_Admin');
-		$this->cms_admin->clear_ci_cache_check();
+		//$this->cms_admin->clear_ci_cache_check();
 		
  		return 1;
  	}
