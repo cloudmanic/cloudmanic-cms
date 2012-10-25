@@ -27,9 +27,9 @@ if (defined('ENVIRONMENT'))
 	}
 }
 
-$application_folder = VENDOR_PATH . '/cloudmanic/cloudmanic-cms/src/cms';
+$application_folder = VENDOR_PATH . '/cloudmanic/cloudmanic-cms/src/CMS/Application';
 
-$system_path = VENDOR_PATH . '/cloudmanic/cloudmanic-cms/src/codeigniter/';
+$system_path = VENDOR_PATH . '/cloudmanic/cloudmanic-cms/src/codeigniter';
 
 // Set the current directory correctly for CLI requests
 if (defined('STDIN'))
