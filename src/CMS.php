@@ -14,16 +14,20 @@ class CMS
 	// We call this when we want to access stuff outside
 	// the CMS. For example we might want to access CMS
 	// data from within our parent framework. We pass
-	// in the path to the vendor directory if the default 
-	// is not good enough.
+	// in the path to the config file.
 	//
-	public static function start($configs)
+	public static function start($file = null)
 	{
+		// If we passed in a file name.
+		if(! is_null($file))
+		{
+			self::config_file($file);
+		}
+	
+		// Load file configs.
+		CMS\Libraries\Config::load_configs_from_file();
+	
 		// Setup database
-		CMS\Libraries\Config::set('db_host', $configs['host']);
-		CMS\Libraries\Config::set('db_database', $configs['database']);
-		CMS\Libraries\Config::set('db_username', $configs['username']);
-		CMS\Libraries\Config::set('db_password', $configs['password']);
 		self::setup_database();
 	
 		// Set Configs

@@ -42,10 +42,7 @@ class Config
 	// Load configs from the database.
 	//
 	public static function load_configs()
-	{
-		// Load file configs.
-		self::load_configs_from_file();
-	
+	{	
 		$d = ORM::for_table(self::get('table_base') . 'Configs')->find_many();
 		
 		foreach($d AS $key => $row)
