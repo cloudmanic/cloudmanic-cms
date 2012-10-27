@@ -9,7 +9,27 @@ class CMS
 {
 	public static $env = 'production';
 	private static $_root_path = '';
-
+	
+	//
+	// We call this when we want to access stuff outside
+	// the CMS. For example we might want to access CMS
+	// data from within our parent framework. We pass
+	// in the path to the vendor directory if the default 
+	// is not good enough.
+	//
+	public static function start($configs)
+	{
+		// Setup database
+		CMS\Libraries\Config::set('db_host', $configs['host']);
+		CMS\Libraries\Config::set('db_database', $configs['database']);
+		CMS\Libraries\Config::set('db_username', $configs['username']);
+		CMS\Libraries\Config::set('db_password', $configs['password']);
+		self::setup_database();
+	
+		// Set Configs
+		CMS\Libraries\Config::load_configs();
+	}
+	
 	//
 	// We call this to bootstrap the CMS.
 	// Typically we put this in the index.php file.
@@ -22,7 +42,7 @@ class CMS
 	// include_once CMS::boostrap('../vendor');
 	// </code>
 	//
-	public static function boostrap($vendor = './')
+	public static function boostrap($vendor = '../')
 	{
 		// Set defines
 		define('ENVIRONMENT', 'development');
@@ -101,7 +121,29 @@ class CMS
 		return CMS\Libraries\Config::get($key); 
 	}
 	
+	//
+	// Get a block.
+	//
+	public static function block($key)
+	{
+		return CMS\Libraries\Blocks::get_by_name($key);
+	}
+	
 	// ---------------- Private Helper Functions ------------------- //
+	
+	//
+	// Setup database connection.
+	//
+	private static function setup_database()
+	{
+		$host = CMS\Libraries\Config::get('db_host');
+		$database = CMS\Libraries\Config::get('db_database');
+		$username = CMS\Libraries\Config::get('db_username');
+		$password = CMS\Libraries\Config::get('db_password');
+		CMS\Libraries\ORM::configure("mysql:host=$host;dbname=$database");
+		CMS\Libraries\ORM::configure('username', $username);
+		CMS\Libraries\ORM::configure('password', $password);
+	}
 	
 	//
 	// Detect the current environment from an environment configuration.
