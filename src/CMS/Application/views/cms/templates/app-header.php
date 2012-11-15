@@ -47,12 +47,12 @@
 				<ul class="nav">
 					<?php foreach($nav AS $key => $row) : ?>
 						<li class="dropdown">
-					    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$row['NavName']?> <b class="caret"></b></a>
+					    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$row['CMS_NavName']?> <b class="caret"></b></a>
 					    <ul class="dropdown-menu">
 								<?php foreach($row['Kids'] AS $key2 => $row2) : ?>
 					      	<li>
-					      		<a href="<?=$row2['href']?>" <?=(! empty($row2['NavTarget'])) ? 'target="' . $row2['NavTarget'] . '" class="no-deep-true"' : ''?>>
-					      			<?=$row2['NavName']?>
+					      		<a href="<?=$row2['href']?>" <?=(! empty($row2['CMS_NavTarget'])) ? 'target="' . $row2['CMS_NavTarget'] . '" class="no-deep-true"' : ''?>>
+					      			<?=$row2['CMS_NavName']?>
 										</a>
 									</li>
 								<?php endforeach; ?>

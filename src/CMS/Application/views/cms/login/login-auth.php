@@ -10,16 +10,16 @@
 			  <p class="control-group error"><span class="help-block">Incorrect login. Please try again.</span></p>
 			<?php endif; ?>
 	  	
-	  <p class="control-group <?=(form_error('UsersEmail')) ? 'error' : ''?>">
-	    <?=form_label('Email', 'UsersEmail')?>
-	    <?=form_input('UsersEmail', set_value('UsersEmail'))?>
-	    <?=form_error('UsersEmail', '<span class="help-block">', '</span>')?>
+	  <p class="control-group <?=(form_error('CMS_UsersEmail')) ? 'error' : ''?>">
+	    <?=form_label('Email', 'CMS_UsersEmail')?>
+	    <?=form_input('CMS_UsersEmail', set_value('CMS_UsersEmail'))?>
+	    <?=form_error('CMS_UsersEmail', '<span class="help-block">', '</span>')?>
 	  </p>
 	  
-	  <p class="control-group <?=(form_error('UsersPassword')) ? 'error' : ''?>">
-	    <?=form_label('Password', 'UsersPassword')?>
-	    <?=form_password('UsersPassword')?>
-	    <?=form_error('UsersPassword', '<span class="help-block">', '</span>')?>
+	  <p class="control-group <?=(form_error('CMS_UsersPassword')) ? 'error' : ''?>">
+	    <?=form_label('Password', 'CMS_UsersPassword')?>
+	    <?=form_password('CMS_UsersPassword')?>
+	    <?=form_error('CMS_UsersPassword', '<span class="help-block">', '</span>')?>
 	  </p>
 	  
 	  <div class="row">			  

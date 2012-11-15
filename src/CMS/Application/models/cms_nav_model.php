@@ -5,14 +5,14 @@
 // Website: http://cloudmanic.com
 //
 
-class Nav_Model extends MY_Model 
+class CMS_Nav_Model extends MY_Model 
 { 
 	//
 	// Set type.
 	//
 	function set_type($type)
 	{
-		$this->db->where('NavType', $type);
+		$this->db->where('CMS_NavType', $type);
 	}
 	
 	//
@@ -20,7 +20,7 @@ class Nav_Model extends MY_Model
 	//
 	function set_parent($id)
 	{
-		$this->db->where('NavParentId', $id);
+		$this->db->where('CMS_NavParentId', $id);
 	}
 	
 	//
@@ -28,7 +28,7 @@ class Nav_Model extends MY_Model
 	//
 	function set_not_parents()
 	{
-		$this->db->where("NavType != 'Parent'");
+		$this->db->where("CMS_NavType != 'Parent'");
 	}
 
 	//
@@ -37,14 +37,14 @@ class Nav_Model extends MY_Model
 	function get_nav()
 	{
 		$data = array();
-		$this->set_select('NavId, NavName');
-		$this->set_order('NavOrder ASC');
+		$this->set_select('CMS_NavId, CMS_NavName');
+		$this->set_order('CMS_NavOrder ASC');
 		$this->set_type('Parent');
 		$data = $this->get();
 		
 		foreach($data AS $key => $row)
 		{
-			$data[$key]['Kids'] = $this->get_kids($row['NavId']);
+			$data[$key]['Kids'] = $this->get_kids($row['CMS_NavId']);
 		}
 		
 		return $data;
@@ -57,25 +57,25 @@ class Nav_Model extends MY_Model
 	{
 		$data = array();
 		$this->set_parent($id);
-		$this->set_select('NavId, NavName, NavBucketId, NavUri, NavType, NavTarget');
-		$this->set_order('NavOrder ASC');
+		$this->set_select('CMS_NavId, CMS_NavName, CMS_NavBucketId, CMS_NavUri, CMS_NavType, CMS_NavTarget');
+		$this->set_order('CMS_NavOrder ASC');
 		$this->set_not_parents();
 		$data = $this->get();
 		
 		foreach($data AS $key => $row)
 		{
-			switch($row['NavType'])
+			switch($row['CMS_NavType'])
 			{
 				case 'Bucket':
-					$data[$key]['href'] = site_url($this->data['cms']['cp_base'] . '/buckets/listview/' . $row['NavBucketId']);
+					$data[$key]['href'] = site_url($this->data['cms']['cp_base'] . '/buckets/listview/' . $row['CMS_NavBucketId']);
 				break;
 
 				case 'Internal':				
-					$data[$key]['href'] = site_url($this->data['cms']['cp_base'] . $row['NavUri']);
+					$data[$key]['href'] = site_url($this->data['cms']['cp_base'] . $row['CMS_NavUri']);
 				break;
 				
 				case 'External':
-					$data[$key]['href'] = $row['NavUri'];
+					$data[$key]['href'] = $row['CMS_NavUri'];
 				break;
 				
 				default:

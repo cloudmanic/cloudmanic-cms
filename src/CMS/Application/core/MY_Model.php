@@ -21,8 +21,8 @@ class MY_Model extends CI_Model
   {
     parent::__construct();
 		$t = str_ireplace('_model', '', get_class($this));
-		$this->table_base = str_ireplace('CMS_', '', $t);
-		$this->table = $this->data['cms']['table_base'] . $this->table_base;
+		$this->table_base = $t; // Todo: Delete this later.
+		$this->table = $this->table_base;
   }
   
 	//

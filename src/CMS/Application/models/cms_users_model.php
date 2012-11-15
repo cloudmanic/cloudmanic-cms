@@ -5,7 +5,7 @@
 // Website: http://cloudmanic.com
 //
 
-class Users_Model extends MY_Model 
+class CMS_Users_Model extends MY_Model 
 {  
 	//
 	// Return a user by their email.

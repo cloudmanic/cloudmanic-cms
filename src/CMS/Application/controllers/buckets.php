@@ -463,8 +463,8 @@ class Buckets extends MY_Controller
 	private function _do_looksup($r, $row, $key)
 	{	
 		// Set name
-		$this->db->select($r['tablevalue'] . " AS value");
-		$this->db->select($r['tablename'] . " AS name");
+		$this->db->select($r['tablevalue'] . " AS value", false);
+		$this->db->select($r['tablename'] . " AS name", false);
 		
 		// Set where
 		if(! empty($r['tablewhere']))
@@ -485,7 +485,7 @@ class Buckets extends MY_Controller
 		}
 		
 		// Make query and get look up array.
-		$d = $this->db->get($this->data['cms']['table_base'] . $r['table'])->result_array();
+		$d = $this->db->get($r['table'])->result_array();
 		$this->data['fields'][$key]->select_options = array();
 		foreach($d AS $key2 => $row2)
 		{

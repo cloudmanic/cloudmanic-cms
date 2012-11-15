@@ -19,12 +19,12 @@ class MY_Controller extends CI_Controller
 		// Bootstrap
 		$this->_load_configs();
 		$this->_check_auth();
-		$this->load->model('nav_model');
+		$this->load->model('cms_nav_model');
 		
 		// Set system wide vars.
 		$this->data['state'] = array();
 		$this->data['page_title'] = $this->data['cms']['site_name'] . ' // Admin Only';
-		$this->data['nav'] = $this->nav_model->get_nav();
+		$this->data['nav'] = $this->cms_nav_model->get_nav();
 		$this->_cont_init();
 
 		// Setup segments based on what the cp base is.
@@ -144,8 +144,8 @@ class MY_Controller extends CI_Controller
 		}
 		
 		// Refresh the session.
-		$this->load->model('users_model');
-		$this->data['me'] = $this->users_model->get_by_id($user['UsersId']);
+		$this->load->model('cms_users_model');
+		$this->data['me'] = $this->cms_users_model->get_by_id($user['CMS_UsersId']);
 	}
 	
 	//

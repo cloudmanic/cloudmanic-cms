@@ -78,78 +78,78 @@ class CMS_Tables
 	private function _nav_check()
 	{	
 		// Setup Blocks Table
-		if(! $this->_ci->db->table_exists($this->_ci->data['cms']['table_base'] . 'Nav')) 
+		if(! $this->_ci->db->table_exists('CMS_Nav')) 
 		{
 			$this->_ci->load->dbforge();
 			
 			$cols = array(
-				'NavId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),			
-				'NavName' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
-				'NavType' => array('type' => "enum('Bucket','Internal','External','Parent')", 'null' => FALSE, 'default' => 'External'),
-				'NavTarget' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
-				'NavUri' => array('type' => 'TEXT', 'null' => FALSE),
-				'NavParentId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'default' => 0),
-				'NavBucketId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'default' => 0),
-				'NavOrder' => array('type' => 'INT', 'constraint' => 9, 'null' => FALSE)
+				'CMS_NavId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),			
+				'CMS_NavName' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
+				'CMS_NavType' => array('type' => "enum('Bucket','Internal','External','Parent')", 'null' => FALSE, 'default' => 'External'),
+				'CMS_NavTarget' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
+				'CMS_NavUri' => array('type' => 'TEXT', 'null' => FALSE),
+				'CMS_NavParentId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'default' => 0),
+				'CMS_NavBucketId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'default' => 0),
+				'CMS_NavOrder' => array('type' => 'INT', 'constraint' => 9, 'null' => FALSE)
 			);
 			
-			$this->_ci->dbforge->add_key('NavId', TRUE);
-			$this->_ci->dbforge->add_key('NavParentId');
+			$this->_ci->dbforge->add_key('CMS_NavId', TRUE);
+			$this->_ci->dbforge->add_key('CMS_NavParentId');
     	$this->_ci->dbforge->add_field($cols);
-    	$this->_ci->dbforge->add_field("NavUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
-    	$this->_ci->dbforge->add_field("NavCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
-    	$this->_ci->dbforge->create_table($this->_ci->data['cms']['table_base'] . 'Nav', TRUE);
+    	$this->_ci->dbforge->add_field("CMS_NavUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
+    	$this->_ci->dbforge->add_field("CMS_NavCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
+    	$this->_ci->dbforge->create_table('CMS_Nav', TRUE);
     	
 			// Insert top level for Admin.
 			$q = array();
-			$q['NavName'] = 'Admin';
-			$q['NavType'] = 'Parent';
-			$q['NavOrder'] = '0';
-			$q['NavUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['NavCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Nav', $q);
+			$q['CMS_NavName'] = 'Admin';
+			$q['CMS_NavType'] = 'Parent';
+			$q['CMS_NavOrder'] = '0';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
 			
 			// Insert users under admin.
 			$q = array();
-			$q['NavName'] = 'Users';
-			$q['NavType'] = 'Bucket';
-			$q['NavBucketId'] = '1';
-			$q['NavParentId'] = '1';
-			$q['NavOrder'] = '0';
-			$q['NavUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['NavCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Nav', $q);
+			$q['CMS_NavName'] = 'Users';
+			$q['CMS_NavType'] = 'Bucket';
+			$q['CMS_NavBucketId'] = '1';
+			$q['CMS_NavParentId'] = '1';
+			$q['CMS_NavOrder'] = '0';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
 			
 			// Insert top level for Site.
 			$q = array();
-			$q['NavName'] = 'Site';
-			$q['NavType'] = 'Parent';
-			$q['NavOrder'] = '1';
-			$q['NavUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['NavCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Nav', $q);
+			$q['CMS_NavName'] = 'Site';
+			$q['CMS_NavType'] = 'Parent';
+			$q['CMS_NavOrder'] = '1';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
 			
 			// Insert users under site.
 			$q = array();
-			$q['NavName'] = 'Blocks';
-			$q['NavType'] = 'Internal';
-			$q['NavUri'] = '/blocks';
-			$q['NavParentId'] = '3';
-			$q['NavOrder'] = '0';
-			$q['NavUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['NavCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Nav', $q);
+			$q['CMS_NavName'] = 'Blocks';
+			$q['CMS_NavType'] = 'Internal';
+			$q['CMS_NavUri'] = '/blocks';
+			$q['CMS_NavParentId'] = '3';
+			$q['CMS_NavOrder'] = '0';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
 			
 			// Insert media under site.
 			$q = array();
-			$q['NavName'] = 'Media';
-			$q['NavType'] = 'Internal';
-			$q['NavUri'] = '/media';
-			$q['NavParentId'] = '3';
-			$q['NavOrder'] = '2';
-			$q['NavUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['NavCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Nav', $q);
+			$q['CMS_NavName'] = 'Media';
+			$q['CMS_NavType'] = 'Internal';
+			$q['CMS_NavUri'] = '/media';
+			$q['CMS_NavParentId'] = '3';
+			$q['CMS_NavOrder'] = '2';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
 		}
 	}
 
@@ -259,48 +259,48 @@ class CMS_Tables
 	private function _users_check()
 	{	
 		// Setup Users Table
-		if(! $this->_ci->db->table_exists($this->_ci->data['cms']['table_base'] . 'Users')) 
+		if(! $this->_ci->db->table_exists($this->_ci->data['cms']['table_base'] . 'CMS_Users')) 
 		{
 			$this->_ci->load->dbforge();
 			
 			$cols = array(
-				'UsersId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),
-				'UsersTitle' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
-				'UsersDisplayName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
-				'UsersFirstName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
-				'UsersLastName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
-				'UsersEmail' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE),
-				'UsersUrl' => array('type' => 'VARCHAR', 'constraint' => '1000', 'null' => FALSE),
-				'UsersImageId' => array('type' => 'INT', 'constraint' => 9, 'null' => FALSE),
-				'UsersPassword' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE),
-				'UsersSalt' => array('type' => 'VARCHAR', 'constraint' => '20', 'null' => FALSE),
-				'UsersOrder' => array('type' => 'INT', 'constraint' => 9, 'null' => FALSE),
-				'UsersStatus' => array('type' => "enum('Active','Disabled')", 'null' => FALSE, 'default' => 'Active'),
-				'UsersLastIn' => array('type' => 'DATETIME', 'null' => FALSE),
-				'UsersLastActivity' => array('type' => 'DATETIME', 'null' => FALSE)
+				'CMS_UsersId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),
+				'CMS_UsersTitle' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
+				'CMS_UsersDisplayName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
+				'CMS_UsersFirstName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
+				'CMS_UsersLastName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
+				'CMS_UsersEmail' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE),
+				'CMS_UsersUrl' => array('type' => 'VARCHAR', 'constraint' => '1000', 'null' => FALSE),
+				'CMS_UsersImageId' => array('type' => 'INT', 'constraint' => 9, 'null' => FALSE),
+				'CMS_UsersPassword' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE),
+				'CMS_UsersSalt' => array('type' => 'VARCHAR', 'constraint' => '20', 'null' => FALSE),
+				'CMS_UsersOrder' => array('type' => 'INT', 'constraint' => 9, 'null' => FALSE),
+				'CMS_UsersStatus' => array('type' => "enum('Active','Disabled')", 'null' => FALSE, 'default' => 'Active'),
+				'CMS_UsersLastIn' => array('type' => 'DATETIME', 'null' => FALSE),
+				'CMS_UsersLastActivity' => array('type' => 'DATETIME', 'null' => FALSE)
 			);
 			
-			$this->_ci->dbforge->add_key('UsersId', TRUE);
-			$this->_ci->dbforge->add_key('UsersEmail');
+			$this->_ci->dbforge->add_key('CMS_UsersId', TRUE);
+			$this->_ci->dbforge->add_key('CMS_UsersEmail');
     	$this->_ci->dbforge->add_field($cols);
-    	$this->_ci->dbforge->add_field("UsersUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
-    	$this->_ci->dbforge->add_field("UsersCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
-    	$this->_ci->dbforge->create_table($this->_ci->data['cms']['table_base'] . 'Users', TRUE);
+    	$this->_ci->dbforge->add_field("CMS_UsersUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
+    	$this->_ci->dbforge->add_field("CMS_UsersCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
+    	$this->_ci->dbforge->create_table($this->_ci->data['cms']['table_base'] . 'CMS_Users', TRUE);
     	
 			// Insert first user.
 			$q = array();
-			$q['UsersTitle'] = 'Delete Me';
-			$q['UsersDisplayName'] = 'Delete Me User';
-			$q['UsersFirstName'] = 'Delete';
-			$q['UsersLastName'] = 'Me';
-			$q['UsersEmail'] = 'delete@me.com';
-			$q['UsersPassword'] = 'cf3eb00dfff3144acfda0a0f4fd8e43f';
-			$q['UsersSalt'] = 'f42Fr&';
-			$q['UsersOrder'] = '0';
-			$q['UsersStatus'] = 'Active';
-			$q['UsersUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['UsersCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Users', $q);
+			$q['CMS_UsersTitle'] = 'Delete Me';
+			$q['CMS_UsersDisplayName'] = 'Delete Me User';
+			$q['CMS_UsersFirstName'] = 'Delete';
+			$q['CMS_UsersLastName'] = 'Me';
+			$q['CMS_UsersEmail'] = 'delete@me.com';
+			$q['CMS_UsersPassword'] = 'cf3eb00dfff3144acfda0a0f4fd8e43f';
+			$q['CMS_UsersSalt'] = 'f42Fr&';
+			$q['CMS_UsersOrder'] = '0';
+			$q['CMS_UsersStatus'] = 'Active';
+			$q['CMS_UsersUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_UsersCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'CMS_Users', $q);
 		}
 	}
 	
