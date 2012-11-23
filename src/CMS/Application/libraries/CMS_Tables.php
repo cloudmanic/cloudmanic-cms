@@ -199,7 +199,6 @@ class CMS_Tables
     	$this->_ci->dbforge->add_field("CMS_BucketsUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
     	$this->_ci->dbforge->add_field("CMS_BucketsCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
     	$this->_ci->dbforge->create_table('CMS_Buckets', TRUE);
-			$this->_ci->db->insert('CMS_Buckets', $q);
 		}
 	}
 	
