@@ -15,7 +15,7 @@ class Blocks extends MY_Controller
 		parent::__construct();
 		$this->load->helper('array');
 		$this->load->helper('form');
-		$this->load->model('blocks_model');		
+		$this->load->model('cms_blocks_model');		
 	}
 	
 	//
@@ -41,7 +41,7 @@ class Blocks extends MY_Controller
 		
 		// Get data
 		$this->data['id'] = $id;
-		if(! $this->data['data'] = $this->blocks_model->get_by_id($id)) 
+		if(! $this->data['data'] = $this->cms_blocks_model->get_by_id($id)) 
 		{
 			redirect($this->config->item('cb_cp_url_base') . '/blocks');
 		}	
@@ -60,20 +60,20 @@ class Blocks extends MY_Controller
 		if($this->input->post('submit'))
 		{
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('BlocksName', 'Name', 'required|trim|strtolower');
-			$this->form_validation->set_rules('BlocksBody', 'Body', 'required|trim');
+			$this->form_validation->set_rules('CMS_BlocksName', 'Name', 'required|trim|strtolower');
+			$this->form_validation->set_rules('CMS_BlocksBody', 'Body', 'required|trim');
 	
 			if($this->form_validation->run() != FALSE)
 			{
-				$q['BlocksName'] = $this->input->post('BlocksName');
-				$q['BlocksBody'] = $this->input->post('BlocksBody');
+				$q['CMS_BlocksName'] = $this->input->post('CMS_BlocksName');
+				$q['CMS_BlocksBody'] = $this->input->post('CMS_BlocksBody');
 				
 				if($update)
 				{
-					$this->blocks_model->update($q, $update);
+					$this->cms_blocks_model->update($q, $update);
 				} else
 				{
-					$this->blocks_model->insert($q);
+					$this->cms_blocks_model->insert($q);
 				}
 				
 				redirect($this->data['cms']['cp_base'] . '/blocks');

@@ -25,9 +25,14 @@ class Api extends MY_Controller
 		// Set which model we are going to get data from.
 		switch($this->input->get('type'))
 		{
+			case 'users':
+				$this->load->model('cms_users_model');
+				$model = 'cms_users_model';
+			break;
+
 			case 'blocks':
-				$this->load->model('blocks_model');
-				$model = 'blocks_model';
+				$this->load->model('cms_blocks_model');
+				$model = 'cms_blocks_model';
 			break;
 			
 			case 'bucket':

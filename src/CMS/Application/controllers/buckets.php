@@ -15,7 +15,6 @@ class Buckets extends MY_Controller
 		parent::__construct();
 		$this->load->helper('array');
 		$this->load->helper('form');
-		$this->load->model('blocks_model');
 		$this->load->model('media_model');
 		$this->load->model('bucketdata_model');
 		$this->load->model('buckets_model');
@@ -257,13 +256,7 @@ class Buckets extends MY_Controller
 			if($this->form_validation->run() != FALSE)
 			{		
 				$q[$this->data['prefix'] . 'Status'] = $this->input->post($this->data['prefix'] . 'Status');
-						
-				// Do a few special things for users.
-				if($this->data['bucket']['BucketsName'] == 'Users')
-				{
-					$q = $this->_do_users($q);
-				}
-				
+										
 				// Deal with an extra col. Make it Json.
 				if(isset($q[$this->data['prefix'] . 'Extra']))
 				{
@@ -426,35 +419,6 @@ class Buckets extends MY_Controller
 		}
 		
 		$this->relations_model->delete_all();
-	}
-	
-	//
-	// Speical magic just for the users bucket.
-	//
-	private function _do_users($q)
-	{
-		$this->load->helper('string');
-		
-		if($this->data['type'] == 'add')
-		{
-			$q['UsersSalt'] = random_string('alnum', 15);
-			$q['UsersPassword'] = md5($q['UsersPassword'] . $q['UsersSalt']);
-		}	
-		
-		if($this->data['type'] == 'edit')
-		{
-			if($q['UsersPassword'] != 'cms-edit')
-			{
-				$q['UsersSalt'] = random_string('alnum', 15);
-				$q['UsersPassword'] = md5($q['UsersPassword'] . $q['UsersSalt']);
-			} else
-			{
-				unset($q['UsersPassword']);
-				unset($q['UsersSalt']);
-			}
-		}
-		
-		return $q;
 	}
 	
 	//

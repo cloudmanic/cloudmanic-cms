@@ -15,16 +15,16 @@
 		<?php endif; ?>
 	
 	
-	  <p class="control-group <?=(form_error('BlocksName')) ? 'error' : ''?>">
-	  	<?=form_label('Name:', 'BlocksName')?>
-	  	<?=form_input('BlocksName', set_value('BlocksName', element('BlocksName', $data, '')))?>
-			<?=form_error('BlocksName', '<span class="help-block">', '</span>')?>
+	  <p class="control-group <?=(form_error('CMS_BlocksName')) ? 'error' : ''?>">
+	  	<?=form_label('Name:', 'CMS_BlocksName')?>
+	  	<?=form_input('CMS_BlocksName', set_value('CMS_BlocksName', element('CMS_BlocksName', $data, '')))?>
+			<?=form_error('CMS_BlocksName', '<span class="help-block">', '</span>')?>
 	  </p>
 	  
-	  <p class="control-group <?=(form_error('BlocksBody')) ? 'error' : ''?>">
-	  	<?=form_label('Body:', 'BlocksBody')?>
-	  	<?=form_textarea(array('name' => 'BlocksBody', 'value' => set_value('BlocksBody', element('BlocksBody', $data, '')), 'cols' => '44', 'rows' => '24'))?>
-			<?=form_error('BlocksBody', '<span class="help-block">', '</span>')?>
+	  <p class="control-group <?=(form_error('CMS_BlocksBody')) ? 'error' : ''?>">
+	  	<?=form_label('Body:', 'CMS_BlocksBody')?>
+	  	<?=form_textarea(array('name' => 'CMS_BlocksBody', 'value' => set_value('CMS_BlocksBody', element('CMS_BlocksBody', $data, '')), 'cols' => '44', 'rows' => '24'))?>
+			<?=form_error('CMS_BlocksBody', '<span class="help-block">', '</span>')?>
 	  </p>
 	  
 	  <div class="row">

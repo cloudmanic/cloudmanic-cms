@@ -48,7 +48,7 @@ class MY_Controller extends CI_Controller
 	function index()
 	{
 		$view = str_ireplace('cms_', '', strtolower(get_class($this)));
-		$model = strtolower(get_class($this)) . '_model';
+		$model = 'cms_' . strtolower(get_class($this)) . '_model';
 		$this->load->model($model);
 		$this->data['data'] = $this->{$model}->get();
 		$this->load->view('cms/templates/app-header', $this->data);
@@ -61,7 +61,7 @@ class MY_Controller extends CI_Controller
 	//
 	function delete()
 	{	
-		$model = strtolower(get_class($this)) . '_model';
+		$model = 'cms_' . strtolower(get_class($this)) . '_model';
 		$base = str_ireplace('cms_', '', strtolower(get_class($this)));
 		$this->load->model($model);		
 		$this->{$model}->delete(end($this->uri->segment_array()));

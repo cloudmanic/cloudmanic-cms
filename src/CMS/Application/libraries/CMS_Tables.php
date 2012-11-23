@@ -112,8 +112,8 @@ class CMS_Tables
 			// Insert users under admin.
 			$q = array();
 			$q['CMS_NavName'] = 'Users';
-			$q['CMS_NavType'] = 'Bucket';
-			$q['CMS_NavBucketId'] = '1';
+			$q['CMS_NavType'] = 'Internal';
+			$q['CMS_NavUri'] = '/users';
 			$q['CMS_NavParentId'] = '1';
 			$q['CMS_NavOrder'] = '0';
 			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
@@ -310,22 +310,22 @@ class CMS_Tables
 	private function _blocks_check()
 	{	
 		// Setup Blocks Table
-		if(! $this->_ci->db->table_exists($this->_ci->data['cms']['table_base'] . 'Blocks')) 
+		if(! $this->_ci->db->table_exists('CMS_Blocks')) 
 		{
 			$this->_ci->load->dbforge();
 			
 			$cols = array(
-				'BlocksId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),			
-				'BlocksName' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE),
-				'BlocksBody' => array('type' => 'TEXT', 'null' => FALSE)
+				'CMS_BlocksId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),			
+				'CMS_BlocksName' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE),
+				'CMS_BlocksBody' => array('type' => 'TEXT', 'null' => FALSE)
 			);
 			
-			$this->_ci->dbforge->add_key('BlocksId', TRUE);
-			$this->_ci->dbforge->add_key('BlocksName');
+			$this->_ci->dbforge->add_key('CMS_BlocksId', TRUE);
+			$this->_ci->dbforge->add_key('CMS_BlocksName');
     	$this->_ci->dbforge->add_field($cols);
-    	$this->_ci->dbforge->add_field("BlocksUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
-    	$this->_ci->dbforge->add_field("BlocksCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
-    	$this->_ci->dbforge->create_table($this->_ci->data['cms']['table_base'] . 'Blocks', TRUE);
+    	$this->_ci->dbforge->add_field("CMS_BlocksUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
+    	$this->_ci->dbforge->add_field("CMS_BlocksCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
+    	$this->_ci->dbforge->create_table('CMS_Blocks', TRUE);
 		}
 	}
 }

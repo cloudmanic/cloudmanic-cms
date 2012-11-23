@@ -23,7 +23,7 @@
 				</tr>
 			</thead>
 			
-			<tbody cloud-api-url="<?=site_url('api/get?type=blocks&search={{search}}&format=json&order=BlocksName&sort=ASC')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
+			<tbody cloud-api-url="<?=site_url('api/get?type=blocks&search={{search}}&format=json&order=CMS_BlocksName&sort=ASC')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
 		</table>
 		
 		<?php /*
@@ -44,11 +44,11 @@
 
 <script id="data-table-row" type="text/cloud-tmpl">
 <tr>
-	<td>{{BlocksName}}</td>
+	<td>{{CMS_BlocksName}}</td>
 	<td>{{DateFormat1}}</td>
 	<td>
-		<a href="<?=site_url($cms['cp_base'] . '/blocks/delete/id/')?>/{{BlocksId}}" class="no-deep-false" cloud-api-delete="{{BlocksId}}:remove-fade:confirm:tr:slow">Delete</a> |
-		<a href="<?=site_url($cms['cp_base'] . '/blocks/edit')?>/{{BlocksId}}">Edit</a>
+		<a href="<?=site_url($cms['cp_base'] . '/blocks/delete/id/')?>/{{CMS_BlocksId}}" class="no-deep-false" cloud-api-delete="{{CMS_BlocksId}}:remove-fade:confirm:tr:slow">Delete</a> |
+		<a href="<?=site_url($cms['cp_base'] . '/blocks/edit')?>/{{CMS_BlocksId}}">Edit</a>
 	</td>
 </tr>
 </script>

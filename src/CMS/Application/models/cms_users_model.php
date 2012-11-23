@@ -6,7 +6,17 @@
 //
 
 class CMS_Users_Model extends MY_Model 
-{  
+{ 
+	//
+	// Set search.
+	//
+	function set_search($term)
+	{
+		$this->db->or_like('CMS_UsersFirstName', $term);
+		$this->db->or_like('CMS_UsersLastName', $term);
+		$this->db->or_like('CMS_UsersEmail', $term);
+	}
+ 
 	//
 	// Return a user by their email.
 	//
