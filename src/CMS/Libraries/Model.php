@@ -68,9 +68,14 @@ class Model
 	{
 		if(is_null(self::$_query))
 		{
-			$table = explode('\\', get_called_class());
-			self::$table = end($table);		
-			self::$_query = ORM::for_table(Config::get('table_base') . self::$table);
+			// We might have set this ahead of time.
+			if(empty(self::$table))
+			{
+				$table = explode('\\', get_called_class());
+				self::$table = 'CMS_' . end($table);		
+			}
+			
+			self::$_query = ORM::for_table(self::$table);
 		}
 		
 		return self::$_query;
