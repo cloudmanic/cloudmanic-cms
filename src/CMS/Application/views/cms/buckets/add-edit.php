@@ -11,7 +11,7 @@
 
 		<?php 
 			foreach($fields AS $key => $row) : 
-				if(in_array(str_ireplace($prefix, '', $row->name), $skip)) 
+				if(in_array(str_ireplace($table, '', $row->name), $skip)) 
 				{ 
 					continue; 
 				}
@@ -22,38 +22,19 @@
 					continue;
 				}
 				
-				// If this is a users bucket strip out certain fields.
-				$uf = array('UsersSalt', 'UsersLastIn', 'UsersLastActivity');
-				if(($bucket['BucketsName'] == 'Users') && (in_array($row->name, $uf)))
-				{
-					continue;
-				}
-				
 				// See if this is a custom field. 
-				if(isset($bucket['BucketsFields'][$row->name]))
+				if(isset($bucket['CMS_BucketsFields'][$row->name]))
 				{
-					$row->type = $bucket['BucketsFields'][$row->name]['type'];
-				}
-				
-				// Strip out password
-				if(($bucket['BucketsName'] == 'Users') && ($type == 'edit') && ($row->name == 'UsersPassword'))
-				{
-					$data[$row->name] = 'cms-edit';
-				}
-				
-				// Users make password field.
-				if(($bucket['BucketsName'] == 'Users') && ($row->name == 'UsersPassword'))
-				{
-					$row->type = 'password';
+					$row->type = $bucket['CMS_BucketsFields'][$row->name]['type'];
 				}
 				
 				// Set label. We either have a custom label or a label from the db col name.
-				if(isset($bucket['BucketsLabels'][$row->name]))
+				if(isset($bucket['CMS_BucketsLabels'][$row->name]))
 				{
-					$label = $bucket['BucketsLabels'][$row->name] . ':';
+					$label = $bucket['CMS_BucketsLabels'][$row->name] . ':';
 				} else
 				{
-					$label = str_ireplace($prefix, '', $row->name . ':');
+					$label = str_ireplace($table, '', $row->name . ':');
 				}
 		?>
 	
@@ -161,20 +142,20 @@
 		</p>
 		<?php endforeach; ?>
 		
-		<?php if(isset($bucket['BucketsFields'][$prefix . 'Status']) && ($bucket['BucketsFields'][$prefix . 'Status'] != 'none')) : ?>
-			<?=form_hidden($prefix . 'Status', 'Active')?>
+		<?php if(isset($bucket['CMS_BucketsFields'][$table . 'Status']) && ($bucket['CMS_BucketsFields'][$table . 'Status'] != 'none')) : ?>
+			<?=form_hidden($table . 'Status', 'Active')?>
 		<?php else : ?>
-			<p class="control-group <?=(form_error($prefix . 'Status')) ? 'error' : ''?>">
-		  	<?=form_label('Status:', $prefix . 'Status')?>
-				<?=form_dropdown($prefix . 'Status', array('Active' => 'Active', 'Disabled' => 'Disabled'), set_value($prefix . 'Status', element($prefix . 'Status', $data, '')))?>
-				<?=form_error($prefix . 'Status', '<span class="help-block">', '</span>')?>	
+			<p class="control-group <?=(form_error($table . 'Status')) ? 'error' : ''?>">
+		  	<?=form_label('Status:', $table . 'Status')?>
+				<?=form_dropdown($table . 'Status', array('Active' => 'Active', 'Disabled' => 'Disabled'), set_value($table . 'Status', element($table . 'Status', $data, '')))?>
+				<?=form_error($table . 'Status', '<span class="help-block">', '</span>')?>	
 			</p>
 		<?php endif; ?>
 	  
 		<div class="row">
 		  <div class="pull-right">		  
 		  	<button type="submit" class="btn btn-primary">Save</button> or
-		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['BucketsId'])?>" class="cancel-link">Cancel</a>
+		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link">Cancel</a>
 		  </div>	
 		</div>
 	  

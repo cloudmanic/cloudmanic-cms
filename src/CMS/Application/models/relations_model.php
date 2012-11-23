@@ -5,7 +5,7 @@
 // Website: http://cloudmanic.com
 //
 
-class CMS_Relations_Model extends CMS_Model 
+class Relations_Model extends MY_Model 
 {  
 	//
 	// set the table id.

@@ -17,22 +17,21 @@ class Buckets extends MY_Controller
 		$this->load->helper('form');
 		$this->load->model('media_model');
 		$this->load->model('bucketdata_model');
-		$this->load->model('buckets_model');
+		$this->load->model('cms_buckets_model');
 		
 		// Load bucket
-		if(! $bucket = $this->buckets_model->get_by_id($this->uri->segment(3)))
+		if(! $bucket = $this->cms_buckets_model->get_by_id($this->uri->segment(3)))
 		{
 			show_404();
 		}
 		$this->data['bucket'] = $bucket;
 		
 		// Make sure the bucket table exists
-		$this->data['table'] = $this->data['cms']['table_base'] . ucfirst($bucket['BucketsName']);
+		$this->data['table'] = ucfirst($bucket['CMS_BucketsName']);
 		if(! $this->db->table_exists($this->data['table']))
 		{
 			show_404();
 		} 
-		$this->data['prefix'] = str_ireplace($this->data['cms']['table_base'], '', $this->data['table']); 
 	}
 	
 	//
@@ -50,10 +49,10 @@ class Buckets extends MY_Controller
 	//
 	function delete($bucket, $id)
 	{	
-		$this->db->where($this->data['prefix'] . 'Id', $id);
+		$this->db->where($this->data['table'] . 'Id', $id);
 		$this->db->delete($this->data['table']);
-		$this->_delete_relations($id, NULL, $this->data['bucket']['BucketsName']);
-		$this->_delete_relations(NULL, $this->data['bucket']['BucketsName'], NULL, $id);
+		$this->_delete_relations($id, NULL, $this->data['bucket']['CMS_BucketsName']);
+		$this->_delete_relations(NULL, $this->data['bucket']['CMS_BucketsName'], NULL, $id);
 		redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $bucket);
 	}
 	
@@ -62,8 +61,8 @@ class Buckets extends MY_Controller
 	//
 	function add()
 	{			
-		$this->data['widgettext'] = 'Add New ' . cms_depluralize($this->data['prefix']);
-		$this->data['helpertext'] = 'To add a new ' . cms_depluralize($this->data['prefix']) . ' fill out the field below and click "save"';
+		$this->data['widgettext'] = 'Add New ' . cms_depluralize($this->data['table']);
+		$this->data['helpertext'] = 'To add a new ' . cms_depluralize($this->data['table']) . ' fill out the field below and click "save"';
 		$this->data['type'] = 'add';
 		
 		$this->_add_edit_shared_func();
@@ -74,25 +73,25 @@ class Buckets extends MY_Controller
 	//
 	function edit($bucket, $id)
 	{
-		$this->data['widgettext'] = 'Edit ' . cms_depluralize($this->data['prefix']);
-		$this->data['helpertext'] = 'To edit a the ' . cms_depluralize($this->data['prefix']) . ' fill out the field below and click "save"';
+		$this->data['widgettext'] = 'Edit ' . cms_depluralize($this->data['table']);
+		$this->data['helpertext'] = 'To edit a the ' . cms_depluralize($this->data['table']) . ' fill out the field below and click "save"';
 		$this->data['type'] = 'edit';
 		
 		// Get data
-		$this->db->where($this->data['prefix'] . 'Id', $id);
+		$this->db->where($this->data['table'] . 'Id', $id);
 		$this->data['data'] = $this->db->get($this->data['table'])->row_array();
 		
 		// Add formating to the data.
-		if(isset($this->data['data'][$this->data['prefix'] . 'Extra']))
+		if(isset($this->data['data'][$this->data['table'] . 'Extra']))
 		{
-			$this->data['data'][$this->data['prefix'] . 'Extra'] = json_decode($this->data['data'][$this->data['prefix'] . 'Extra'], TRUE);
+			$this->data['data'][$this->data['table'] . 'Extra'] = json_decode($this->data['data'][$this->data['table'] . 'Extra'], TRUE);
 		} else
 		{
-			$this->data['data'][$this->data['prefix'] . 'Extra'] = array();
+			$this->data['data'][$this->data['table'] . 'Extra'] = array();
 		}
 		
 		// See if we need to include any media info as well
-		foreach($this->data['bucket']['BucketsFields'] AS $key => $row)
+		foreach($this->data['bucket']['CMS_BucketsFields'] AS $key => $row)
 		{
 			if(isset($this->data['data'][$key]) && 
 					(($row['type'] == 'cms-image') || ($row['type'] == 'cms-image-crop')))
@@ -102,36 +101,6 @@ class Buckets extends MY_Controller
 		}
 		
 		$this->_add_edit_shared_func(true);
-	}
-	
-	//
-	// Move an entry up.
-	//
-	function move_up()
-	{
-		$id = $this->uri->segment(5);
-		$this->db->order_by($this->data['prefix'] . 'Order');
-		$data = $this->db->get($this->data['table'])->result_array();
-		$c = 0;
-		$last = false;
-		foreach($data AS $key => $row)
-		{
-			$q[$this->data['prefix'] . 'Order'] = $c;
-			$this->db->where($this->data['prefix'] . 'Id', $row[$this->data['prefix'] . 'Id']);
-			$this->db->update($this->data['table'], $q);
-			
-			if($row[$this->data['prefix'] . 'Id'] == $id)
-			{
-				$c++; 
-				$q[$this->data['prefix'] . 'Order'] = $c;
-				$this->db->where($this->data['prefix'] . 'Id', $last[$this->data['prefix'] . 'Id']);
-				$this->db->update($this->data['table'], $q);
-			}
-			
-			$last = $row;
-			$c++;
-		}
-		redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $this->uri->segment(4));
 	}
 	
 	// ------------------ Internal Helper Functions ---------------- //
@@ -150,13 +119,13 @@ class Buckets extends MY_Controller
 		foreach($this->data['fields'] AS $key => $row)
 		{
 			// Deal with look ups. 
-			if(isset($this->data['bucket']['BucketsLookUps'][$row->name]))
+			if(isset($this->data['bucket']['CMS_BucketsLookUps'][$row->name]))
 			{
-				$this->_do_looksup($this->data['bucket']['BucketsLookUps'][$row->name], $row, $key);
+				$this->_do_looksup($this->data['bucket']['CMS_BucketsLookUps'][$row->name], $row, $key);
 			}
 			
 			// Deal with Enums
-			if(($row->type == 'enum') && ($row->name != $this->data['prefix'] . 'Status'))
+			if(($row->type == 'enum') && ($row->name != $this->data['table'] . 'Status'))
 			{
 				$sql = "SHOW COLUMNS FROM " . $this->data['table'] . " WHERE Field = '" . $row->name . "'";
 				$d = $this->db->query($sql)->row_array();
@@ -174,7 +143,7 @@ class Buckets extends MY_Controller
 		}
 	
 		// Manage bucket relations.
-		$relations = $this->data['bucket']['BucketsRelations'];
+		$relations = $this->data['bucket']['CMS_BucketsRelations'];
 		if(! empty($relations))
 		{
 			$this->data['relations'] = json_decode($relations, TRUE);
@@ -215,15 +184,15 @@ class Buckets extends MY_Controller
 			// Set validation
 			foreach($this->data['fields'] AS $key => $row)
 			{	
-				if(in_array(str_ireplace($this->data['prefix'], '', $row->name), $this->data['skip'])) { continue; }
+				if(in_array(str_ireplace($this->data['table'], '', $row->name), $this->data['skip'])) { continue; }
 				$q[$row->name] = $this->input->post($row->name);
 				
-				if($row->name == $this->data['prefix'] . 'Title')
+				if($row->name == $this->data['table'] . 'Title')
 				{
-					$this->form_validation->set_rules($row->name, str_ireplace($this->data['prefix'], '', $row->name), 'trim|required');
+					$this->form_validation->set_rules($row->name, str_ireplace($this->data['table'], '', $row->name), 'trim|required');
 				} else
 				{
-					$this->form_validation->set_rules($row->name, str_ireplace($this->data['prefix'], '', $row->name), 'trim');
+					$this->form_validation->set_rules($row->name, str_ireplace($this->data['table'], '', $row->name), 'trim');
 				}
 			}
 				
@@ -233,7 +202,7 @@ class Buckets extends MY_Controller
 			  $this->form_validation->set_rules($row['table'], $row['name'], '');
 			}
 			
-			$this->form_validation->set_rules($this->data['prefix'] . 'Status', 'Status', 'trim|required');
+			$this->form_validation->set_rules($this->data['table'] . 'Status', 'Status', 'trim|required');
 			
 			// Deal with any date options.
 			if($this->input->post('dates') && is_array($_POST['dates']))
@@ -255,12 +224,12 @@ class Buckets extends MY_Controller
 			// Validate the post.
 			if($this->form_validation->run() != FALSE)
 			{		
-				$q[$this->data['prefix'] . 'Status'] = $this->input->post($this->data['prefix'] . 'Status');
+				$q[$this->data['table'] . 'Status'] = $this->input->post($this->data['table'] . 'Status');
 										
 				// Deal with an extra col. Make it Json.
-				if(isset($q[$this->data['prefix'] . 'Extra']))
+				if(isset($q[$this->data['table'] . 'Extra']))
 				{
-					$q[$this->data['prefix'] . 'Extra'] = json_encode($q[$this->data['prefix'] . 'Extra']);
+					$q[$this->data['table'] . 'Extra'] = json_encode($q[$this->data['table'] . 'Extra']);
 				}
 					
 				if($update)
@@ -271,22 +240,22 @@ class Buckets extends MY_Controller
 						if(! empty($this->data['cms']['cp_hooks']['bucket_before_update']['library']))
 						{
 							$this->load->library($this->data['cms']['cp_hooks']['bucket_before_update']['library']);
-							$q = $this->{strtolower($this->data['cms']['cp_hooks']['bucket_before_update']['library'])}->{$this->data['cms']['cp_hooks']['bucket_before_update']['method']}($this->data['prefix'], $q, $this->uri->segment(4));
+							$q = $this->{strtolower($this->data['cms']['cp_hooks']['bucket_before_update']['library'])}->{$this->data['cms']['cp_hooks']['bucket_before_update']['method']}($this->data['table'], $q, $this->uri->segment(4));
 						}
 					}
 				
-					$this->db->where($this->data['prefix'] . 'Id', $this->uri->segment(4));
+					$this->db->where($this->data['table'] . 'Id', $this->uri->segment(4));
 					$this->db->update($this->data['table'], $q);
 					$this->_do_relation($this->uri->segment(4));
 					$this->_do_tags($this->uri->segment(4));
 					$this->clear_ci_cache_check();
 				} else
 				{
-					$this->db->select_max($this->data['prefix'] . 'Order', 'max');
+					$this->db->select_max($this->data['table'] . 'Order', 'max');
 					$m = $this->db->get($this->data['table'])->result_array();
-					$q[$this->data['prefix'] . 'Order'] = (isset($m[0]['max'])) ? $m[0]['max'] + 1 : 0;
-					$q[$this->data['prefix'] . 'CreatedAt'] = date('Y-m-d G:i:s');
-					$q[$this->data['prefix'] . 'UpdatedAt'] = date('Y-m-d G:i:s');
+					$q[$this->data['table'] . 'Order'] = (isset($m[0]['max'])) ? $m[0]['max'] + 1 : 0;
+					$q[$this->data['table'] . 'CreatedAt'] = date('Y-m-d G:i:s');
+					$q[$this->data['table'] . 'UpdatedAt'] = date('Y-m-d G:i:s');
 					
 					// Hook just before insert.
 					if(isset($this->data['cms']['cp_hooks']['bucket_before_insert']))
@@ -294,7 +263,7 @@ class Buckets extends MY_Controller
 						if(! empty($this->data['cms']['cp_hooks']['bucket_before_insert']['library']))
 						{
 							$this->load->library($this->data['cms']['cp_hooks']['bucket_before_insert']['library']);
-							$q = $this->{strtolower($this->data['cms']['cp_hooks']['bucket_before_insert']['library'])}->{$this->data['cms']['cp_hooks']['bucket_before_insert']['method']}($this->data['prefix'], $q);
+							$q = $this->{strtolower($this->data['cms']['cp_hooks']['bucket_before_insert']['library'])}->{$this->data['cms']['cp_hooks']['bucket_before_insert']['method']}($this->data['table'], $q);
 						}
 					}
 					

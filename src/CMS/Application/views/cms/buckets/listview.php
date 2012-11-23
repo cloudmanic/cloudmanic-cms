@@ -1,5 +1,5 @@
 <?php
-$add_name = (isset($bucket['BucketsDisplay']['add-button'])) ? $bucket['BucketsDisplay']['add-button'] : 'Add ' . cms_depluralize($prefix);
+$add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_BucketsDisplay']['add-button'] : 'Add ' . cms_depluralize($table);
 ?>
 
 <?=$this->load->view('cms/buckets/section-header')?>
@@ -14,21 +14,21 @@ $add_name = (isset($bucket['BucketsDisplay']['add-button'])) ? $bucket['BucketsD
 			</div>
 			
 			<div class="pull-right">
-				<a href="<?=site_url($cms['cp_base'] . '/buckets/add/' . $bucket['BucketsId'])?>" class="btn btn-primary"><?=$add_name?></a>
+				<a href="<?=site_url($cms['cp_base'] . '/buckets/add/' . $bucket['CMS_BucketsId'])?>" class="btn btn-primary"><?=$add_name?></a>
 			</div>
 		</div>
 	
 		<table class="table table-bordered table-striped bump-up-10">
 			<thead>
 				<tr>
-					<?php if($bucket['BucketsName'] == 'Users') : ?>
+					<?php if($bucket['CMS_BucketsName'] == 'Users') : ?>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Date</th>
 					<?php endif; ?>
 					
-					<?php if(isset($bucket['BucketsListview']['columns']) && (! empty($bucket['BucketsListview']['columns']))) : ?>
-						<?php foreach($bucket['BucketsListview']['columns'] AS $key => $row) : ?>
+					<?php if(isset($bucket['CMS_BucketsListview']['columns']) && (! empty($bucket['CMS_BucketsListview']['columns']))) : ?>
+						<?php foreach($bucket['CMS_BucketsListview']['columns'] AS $key => $row) : ?>
 							<th><?=$row?></th>
 						<?php endforeach; ?>
 					<?php else : ?>
@@ -39,7 +39,7 @@ $add_name = (isset($bucket['BucketsDisplay']['add-button'])) ? $bucket['BucketsD
 				</tr>
 			</thead>
 			
-			<tbody cloud-api-url="<?=site_url('api/get?type=bucket&bucket=' . $bucket['BucketsId'] . '&order=' . $prefix . 'Order&sort=DESC&search={{search}}&format=json')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
+			<tbody cloud-api-url="<?=site_url('api/get?type=bucket&bucket=' . $bucket['CMS_BucketsId'] . '&order=' . $table . 'Order&sort=DESC&search={{search}}&format=json')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
 		</table>
 		
 		<?php /*
@@ -60,24 +60,18 @@ $add_name = (isset($bucket['BucketsDisplay']['add-button'])) ? $bucket['BucketsD
 
 <script id="data-table-row" type="text/cloud-tmpl">
 <tr>
-	<?php if($bucket['BucketsName'] == 'Users') : ?>
-		<td>{{UsersFirstName}}</td>
-		<td>{{UsersLastName}}</td>
-		<td>{{CreateDateFormat1}}</td>
-	<?php endif; ?>
 		
-	<?php if(isset($bucket['BucketsListview']['columns']) && (! empty($bucket['BucketsListview']['columns']))) : ?>
-		<?php foreach($bucket['BucketsListview']['columns'] AS $key2 => $row2) : ?>
+	<?php if(isset($bucket['CMS_BucketsListview']['columns']) && (! empty($bucket['CMS_BucketsListview']['columns']))) : ?>
+		<?php foreach($bucket['CMS_BucketsListview']['columns'] AS $key2 => $row2) : ?>
 			<td>{{<?=$key2?>}}</td>
 		<?php endforeach; ?>
 	<?php else : ?>
-		<td>{{<?=$bucket['BucketsName']?>Title}}</td>	
+		<td>{{<?=$bucket['CMS_BucketsName']?>Title}}</td>	
 		<td>{{CreateDateFormat1}}</td>
 	<?php endif; ?>
 	<td>
-		<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['BucketsId'])?>/{{<?=$bucket['BucketsName']?>Id}}" class="no-deep-false" cloud-api-delete="{{<?=$bucket['BucketsName']?>Id}}:remove-fade:confirm:tr:slow">Delete</a> |
-		<a href="<?=site_url($cms['cp_base'] . '/buckets/edit/' . $bucket['BucketsId'])?>/{{<?=$bucket['BucketsName']?>Id}}">Edit</a> |
-		<a href="<?=site_url($cms['cp_base'] . '/buckets/move_up/' . $bucket['BucketsId'])?>/{{<?=$bucket['BucketsName']?>Id}}">Up</a>
+		<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsName']?>Id}}" class="no-deep-false" cloud-api-delete="{{<?=$bucket['CMS_BucketsName']?>Id}}:remove-fade:confirm:tr:slow">Delete</a> |
+		<a href="<?=site_url($cms['cp_base'] . '/buckets/edit/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsName']?>Id}}">Edit</a> 
 	</td>
 </tr>
 </script>

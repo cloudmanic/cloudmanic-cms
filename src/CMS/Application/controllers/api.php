@@ -37,20 +37,20 @@ class Api extends MY_Controller
 			
 			case 'bucket':
 				$this->load->model('bucketdata_model');
-				$this->load->model('buckets_model');
+				$this->load->model('cms_buckets_model');
 						
-				if(! $bucket = $this->buckets_model->get_by_id($this->input->get_post('bucket')))
+				if(! $bucket = $this->cms_buckets_model->get_by_id($this->input->get_post('bucket')))
 				{
 					die('Nothing to see here.');
 				}
 				
-				$this->bucketdata_model->set_table($bucket['BucketsName']);
+				$this->bucketdata_model->set_table($bucket['CMS_BucketsName']);
 		
 				// See if we have any relations to add.
-				if(isset($bucket['BucketsListview']['joins']) && 
-						(is_array($bucket['BucketsListview']['joins'])))
+				if(isset($bucket['CMS_BucketsListview']['joins']) && 
+						(is_array($bucket['CMS_BucketsListview']['joins'])))
 				{
-				  foreach($bucket['BucketsListview']['joins'] AS $key => $row)
+				  foreach($bucket['CMS_BucketsListview']['joins'] AS $key => $row)
 				  {
 				  	$this->bucketdata_model->set_join($row['table'], $row['left'], $row['right'], $row['type']);	
 				  }

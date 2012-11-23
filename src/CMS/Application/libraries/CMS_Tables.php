@@ -220,36 +220,29 @@ class CMS_Tables
 	private function _bucket_check()
 	{	
 		// Setup Buckets Table
-		if(! $this->_ci->db->table_exists($this->_ci->data['cms']['table_base'] . 'Buckets')) 
+		if(! $this->_ci->db->table_exists('CMS_Buckets')) 
 		{
 			$this->_ci->load->dbforge();
 			
 			$cols = array(
-				'BucketsId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),
-				'BucketsName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
-				'BucketsHeadline' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
-				'BucketsDescription' => array('type' => 'TEXT', 'null' => FALSE),
-				'BucketsLabels' => array('type' => 'TEXT', 'null' => FALSE),
-				'BucketsLookUps' => array('type' => 'TEXT', 'null' => FALSE),
-				'BucketsRelations' => array('type' => 'TEXT', 'null' => FALSE),
-				'BucketsFields' => array('type' => 'TEXT', 'null' => FALSE),
-				'BucketsDisplay' => array('type' => 'TEXT', 'null' => FALSE),
-				'BucketsListview' => array('type' => 'TEXT', 'null' => FALSE)
+				'CMS_BucketsId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),
+				'CMS_BucketsName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
+				'CMS_BucketsHeadline' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
+				'CMS_BucketsDescription' => array('type' => 'TEXT', 'null' => FALSE),
+				'CMS_BucketsLabels' => array('type' => 'TEXT', 'null' => FALSE),
+				'CMS_BucketsLookUps' => array('type' => 'TEXT', 'null' => FALSE),
+				'CMS_BucketsRelations' => array('type' => 'TEXT', 'null' => FALSE),
+				'CMS_BucketsFields' => array('type' => 'TEXT', 'null' => FALSE),
+				'CMS_BucketsDisplay' => array('type' => 'TEXT', 'null' => FALSE),
+				'CMS_BucketsListview' => array('type' => 'TEXT', 'null' => FALSE)
 			);
 			
-			$this->_ci->dbforge->add_key('BucketsId', TRUE);
+			$this->_ci->dbforge->add_key('CMS_BucketsId', TRUE);
     	$this->_ci->dbforge->add_field($cols);
-    	$this->_ci->dbforge->add_field("BucketsUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
-    	$this->_ci->dbforge->add_field("BucketsCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
-    	$this->_ci->dbforge->create_table($this->_ci->data['cms']['table_base'] . 'Buckets', TRUE);
-    	
-			// Insert user bucket.
-			$q['BucketsName'] = 'Users';
-			$q['BucketsDescription'] = 'A user is someone you grant access to this CMS admin area. In order to grant a user access you enter their first name, last name, and email address. They may then login.';
-			$q['BucketsHeadline'] = 'The people that can use this CMS';
-			$q['BucketsUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['BucketsCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert($this->_ci->data['cms']['table_base'] . 'Buckets', $q);
+    	$this->_ci->dbforge->add_field("CMS_BucketsUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
+    	$this->_ci->dbforge->add_field("CMS_BucketsCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
+    	$this->_ci->dbforge->create_table('CMS_Buckets', TRUE);
+			$this->_ci->db->insert('CMS_Buckets', $q);
 		}
 	}
 	
