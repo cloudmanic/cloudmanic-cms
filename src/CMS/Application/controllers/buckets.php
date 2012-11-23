@@ -15,7 +15,7 @@ class Buckets extends MY_Controller
 		parent::__construct();
 		$this->load->helper('array');
 		$this->load->helper('form');
-		$this->load->model('media_model');
+		$this->load->model('cms_media_model');
 		$this->load->model('bucketdata_model');
 		$this->load->model('cms_buckets_model');
 		
@@ -96,7 +96,7 @@ class Buckets extends MY_Controller
 			if(isset($this->data['data'][$key]) && 
 					(($row['type'] == 'cms-image') || ($row['type'] == 'cms-image-crop')))
 			{
-				$this->data['data'][$key . '_media'] = $this->media_model->get_by_id($this->data['data'][$key]);
+				$this->data['data'][$key . '_media'] = $this->cms_media_model->get_by_id($this->data['data'][$key]);
 			}
 		}
 		

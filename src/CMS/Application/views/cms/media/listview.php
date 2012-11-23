@@ -26,7 +26,7 @@
 				</tr>
 			</thead>
 			
-			<tbody cloud-api-url="<?=site_url('cp/api/get?type=media&order=MediaId&sort=DESC&search={{search}}&format=json')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
+			<tbody cloud-api-url="<?=site_url('api/get?type=media&order=CMS_MediaId&sort=DESC&search={{search}}&format=json')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
 		</table>
 		
 		<?php /*
@@ -53,11 +53,11 @@
 		</a>
   </td>
   <td>{{FileEllipse}}</td>
-  <td>{{MediaSize}}kb</td>
-	<td>{{MediaType}}</td>
+  <td>{{CMS_MediaSize}}kb</td>
+	<td>{{CMS_MediaType}}</td>
   <td>{{DateFormat1}}</td>
   <td>
-		<a href="<?=site_url($cms['cp_base'] . '/media/delete/')?>/{{MediaId}}" class="no-deep-false" cloud-api-delete="{{MediaId}}:remove-fade:confirm:tr:slow">Delete</a>
+		<a href="<?=site_url($cms['cp_base'] . '/media/delete/')?>/{{CMS_MediaId}}" class="no-deep-false" cloud-api-delete="{{MediaId}}:remove-fade:confirm:tr:slow">Delete</a>
   </td>
 </tr>
 </script>

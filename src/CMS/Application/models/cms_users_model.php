@@ -22,7 +22,7 @@ class CMS_Users_Model extends MY_Model
 	//
 	function get_by_email($email)
 	{
-		$this->db->where($this->table_base . 'Email', $email);
+		$this->db->where($this->table . 'Email', $email);
 		$u = $this->get();
 		return (isset($u[0])) ? $u[0] : 0;
 	}

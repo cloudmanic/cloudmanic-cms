@@ -60,7 +60,7 @@ class Api extends MY_Controller
 			break;
 			
 			case 'media':
-				$this->load->model('media_model');
+				$this->load->model('cms_media_model');
 				$model = 'cms_media_model';			
 			break;
 			

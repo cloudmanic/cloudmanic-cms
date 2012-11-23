@@ -15,7 +15,7 @@ class Media extends MY_Controller
 		parent::__construct();
 		$this->load->helper('array');
 		$this->load->helper('form');
-		$this->load->model('media_model');
+		$this->load->model('cms_media_model');
 		$this->load->helper('text');
 	}
 	
@@ -34,7 +34,7 @@ class Media extends MY_Controller
 	function crop()
 	{
 		get_instance()->data['up_media'] = $this->input->post('media');
-		if(! get_instance()->data['media'] = $this->media_model->get_by_id($this->data['up_media']['id']))
+		if(! get_instance()->data['media'] = $this->cms_media_model->get_by_id($this->data['up_media']['id']))
 		{
 			die('Media asset not found.');
 		}
@@ -64,7 +64,7 @@ class Media extends MY_Controller
 		
 /*
 		// Download the image so we have a local copy.
-		$tmpfile = $this->data['cms']['cp_tmp_dir'] . '/' . $this->data['up_media']['MediaHash'] . '_' . $this->data['up_media']['MediaFile']; 
+		$tmpfile = $this->data['cms']['cp_tmp_dir'] . '/' . $this->data['up_media']['MediaHash'] . '_' . $this->data['up_media']['CMS_MediaFile']; 
 		$image = file_get_contents($this->data['up_media']['url']);
 		file_put_contents($tmpfile, $image);
 		
@@ -84,7 +84,7 @@ class Media extends MY_Controller
 	//
 	function crop_now()
 	{
-		if(! get_instance()->data['media'] = $this->media_model->get_by_id($this->input->post('MediaId')))
+		if(! get_instance()->data['media'] = $this->cms_media_model->get_by_id($this->input->post('MediaId')))
 		{
 			die('Media asset not found.');
 		}
@@ -93,7 +93,7 @@ class Media extends MY_Controller
 		$this->load->spark('wideimage-ci/11.02.19');
 		
 		// Download the image so we have a local copy.
-		$tmpfile = $this->data['cms']['cp_tmp_dir'] . '/' . 'cropped_' . $this->data['media']['MediaFile'];			
+		$tmpfile = $this->data['cms']['cp_tmp_dir'] . '/' . 'cropped_' . $this->data['media']['CMS_MediaFile'];			
 		$image = file_get_contents($this->data['media']['url']);
 		file_put_contents($tmpfile, $image);
 		
@@ -183,10 +183,10 @@ class Media extends MY_Controller
 			$json['data'] = $this->upload->data();
 			
 			// Setup media table information.
-			$q['MediaIsImage'] = $json['data']['is_image'];
-			$q['MediaType'] = $json['data']['image_type'];
-			$q['MediaSize'] = $json['data']['file_size'];
-			$q['MediaHash'] = md5_file($json['data']['full_path']); 
+			$q['CMS_MediaIsImage'] = $json['data']['is_image'];
+			$q['CMS_MediaType'] = $json['data']['image_type'];
+			$q['CMS_MediaSize'] = $json['data']['file_size'];
+			$q['CMS_MediaHash'] = md5_file($json['data']['full_path']); 
 			
 			$json = $this->_do_upload($json, $q);
 		} else
@@ -246,39 +246,39 @@ class Media extends MY_Controller
 	// Upload a file locally.
 	//
 	private function _local_upload($json, $q)
-	{		
+	{			
 		// Insert the file into the media database.
-		$q['MediaStore'] = 'local-files';
-		$q['MediaPath'] = $this->data['cms']['cp_media_local_path'];
-		$json['data']['id'] = $id = $this->media_model->insert($q);
-		$d['MediaFile'] = $json['data']['raw_name'] . "_$id" . $json['data']['file_ext'];
+		$q['CMS_MediaStore'] = 'local-files';
+		$q['CMS_MediaPath'] = $this->data['cms']['cp_media_local_path'];
+		$json['data']['id'] = $id = $this->cms_media_model->insert($q);
+		$d['CMS_MediaFile'] = $json['data']['raw_name'] . "_$id" . $json['data']['file_ext'];
 		
 		// If the file is an image build thumbnail & upload to rs.
 		if($json['data']['is_image'])
 		{
-		  $d['MediaFileThumb'] = str_ireplace($json['data']['file_ext'], '_thumb' . $json['data']['file_ext'], $d['MediaFile']);
-		  $thumb = $this->_build_thumb_nail($json['data']['full_path'], $d['MediaFileThumb']);
-		  $d['MediaPathThumb'] = $this->data['cms']['cp_media_local_path'];
+		  $d['CMS_MediaFileThumb'] = str_ireplace($json['data']['file_ext'], '_thumb' . $json['data']['file_ext'], $d['CMS_MediaFile']);
+		  $thumb = $this->_build_thumb_nail($json['data']['full_path'], $d['CMS_MediaFileThumb']);
+		  $d['CMS_MediaPathThumb'] = $this->data['cms']['cp_media_local_path'];
 		  
 		  // Install file locally (we copy and unlink because of https://bugs.php.net/bug.php?id=50676)
-			copy($this->data['cms']['cp_tmp_dir'] . '/' . $thumb, $this->data['cms']['cp_media_local_dir'] . $d['MediaFileThumb']);
+			copy($this->data['cms']['cp_tmp_dir'] . '/' . $thumb, $this->data['cms']['cp_media_local_dir'] . $d['CMS_MediaFileThumb']);
 			unlink($this->data['cms']['cp_tmp_dir'] . '/' . $thumb);
 		
 		  // Build FQDN
-		  $json['data']['thumburl'] = $this->data['cms']['cp_media_local_url'] .  $d['MediaPathThumb'] . $d['MediaFileThumb'];
-		  $json['data']['thumbsslurl'] = $this->data['cms']['cp_media_local_ssl_url'] . $d['MediaPathThumb'] . $d['MediaFileThumb'];
+		  $json['data']['thumburl'] = $this->data['cms']['cp_media_local_url'] .  $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'];
+		  $json['data']['thumbsslurl'] = $this->data['cms']['cp_media_local_ssl_url'] . $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'];
 		}
 		
 		// We have to insert and then update because of the id in the file name.
-		$this->media_model->update($d, $id);
+		$this->cms_media_model->update($d, $id);
 		
 		// Install file locally
-		copy($json['data']['full_path'], $this->data['cms']['cp_media_local_dir'] . $d['MediaFile']);
+		copy($json['data']['full_path'], $this->data['cms']['cp_media_local_dir'] . $d['CMS_MediaFile']);
 		unlink($json['data']['full_path']);
 		  													
 		// Build FQDN
-		$json['data']['url'] = $this->data['cms']['cp_media_local_url'] . $q['MediaPath'] . $d['MediaFile'];
-		$json['data']['sslurl'] = $this->data['cms']['cp_media_local_ssl_url'] . $q['MediaPath'] . $d['MediaFile'];
+		$json['data']['url'] = $this->data['cms']['cp_media_local_url'] . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
+		$json['data']['sslurl'] = $this->data['cms']['cp_media_local_ssl_url'] . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
 				
 		return $json;
 	}
@@ -292,39 +292,39 @@ class Media extends MY_Controller
 		$this->storage->load_driver('amazon-s3');
 		
 		// Insert the file into the media database.
-		$q['MediaStore'] = 'amazon-web-services-s3';
-		$q['MediaPath'] = $this->data['cms']['cp_media_amazon_s3_path'];
-		$json['data']['id'] = $id = $this->media_model->insert($q);
-		$d['MediaFile'] = $json['data']['raw_name'] . "_$id" . $json['data']['file_ext'];
+		$q['CMS_MediaStore'] = 'amazon-web-services-s3';
+		$q['CMS_MediaPath'] = $this->data['cms']['cp_media_amazon_s3_path'];
+		$json['data']['id'] = $id = $this->cms_media_model->insert($q);
+		$d['CMS_MediaFile'] = $json['data']['raw_name'] . "_$id" . $json['data']['file_ext'];
 		
 		// If the file is an image build thumbnail & upload to rs.
 		if($json['data']['is_image'])
 		{
-		  $d['MediaFileThumb'] = str_ireplace($json['data']['file_ext'], '_thumb' . $json['data']['file_ext'], $d['MediaFile']);
-		  $thumb = $this->_build_thumb_nail($json['data']['full_path'], $d['MediaFileThumb']);
-		  $d['MediaPathThumb'] = $this->data['cms']['cp_media_amazon_s3_path'];
+		  $d['CMS_MediaFileThumb'] = str_ireplace($json['data']['file_ext'], '_thumb' . $json['data']['file_ext'], $d['CMS_MediaFile']);
+		  $thumb = $this->_build_thumb_nail($json['data']['full_path'], $d['CMS_MediaFileThumb']);
+		  $d['CMS_MediaPathThumb'] = $this->data['cms']['cp_media_amazon_s3_path'];
 		  
 		  // Upload to rackspace
 		  $this->storage->upload_file($this->data['cms']['cp_media_amazon_s3_container'], 
-		  														$this->data['cms']['cp_tmp_dir'] . '/' . $thumb, $d['MediaPathThumb'] . $d['MediaFileThumb'], NULL, 'public');
+		  														$this->data['cms']['cp_tmp_dir'] . '/' . $thumb, $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'], NULL, 'public');
 			unlink($this->data['cms']['cp_tmp_dir'] . '/' . $thumb);
 		
 		  // Build FQDN
-		  $json['data']['thumburl'] = $this->data['cms']['cp_media_amazon_s3_url'] . $d['MediaPathThumb'] . $d['MediaFileThumb'];
-		  $json['data']['thumbsslurl'] = $this->data['cms']['cp_media_amazon_s3_ssl_url'] . $d['MediaPathThumb'] . $d['MediaFileThumb'];
+		  $json['data']['thumburl'] = $this->data['cms']['cp_media_amazon_s3_url'] . $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'];
+		  $json['data']['thumbsslurl'] = $this->data['cms']['cp_media_amazon_s3_ssl_url'] . $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'];
 		}
 		
 		// We have to insert and then update because of the id in the file name.
-		$this->media_model->update($d, $id);
+		$this->cms_media_model->update($d, $id);
 		
 		// Upload the file to Rackspace
 		$this->storage->upload_file($this->data['cms']['cp_media_amazon_s3_container'], 
-		  													$json['data']['full_path'], $q['MediaPath'] . $d['MediaFile'], NULL, 'public');
+		  													$json['data']['full_path'], $q['CMS_MediaPath'] . $d['CMS_MediaFile'], NULL, 'public');
 		unlink($json['data']['full_path']);		
 		  													
 		// Build FQDN
-		$json['data']['url'] = $this->data['cms']['cp_media_amazon_s3_url'] . $q['MediaPath'] . $d['MediaFile'];
-		$json['data']['sslurl'] = $this->data['cms']['cp_media_amazon_s3_ssl_url'] . $q['MediaPath'] . $d['MediaFile'];
+		$json['data']['url'] = $this->data['cms']['cp_media_amazon_s3_url'] . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
+		$json['data']['sslurl'] = $this->data['cms']['cp_media_amazon_s3_ssl_url'] . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
 				
 		return $json;
 	}
@@ -338,39 +338,39 @@ class Media extends MY_Controller
 		$this->storage->load_driver('rackspace-cf');
 		
 		// Insert the file into the media database.
-		$q['MediaStore'] = 'rackspace-cloud-files';
-		$q['MediaPath'] = $this->data['cms']['cp_media_rackspace_path'];
-		$json['data']['id'] = $id = $this->media_model->insert($q);
-		$d['MediaFile'] = $json['data']['raw_name'] . "_$id" . $json['data']['file_ext'];
+		$q['CMS_MediaStore'] = 'rackspace-cloud-files';
+		$q['CMS_MediaPath'] = $this->data['cms']['cp_media_rackspace_path'];
+		$json['data']['id'] = $id = $this->cms_media_model->insert($q);
+		$d['CMS_MediaFile'] = $json['data']['raw_name'] . "_$id" . $json['data']['file_ext'];
 		
 		// If the file is an image build thumbnail & upload to rs.
 		if($json['data']['is_image'])
 		{
-		  $d['MediaFileThumb'] = str_ireplace($json['data']['file_ext'], '_thumb' . $json['data']['file_ext'], $d['MediaFile']);
-		  $thumb = $this->_build_thumb_nail($json['data']['full_path'], $d['MediaFileThumb']);
-		  $d['MediaPathThumb'] = $this->data['cms']['cp_media_rackspace_path'];
+		  $d['CMS_MediaFileThumb'] = str_ireplace($json['data']['file_ext'], '_thumb' . $json['data']['file_ext'], $d['CMS_MediaFile']);
+		  $thumb = $this->_build_thumb_nail($json['data']['full_path'], $d['CMS_MediaFileThumb']);
+		  $d['CMS_MediaPathThumb'] = $this->data['cms']['cp_media_rackspace_path'];
 		  
 		  // Upload to rackspace
 		  $this->storage->upload_file($this->data['cms']['cp_media_rackspace_container'], 
-		  														$this->data['cms']['cp_tmp_dir'] . '/' . $thumb, $d['MediaPathThumb'] . $d['MediaFileThumb']);
+		  														$this->data['cms']['cp_tmp_dir'] . '/' . $thumb, $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb']);
 			unlink($this->data['cms']['cp_tmp_dir'] . '/' . $thumb);
 		
 		  // Build FQDN
-		  $json['data']['thumburl'] = $this->data['cms']['cp_media_rackspace_url'] . $d['MediaPathThumb'] . $d['MediaFileThumb'];
-		  $json['data']['thumbsslurl'] = $this->data['cms']['cp_media_rackspace_ssl_url'] . $d['MediaPathThumb'] . $d['MediaFileThumb'];
+		  $json['data']['thumburl'] = $this->data['cms']['cp_media_rackspace_url'] . $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'];
+		  $json['data']['thumbsslurl'] = $this->data['cms']['cp_media_rackspace_ssl_url'] . $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'];
 		}
 		
 		// We have to insert and then update because of the id in the file name.
-		$this->media_model->update($d, $id);
+		$this->cms_media_model->update($d, $id);
 		
 		// Upload the file to Rackspace
 		$this->storage->upload_file($this->data['cms']['cp_media_rackspace_container'], 
-		  													$json['data']['full_path'], $q['MediaPath'] . $d['MediaFile']);
+		  													$json['data']['full_path'], $q['CMS_MediaPath'] . $d['CMS_MediaFile']);
 		unlink($json['data']['full_path']);		
 		  													
 		// Build FQDN
-		$json['data']['url'] = $this->data['cms']['cp_media_rackspace_url'] . $q['MediaPath'] . $d['MediaFile'];
-		$json['data']['sslurl'] = $this->data['cms']['cp_media_rackspace_ssl_url'] . $q['MediaPath'] . $d['MediaFile'];
+		$json['data']['url'] = $this->data['cms']['cp_media_rackspace_url'] . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
+		$json['data']['sslurl'] = $this->data['cms']['cp_media_rackspace_ssl_url'] . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
 				
 		return $json;
 	}
@@ -385,40 +385,6 @@ class Media extends MY_Controller
 		$height = $this->data['cms']['cp_thumb_height'] * 1.10;
 		$this->wideimage->load($file)->resize($width, $height, 'outside')->crop('center', 'center', $this->data['cms']['cp_thumb_width'], $this->data['cms']['cp_thumb_height'])->saveToFile($this->data['cms']['cp_tmp_dir'] . '/' . $newfile);
 		return $newfile;
-	}
-	
-	//
-	// Shared functionality between add / edit.
-	//
-	private function _add_edit_shared_func($update = FALSE)
-	{
-		// Manage posted data.
-		if($this->input->post('submit'))
-		{
-			$this->load->library('form_validation');
-			$this->form_validation->set_rules('BlocksName', 'Name', 'required|trim|strtolower');
-			$this->form_validation->set_rules('BlocksBody', 'Body', 'required|trim');
-	
-			if(get_instance()->form_validation->run() != FALSE)
-			{
-				$q['BlocksName'] = $this->input->post('BlocksName');
-				$q['BlocksBody'] = $this->input->post('BlocksBody');
-				
-				if($update)
-				{
-					$this->cms_blocks_model->update($q, $update);
-				} else
-				{
-					$this->cms_blocks_model->insert($q);
-				}
-				
-				redirect($this->data['cms']['cp_base'] . '/' . $this->data['cms']['cp_base'] . '/blocks');
-			}
-		}
-		
-		$this->load->view('cms/templates/app-header', $this->data);
-		$this->load->view('cms/media/add-edit', $this->data);
-		$this->load->view('cms/templates/app-footer', $this->data);
 	}
 }
 

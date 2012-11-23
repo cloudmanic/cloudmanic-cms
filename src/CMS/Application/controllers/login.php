@@ -93,16 +93,6 @@ class Login extends CI_Controller
 	
 		// Make sure our tables are built
 		$this->load->library('CMS_Tables');
-		
-		// Load configs from database.
-		$this->load->model('configs_model');
-		$cfg = $this->configs_model->get();
-		
-		// Set the config data.
-		foreach($cfg AS $key => $row)
-		{
-			$this->data['cms'][$row['ConfigsKey']] = $row['ConfigsValue'];
-		}
 	}
 }
 

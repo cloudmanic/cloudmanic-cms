@@ -94,16 +94,6 @@ class MY_Controller extends CI_Controller
 		$this->load->config('cms', TRUE);
 		$this->data['cms'] = $this->config->item('cms');
 		
-		// Load configs from database.
-		$this->load->model('configs_model');
-		$cfg = $this->configs_model->get();
-		
-		// Set the config data.
-		foreach($cfg AS $key => $row)
-		{
-			$this->data['cms'][$row['ConfigsKey']] = $row['ConfigsValue'];
-		}
-		
 		// Load configs from file passed in.
 		$configs = CMS\Libraries\Config::load_configs_from_file();
 		

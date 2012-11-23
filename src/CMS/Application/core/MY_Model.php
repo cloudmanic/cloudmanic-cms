@@ -8,7 +8,6 @@
 class MY_Model extends CI_Model 
 {
 	protected $table;
-	protected $table_base;
 	protected $_relatedto = array();
 	protected $_relatedtoignore = FALSE;
 	protected $_date_cols = array();
@@ -20,9 +19,7 @@ class MY_Model extends CI_Model
   function __construct()
   {
     parent::__construct();
-		$t = str_ireplace('_model', '', get_class($this));
-		$this->table_base = $t; // Todo: Delete this later.
-		$this->table = $this->table_base;
+		$this->table = str_ireplace('_model', '', get_class($this));
   }
   
 	//
@@ -113,7 +110,7 @@ class MY_Model extends CI_Model
  	//
  	function delete($id)
  	{
- 		$this->db->where($this->table_base . 'Id', $id);
+ 		$this->db->where($this->table . 'Id', $id);
  		$this->db->delete($this->table); 
 
 		// Fire after event.		
@@ -127,7 +124,7 @@ class MY_Model extends CI_Model
  	{
  		$data = 0;
  		$this->_set_joins();
- 		$this->db->where($this->table_base . 'Id', $id);
+ 		$this->db->where($this->table . 'Id', $id);
  		if($row = $this->db->get($this->table)->row_array())
  		{
  			$data = $this->_format_get($row);
@@ -155,9 +152,9 @@ class MY_Model extends CI_Model
  	//
  	function insert($data)
  	{ 	
- 		if(! isset($data[$this->table_base . 'CreatedAt']))
+ 		if(! isset($data[$this->table . 'CreatedAt']))
  		{
- 			$data[$this->table_base . 'CreatedAt'] = date('Y-m-d G:i:s');
+ 			$data[$this->table . 'CreatedAt'] = date('Y-m-d G:i:s');
  		}
  		
  		$data = $this->_format_post($data);
@@ -179,7 +176,7 @@ class MY_Model extends CI_Model
  	{		
  		$data = $this->_format_post($data);
  		$q = $this->_set_data($data);
- 		$this->db->where($this->table_base . 'Id', $id);
+ 		$this->db->where($this->table . 'Id', $id);
  		$this->db->update($this->table, $q);
 		
 		// Fire after event.		
@@ -263,9 +260,9 @@ class MY_Model extends CI_Model
  	function _format_get($data)
  	{ 	
 		// Add some date formats.
-		if(isset($data[$this->table_base . 'UpdatedAt']))
+		if(isset($data[$this->table . 'UpdatedAt']))
 		{
-			$data['DateFormat1'] = date('n/j/Y', strtotime($data[$this->table_base . 'UpdatedAt']));
+			$data['DateFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'UpdatedAt']));
 		}
 		
  		return $data;
