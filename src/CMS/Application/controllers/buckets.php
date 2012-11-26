@@ -53,6 +53,10 @@ class Buckets extends MY_Controller
 		$this->db->delete($this->data['table']);
 		$this->_delete_relations($id, NULL, $this->data['bucket']['CMS_BucketsName']);
 		$this->_delete_relations(NULL, $this->data['bucket']['CMS_BucketsName'], NULL, $id);
+		
+		// Fire after event.		
+		CMS\Libraries\Event::fire('after.delete', array($this->data['table'], $id));
+		
 		redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $bucket);
 	}
 	
@@ -163,14 +167,14 @@ class Buckets extends MY_Controller
 				$this->data['relations'][$key]['selected'] = array(); 
 				if($this->data['type'] == 'edit')
 				{
-					$this->load->model('relations_model');
-					$this->relations_model->set_bucket($this->data['bucket']['BucketsName']);
-					$this->relations_model->set_table($row['table']);
-					$this->relations_model->set_entry($this->uri->segment(5));
-					$d = $this->relations_model->get();
+					$this->load->model('cms_relations_model');
+					$this->cms_relations_model->set_bucket($this->data['bucket']['BucketsName']);
+					$this->cms_relations_model->set_table($row['table']);
+					$this->cms_relations_model->set_entry($this->uri->segment(5));
+					$d = $this->cms_relations_model->get();
 					foreach($d AS $key2 => $row2)
 					{
-						$this->data['relations'][$key]['selected'][] = $row2['RelationsTableId'];
+						$this->data['relations'][$key]['selected'][] = $row2['CMS_RelationsTableId'];
 					}
 				}
 			}
@@ -248,7 +252,9 @@ class Buckets extends MY_Controller
 					$this->db->update($this->data['table'], $q);
 					$this->_do_relation($this->uri->segment(4));
 					$this->_do_tags($this->uri->segment(4));
-					$this->clear_ci_cache_check();
+					
+					// Fire after event.		
+					CMS\Libraries\Event::fire('after.update', array($this->data['table'], $this->uri->segment(4), 'data' => $q));
 				} else
 				{
 					$this->db->select_max($this->data['table'] . 'Order', 'max');
@@ -271,7 +277,9 @@ class Buckets extends MY_Controller
 					$id = $this->db->insert_id();
 					$this->_do_relation($id);
 					$this->_do_tags($id);
-					$this->clear_ci_cache_check();
+					
+					// Fire after event.		
+					CMS\Libraries\Event::fire('after.insert', array($this->data['table'], $id, 'data' => $q));
 				}
 				
 				redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $this->uri->segment(3));
@@ -320,11 +328,11 @@ class Buckets extends MY_Controller
 					$tagid = $t[$row['table'] . 'Id'];
 				}				
 
-		  	$r['RelationsBucket'] = $this->data['bucket']['BucketsName'];
-		  	$r['RelationsTable'] = $row['table'];
-		  	$r['RelationsTableId'] = $tagid; 
-		  	$r['RelationsEntryId'] = $id;
-		  	$this->relations_model->insert($r);
+		  	$r['CMS_RelationsBucket'] = $this->data['bucket']['BucketsName'];
+		  	$r['CMS_RelationsTable'] = $row['table'];
+		  	$r['CMS_RelationsTableId'] = $tagid; 
+		  	$r['CMS_RelationsEntryId'] = $id;
+		  	$this->cms_relations_model->insert($r);
 		  }
 		}
 	}
@@ -351,11 +359,11 @@ class Buckets extends MY_Controller
 		  // Insert relations.
 		  foreach($_POST[$row['table']] AS $key2 => $row2)
 		  {
-		  	$r['RelationsBucket'] = $this->data['bucket']['BucketsName'];
-		  	$r['RelationsTable'] = $row['table'];
-		  	$r['RelationsTableId'] = $row2; 
-		  	$r['RelationsEntryId'] = $id;
-		  	$this->relations_model->insert($r);
+		  	$r['CMS_RelationsBucket'] = $this->data['bucket']['BucketsName'];
+		  	$r['CMS_RelationsTable'] = $row['table'];
+		  	$r['CMS_RelationsTableId'] = $row2; 
+		  	$r['CMS_RelationsEntryId'] = $id;
+		  	$this->cms_relations_model->insert($r);
 		  }
 		}
 	}
@@ -365,29 +373,29 @@ class Buckets extends MY_Controller
 	//
 	private function _delete_relations($id = NULL, $table = NULL, $bucket = NULL, $tableid = NULL)
 	{
-		$this->load->model('relations_model');
+		$this->load->model('cms_relations_model');
 		
 		if(! is_null($bucket))
 		{
-			$this->relations_model->set_bucket($bucket);
+			$this->cms_relations_model->set_bucket($bucket);
 		}
 		
 		if(! is_null($table))
 		{
-			$this->relations_model->set_table($table);
+			$this->cms_relations_model->set_table($table);
 		}
 		
 		if(! is_null($id))
 		{
-			$this->relations_model->set_entry($id);
+			$this->cms_relations_model->set_entry($id);
 		}
 		
 		if(! is_null($tableid))
 		{
-			$this->relations_model->set_table_id($tableid);
+			$this->cms_relations_model->set_table_id($tableid);
 		}
 		
-		$this->relations_model->delete_all();
+		$this->cms_relations_model->delete_all();
 	}
 	
 	//
