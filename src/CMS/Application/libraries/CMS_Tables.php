@@ -72,7 +72,7 @@ class CMS_Tables
 			$q['CMS_NavType'] = 'Internal';
 			$q['CMS_NavUri'] = '/users';
 			$q['CMS_NavParentId'] = '1';
-			$q['CMS_NavOrder'] = '0';
+			$q['CMS_NavOrder'] = '1';
 			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
 			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
 			$this->_ci->db->insert('CMS_Nav', $q);
@@ -81,7 +81,7 @@ class CMS_Tables
 			$q = array();
 			$q['CMS_NavName'] = 'Site';
 			$q['CMS_NavType'] = 'Parent';
-			$q['CMS_NavOrder'] = '1';
+			$q['CMS_NavOrder'] = '0';
 			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
 			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
 			$this->_ci->db->insert('CMS_Nav', $q);

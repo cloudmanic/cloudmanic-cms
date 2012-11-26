@@ -36,7 +36,7 @@ class Login extends CI_Controller
 		// Are we posting a login?
 		if($this->input->post('CMS_UsersEmail')) 
 		{
-			$this->form_validation->set_rules('CMS_UsersEmail', 'Email Address', 'required|valid_email|min_length[4]|max_length[32]');
+			$this->form_validation->set_rules('CMS_UsersEmail', 'Email Address', 'required|valid_email');
 			$this->form_validation->set_rules('CMS_UsersPassword', 'Password', 'required|min_length[4]|max_length[32]');
 			
 			// If we validated now see if there is really an account.

@@ -29,9 +29,6 @@ class CMS
 	
 		// Setup database
 		self::setup_database();
-	
-		// Set Configs
-		CMS\Libraries\Config::load_configs();
 	}
 	
 	//
