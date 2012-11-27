@@ -95,7 +95,7 @@ class Users extends MY_Controller
 					$this->cms_users_model->insert($q);
 				}
 				
-				redirect($this->data['cms']['cp_base'] . '/users');
+				redirect($this->data['cms']['cp_base'] . '/admin/users');
 			}
 		}
 		

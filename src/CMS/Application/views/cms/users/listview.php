@@ -10,7 +10,7 @@
 			</div>
 			
 			<div class="pull-right">
-				<a href="<?=site_url($cms['cp_base'] . '/users/add')?>" class="btn btn-primary">Add User</a>
+				<a href="<?=site_url($cms['cp_base'] . '/admin/users/add')?>" class="btn btn-primary">Add User</a>
 			</div>
 		</div>
 	
@@ -36,8 +36,8 @@
 	<td>{{CMS_UsersEmail}}</td>
 	<td>{{DateFormat1}}</td>
 	<td>
-		<a href="<?=site_url($cms['cp_base'] . '/users/delete/id/')?>/{{CMS_UsersId}}" class="no-deep-false" cloud-api-delete="{{CMS_BlocksId}}:remove-fade:confirm:tr:slow">Delete</a> |
-		<a href="<?=site_url($cms['cp_base'] . '/users/edit')?>/{{CMS_UsersId}}">Edit</a>
+		<a href="<?=site_url($cms['cp_base'] . '/admin/users/delete/id/')?>/{{CMS_UsersId}}" class="no-deep-false" cloud-api-delete="{{CMS_BlocksId}}:remove-fade:confirm:tr:slow">Delete</a> |
+		<a href="<?=site_url($cms['cp_base'] . '/admin/users/edit')?>/{{CMS_UsersId}}">Edit</a>
 	</td>
 </tr>
 </script>

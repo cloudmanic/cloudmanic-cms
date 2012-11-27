@@ -16,6 +16,7 @@ $config['cp_clear_ci_page_cache'] = TRUE;
 $config['cp_media_driver'] = 'local-files'; // local-files / amazon-web-services-s3 / rackspace-cloud-files;
 $config['cp_media_file_types'] = 'gif|jpg|jpeg|png|pdf|mov|avi|mp4';
 $config['cp_media_file_max_size'] = 102400; // kilobytes
+$config['cp_image_resize'] = '1200';
 
 // Local file config.
 $config['cp_media_local_path'] = 'uploads/';

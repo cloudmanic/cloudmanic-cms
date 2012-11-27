@@ -57,26 +57,8 @@ class CMS_Tables
     	$this->_ci->dbforge->add_field("CMS_NavCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
     	$this->_ci->dbforge->create_table('CMS_Nav', TRUE);
     	
-			// Insert top level for Admin.
-			$q = array();
-			$q['CMS_NavName'] = 'Admin';
-			$q['CMS_NavType'] = 'Parent';
-			$q['CMS_NavOrder'] = '0';
-			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert('CMS_Nav', $q);
-			
-			// Insert users under admin.
-			$q = array();
-			$q['CMS_NavName'] = 'Users';
-			$q['CMS_NavType'] = 'Internal';
-			$q['CMS_NavUri'] = '/users';
-			$q['CMS_NavParentId'] = '1';
-			$q['CMS_NavOrder'] = '1';
-			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
-			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
-			$this->_ci->db->insert('CMS_Nav', $q);
-			
+    	// -------- Global
+    	
 			// Insert top level for Site.
 			$q = array();
 			$q['CMS_NavName'] = 'Site';
@@ -85,13 +67,27 @@ class CMS_Tables
 			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
 			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
 			$this->_ci->db->insert('CMS_Nav', $q);
+			$site = $this->_ci->db->insert_id();
+			
+			// Insert top level for Admin.
+			$q = array();
+			$q['CMS_NavName'] = 'Admin';
+			$q['CMS_NavType'] = 'Parent';
+			$q['CMS_NavOrder'] = '1';
+			$q['CMS_NavParentId'] = '0';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
+			$admin = $this->_ci->db->insert_id();
+			
+    	// -------- Site
 			
 			// Insert users under site.
 			$q = array();
 			$q['CMS_NavName'] = 'Blocks';
 			$q['CMS_NavType'] = 'Internal';
 			$q['CMS_NavUri'] = '/blocks';
-			$q['CMS_NavParentId'] = '3';
+			$q['CMS_NavParentId'] = $site;
 			$q['CMS_NavOrder'] = '0';
 			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
 			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
@@ -102,8 +98,32 @@ class CMS_Tables
 			$q['CMS_NavName'] = 'Media';
 			$q['CMS_NavType'] = 'Internal';
 			$q['CMS_NavUri'] = '/media';
-			$q['CMS_NavParentId'] = '3';
+			$q['CMS_NavParentId'] = $site;
 			$q['CMS_NavOrder'] = '2';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
+    	
+    	// -------- Admin
+			
+			// Insert users under admin.
+			$q = array();
+			$q['CMS_NavName'] = 'Users';
+			$q['CMS_NavType'] = 'Internal';
+			$q['CMS_NavUri'] = '/admin/users';
+			$q['CMS_NavParentId'] = $admin;
+			$q['CMS_NavOrder'] = '1';
+			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
+			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
+			$this->_ci->db->insert('CMS_Nav', $q);
+			
+			// Insert buckets under admin.
+			$q = array();
+			$q['CMS_NavName'] = 'Buckets';
+			$q['CMS_NavType'] = 'Internal';
+			$q['CMS_NavUri'] = '/admin/buckets';
+			$q['CMS_NavParentId'] = $admin;
+			$q['CMS_NavOrder'] = '0';
 			$q['CMS_NavUpdatedAt'] = date('Y-m-d G:i:s');
 			$q['CMS_NavCreatedAt'] = date('Y-m-d G:i:s');
 			$this->_ci->db->insert('CMS_Nav', $q);

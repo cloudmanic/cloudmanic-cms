@@ -23,7 +23,7 @@ class CMS_Media_Model extends MY_Model
 		// Delete files from the file host.
 		if($data = $this->get_by_id($id))
 		{
-			switch($data['MediaStore'])
+			switch($data['CMS_MediaStore'])
 			{
 				case 'rackspace-cloud-files':
 					$this->load->spark('cloudmanic-storage/1.0.2');

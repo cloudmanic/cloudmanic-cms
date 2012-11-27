@@ -36,7 +36,8 @@
 	<td>{{DateFormat1}}</td>
 	<td>
 		<a href="<?=site_url($cms['cp_base'] . '/admin/buckets/delete/id/')?>/{{CMS_BucketsId}}" class="no-deep-false" cloud-api-delete="{{CMS_BlocksId}}:remove-fade:confirm:tr:slow">Delete</a> |
-		<a href="<?=site_url($cms['cp_base'] . '/admin/buckets/edit')?>/{{CMS_BucketsId}}">Edit</a>
+		<a href="<?=site_url($cms['cp_base'] . '/admin/buckets/edit')?>/{{CMS_BucketsId}}">Edit</a> |
+		<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/')?>/{{CMS_BucketsId}}">Manage</a>
 	</td>
 </tr>
 </script>

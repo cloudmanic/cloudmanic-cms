@@ -214,7 +214,29 @@ class Media extends MY_Controller
 	// the file too. Also returns a json file to return to the browser or something.
 	//
 	private function _do_upload($json, $q)
-	{
+	{			
+		// First we check if this is a global resize type of an image.
+		if($json['data']['is_image'] && $this->data['cms']['cp_image_resize'])
+		{
+			if(($json['data']['image_width'] > $this->data['cms']['cp_image_resize']) || 
+				($json['data']['image_height'] > $this->data['cms']['cp_image_resize']))
+			{
+				$this->load->spark('wideimage-ci/11.02.19');
+				
+				if($json['data']['image_width'] >= $json['data']['image_height'])
+				{
+					$width = $this->data['cms']['cp_image_resize'];
+					$height = null;
+				} else
+				{
+					$width = null;
+					$height = $this->data['cms']['cp_image_resize'];
+				}
+				
+				$this->wideimage->load($json['data']['full_path'])->resize($width, $height)->saveToFile($json['data']['full_path']);
+			}
+		}
+	
 		// Upload the file to the storage driver.
 		switch($this->data['cms']['cp_media_driver'])
 		{

@@ -9,9 +9,9 @@
 		<?php endif; ?>
 		
 		<?php if($type == 'add') : ?>
-			<?=form_open($cms['cp_base'] . '/users/add')?>
+			<?=form_open($cms['cp_base'] . '/admin/users/add')?>
 		<?php else : ?>
-			<?=form_open($cms['cp_base'] . '/users/edit/' . $data['CMS_UsersId'])?>
+			<?=form_open($cms['cp_base'] . '/admin/users/edit/' . $data['CMS_UsersId'])?>
 		<?php endif; ?>
 	
 	
@@ -52,7 +52,7 @@
 	  <div class="row">
 	  	<div class="pull-right">		  
 	  		<button type="submit" class="btn btn-primary">Save</button> or
-				<a href="<?=site_url($cms['cp_base'] . '/users')?>" class="cancel-link">Cancel</a>
+				<a href="<?=site_url($cms['cp_base'] . '/admin/users')?>" class="cancel-link">Cancel</a>
 			</div>	
 		</div>
 		
