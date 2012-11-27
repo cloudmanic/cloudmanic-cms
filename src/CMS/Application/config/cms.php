@@ -8,8 +8,8 @@ $config['cp_force_ssl'] = FALSE;
 $config['cp_login_type'] = 'default';
 $config['cp_home'] = 'blocks';
 $config['cp_tmp_dir'] = '/tmp'; // no trailing slash.
-$config['cp_thumb_width'] = '100';
-$config['cp_thumb_height'] = '100';
+$config['cp_thumb_width'] = '300';
+$config['cp_thumb_height'] = '300';
 $config['cp_clear_ci_page_cache'] = TRUE;
 
 // Uploading media.
@@ -19,7 +19,7 @@ $config['cp_media_file_max_size'] = 102400; // kilobytes
 
 // Local file config.
 $config['cp_media_local_path'] = 'uploads/';
-$config['cp_media_local_dir'] = './uploads/'; // must be from document root
+$config['cp_media_local_dir'] = 'uploads/'; // must be from document root
 $config['cp_media_local_url'] = base_url(); 
 $config['cp_media_local_ssl_url'] = base_url(); 
 
@@ -34,9 +34,5 @@ $config['cp_media_rackspace_container'] = '';
 $config['cp_media_rackspace_path'] = 'cms/';
 $config['cp_media_rackspace_url'] = ''; // trailing slash
 $config['cp_media_rackspace_ssl_url'] = ''; // trailing slash
-
-// Hook Functions.
-$config['cp_hooks']['bucket_before_insert'] = array('library' => '', 'method' => '');
-$config['cp_hooks']['bucket_before_update'] = array('library' => '', 'method' => '');
 
 /* End File */

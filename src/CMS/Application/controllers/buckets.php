@@ -27,7 +27,7 @@ class Buckets extends MY_Controller
 		$this->data['bucket'] = $bucket;
 		
 		// Make sure the bucket table exists
-		$this->data['table'] = ucfirst($bucket['CMS_BucketsName']);
+		$this->data['table'] = ucfirst($bucket['CMS_BucketsTable']);
 		if(! $this->db->table_exists($this->data['table']))
 		{
 			show_404();
@@ -238,16 +238,6 @@ class Buckets extends MY_Controller
 					
 				if($update)
 				{
-					// Hook just before insert.
-					if(isset($this->data['cms']['cp_hooks']['bucket_before_update']))
-					{
-						if(! empty($this->data['cms']['cp_hooks']['bucket_before_update']['library']))
-						{
-							$this->load->library($this->data['cms']['cp_hooks']['bucket_before_update']['library']);
-							$q = $this->{strtolower($this->data['cms']['cp_hooks']['bucket_before_update']['library'])}->{$this->data['cms']['cp_hooks']['bucket_before_update']['method']}($this->data['table'], $q, $this->uri->segment(4));
-						}
-					}
-				
 					$this->db->where($this->data['table'] . 'Id', $this->uri->segment(4));
 					$this->db->update($this->data['table'], $q);
 					$this->_do_relation($this->uri->segment(4));

@@ -4,18 +4,18 @@ $class = '';
 $width = '';
 $height = '';
 $aspect = '';
-if(isset($bucket['BucketsFields'][$row->name]['type']) && 
-		($bucket['BucketsFields'][$row->name]['type'] == 'cms-image-crop'))
+if(isset($bucket['CMS_BucketsFields'][$row->name]['type']) && 
+		($bucket['CMS_BucketsFields'][$row->name]['type'] == 'cms-image-crop'))
 {
 	$class = 'crop';
-	$width = $bucket['BucketsFields'][$row->name]['target-width'];
-	$height = $bucket['BucketsFields'][$row->name]['target-height'];
-	$aspect = $bucket['BucketsFields'][$row->name]['target-aspect'];
+	$width = $bucket['CMS_BucketsFields'][$row->name]['target-width'];
+	$height = $bucket['CMS_BucketsFields'][$row->name]['target-height'];
+	$aspect = $bucket['CMS_BucketsFields'][$row->name]['target-aspect'];
 }
 
 $rand = rand(0, 900000);
 
-if(isset($data[$row->name . '_media']['MediaId']))
+if(isset($data[$row->name . '_media']['CMS_MediaId']))
 {
   echo '<a href="' . site_url($cms['cp_base'] . '/media/add/') . 
   			'" class="bucket-add-image cancel-link hide no-deep-true ' . $class . '" id="image-' . $rand . '-' . $row->name . '" target-width="' . $width . '" target-height="' . $height . '" target-aspect="' . $aspect . '">Add Image</a>';

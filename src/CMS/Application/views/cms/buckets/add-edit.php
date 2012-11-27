@@ -23,7 +23,8 @@
 				}
 				
 				// See if this is a custom field. 
-				if(isset($bucket['CMS_BucketsFields'][$row->name]))
+				if(isset($bucket['CMS_BucketsFields'][$row->name]) && 
+					($bucket['CMS_BucketsFields'][$row->name]['type'] != 'default'))
 				{
 					$row->type = $bucket['CMS_BucketsFields'][$row->name]['type'];
 				}
@@ -41,6 +42,13 @@
 		<?php if($row->type != 'none') : ?>
 		  <p class="control-group <?=(form_error($row->name)) ? 'error' : ''?>">
 		  	<?=form_label($label, $row->name)?>
+		  	
+		  	<?php 
+		  		if($row->type == 'default')
+		  		{
+			  	
+		  		}
+		  	?>
 		  	
 		  	<?php 
 		  		switch($row->type)

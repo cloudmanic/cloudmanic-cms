@@ -20,7 +20,7 @@ class BucketData_Model extends MY_Model
 	//	
 	function set_join($table, $left, $right, $type = 'left')
 	{
-		$this->db->join($this->data['cms']['table_base'] . $table, "$left = $right", $type);
+		$this->db->join($table, "$left = $right", $type);
 	}
 	
 	//

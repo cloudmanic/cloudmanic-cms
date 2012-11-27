@@ -184,6 +184,7 @@ class CMS_Tables
 			$cols = array(
 				'CMS_BucketsId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),
 				'CMS_BucketsName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
+				'CMS_BucketsTable' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
 				'CMS_BucketsHeadline' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
 				'CMS_BucketsDescription' => array('type' => 'TEXT', 'null' => FALSE),
 				'CMS_BucketsLabels' => array('type' => 'TEXT', 'null' => FALSE),

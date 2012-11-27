@@ -35,6 +35,11 @@ class Api extends MY_Controller
 				$model = 'cms_blocks_model';
 			break;
 			
+			case 'buckets':
+				$this->load->model('cms_buckets_model');
+				$model = 'cms_buckets_model';
+			break;
+			
 			case 'bucket':
 				$this->load->model('bucketdata_model');
 				$this->load->model('cms_buckets_model');
@@ -44,7 +49,7 @@ class Api extends MY_Controller
 					die('Nothing to see here.');
 				}
 				
-				$this->bucketdata_model->set_table($bucket['CMS_BucketsName']);
+				$this->bucketdata_model->set_table($bucket['CMS_BucketsTable']);
 		
 				// See if we have any relations to add.
 				if(isset($bucket['CMS_BucketsListview']['joins']) && 

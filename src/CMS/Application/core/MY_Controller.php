@@ -26,6 +26,7 @@ class MY_Controller extends CI_Controller
 		$this->data['page_title'] = $this->data['cms']['site_name'] . ' // Admin Only';
 		$this->data['nav'] = $this->cms_nav_model->get_nav();
 		$this->_cont_init();
+		$this->_check_filesystem_paths();
 
 		// Setup segments based on what the cp base is.
 		$this->data['seg1'] = $this->uri->segment($this->data['cms']['cp_base_seg'] + 1);
@@ -136,6 +137,26 @@ class MY_Controller extends CI_Controller
 		// Refresh the session.
 		$this->load->model('cms_users_model');
 		$this->data['me'] = $this->cms_users_model->get_by_id($user['CMS_UsersId']);
+	}
+	
+	//
+	// Make sure our local file systems paths are correct.
+	//
+	private function _check_filesystem_paths()
+	{
+		// Make sure the upload directory exists
+		if(($this->data['cms']['cp_media_driver'] == 'local-files') && 
+			(! is_dir($this->data['cms']['cp_media_local_dir'])))
+		{
+			show_error('Upload directory does not exists (media driver is set to local-files): ' . getcwd() . '/' . $this->data['cms']['cp_media_local_dir']);
+		}
+		
+		// Make sure the upload directory is writeable.
+		if(($this->data['cms']['cp_media_driver'] == 'local-files') && 
+			(! is_writable($this->data['cms']['cp_media_local_dir'])))
+		{
+			show_error('Upload directory is not writeable (media driver is set to local-files): ' . getcwd() . '/' . $this->data['cms']['cp_media_local_dir']);
+		}
 	}
 	
 	//

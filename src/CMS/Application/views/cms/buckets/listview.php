@@ -66,12 +66,12 @@ $add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_
 			<td>{{<?=$key2?>}}</td>
 		<?php endforeach; ?>
 	<?php else : ?>
-		<td>{{<?=$bucket['CMS_BucketsName']?>Title}}</td>	
+		<td>{{<?=$bucket['CMS_BucketsTable']?>Title}}</td>	
 		<td>{{CreateDateFormat1}}</td>
 	<?php endif; ?>
 	<td>
-		<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsName']?>Id}}" class="no-deep-false" cloud-api-delete="{{<?=$bucket['CMS_BucketsName']?>Id}}:remove-fade:confirm:tr:slow">Delete</a> |
-		<a href="<?=site_url($cms['cp_base'] . '/buckets/edit/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsName']?>Id}}">Edit</a> 
+		<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsTable']?>Id}}" class="no-deep-false" cloud-api-delete="{{<?=$bucket['CMS_BucketsTable']?>Id}}:remove-fade:confirm:tr:slow">Delete</a> |
+		<a href="<?=site_url($cms['cp_base'] . '/buckets/edit/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsTable']?>Id}}">Edit</a> 
 	</td>
 </tr>
 </script>
