@@ -13,6 +13,14 @@ class Model
 	private static $_query = null;
 
 	// -------------------- Setters -------------------- //
+
+	//
+	// Set table.
+	//
+	public static function set_table($table)
+	{
+		self::$table = $table;
+	}
 	
 	//
 	// Set col.
@@ -28,6 +36,20 @@ class Model
 	public static function set_select($col)
 	{
 		self::set_query()->select($col);
+	}
+	
+	//
+	// Set Order.
+	//
+	public static function set_order($order, $sort = 'asc')
+	{
+		if(strtolower($sort) == 'asc')
+		{
+			self::set_query()->order_by_asc($order);
+		} else
+		{
+			self::set_query()->order_by_desc($order);			
+		}
 	}
 
 	// -------------------- CRUD ----------------------- //
@@ -45,14 +67,51 @@ class Model
 		
 		foreach($d AS $key => $row)
 		{
-			$data[] = $row->as_array();
+			$data[] = static::_format_get($row->as_array());
 		}
 
 		return $data;
 	}
 	
+	//
+	// Get by Id.
+	//
+	public static function get_by_id($id)
+	{
+		self::set_col(self::$table . 'Id', $id);
+		$data = self::get();
+		return (isset($data[0])) ? $data[0] : 0;
+	}
+	
 	// ------------------ Helpers --------------------- //
 	
+ 	//
+ 	// Add extra data to get request.
+ 	//
+ 	public static function _format_get($data)
+ 	{ 	
+ 		// Give a nicely formated version.
+ 		if(isset($data[self::$table. 'CreatedAt']))
+ 		{
+ 			$data['CreateDateFormat1'] = date('n/j/Y', strtotime($data[self::$table . 'CreatedAt']));
+ 		}
+ 		
+ 		// Format any column named Date
+ 		if(isset($data[self::$table . 'Date']))
+ 		{
+ 			$data['DateColFormat1'] = date('n/j/Y', strtotime($data[self::$table . 'Date']));
+ 			$data['DateColFormat2'] = date('n/j/Y', strtotime($data[self::$table . 'Date']));
+ 		}
+ 		
+ 		// Format any column named CreateAt
+ 		if(isset($data[self::$table . 'CreatedAt']))
+ 		{
+ 			$data['CreatedAtColFormat1'] = date('n/j/Y', strtotime($data[self::$table . 'CreatedAt']));
+ 		}
+ 		
+ 		return $data;
+ 	}
+ 	
 	//
 	// Clear query.
 	//

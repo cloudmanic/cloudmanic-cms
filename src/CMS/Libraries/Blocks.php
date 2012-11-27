@@ -16,6 +16,7 @@ class Blocks extends Model
 	//
 	public static function get_by_name($key)
 	{
+		self::set_table('CMS_Blocks');
 		self::set_select('CMS_BlocksBody');
 		self::set_col('CMS_BlocksName', $key);
 		$data = self::get();

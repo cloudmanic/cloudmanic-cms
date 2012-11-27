@@ -130,6 +130,38 @@ class CMS
 		return CMS\Libraries\Blocks::get_by_name($key);
 	}
 	
+	//
+	// Get bucket data.
+	//
+	public static function bucket($table, $order = NULL, $sort = 'ASC')
+	{
+		CMS\Libraries\Bucket::set_table($table);
+		CMS\Libraries\Bucket::set_col($table . 'Status', 'Active');
+		
+		if(is_null($order))
+		{
+			CMS\Libraries\Bucket::set_order($table . 'Order', $sort);
+		} else
+		{
+			CMS\Libraries\Bucket::set_order($order, $sort);			
+		}
+		
+		return CMS\Libraries\Bucket::get();
+	}
+	
+	//
+	// Return a url to media based on the media id passed in.
+	//
+	public static function media_url($id, $thumb = FALSE, $ssl = FALSE)
+	{
+		CMS\Libraries\Media::set_table('CMS_Media');
+		$media = CMS\Libraries\Media::get_by_id($id);		
+		if(($thumb) && ($ssl)) { return $media['thumbsslurl']; }
+		if($thumb) { return $media['thumburl']; }
+		if((! $thumb) && ($ssl)) { return $media['sslurl']; }
+		return $media['url'];
+	}
+	
 	// ---------------- Private Helper Functions ------------------- //
 	
 	//
