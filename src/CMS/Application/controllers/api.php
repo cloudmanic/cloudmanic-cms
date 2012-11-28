@@ -40,6 +40,16 @@ class Api extends MY_Controller
 				$model = 'cms_buckets_model';
 			break;
 			
+			case 'bucket-reorder':
+				$this->load->model('cms_buckets_model');
+				$bucket = $this->cms_buckets_model->get_by_id($this->input->get('bucket'));
+				$this->load->model('bucketdata_model');
+				$this->bucketdata_model->set_table($bucket['CMS_BucketsTable']);
+				$this->bucketdata_model->reorder($this->input->post('ids'));
+				$this->_return_data(array());
+				return;
+			break;
+			
 			case 'bucket':
 				$this->load->model('bucketdata_model');
 				$this->load->model('cms_buckets_model');

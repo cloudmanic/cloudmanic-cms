@@ -1,5 +1,6 @@
 var site = {
-	state: {}
+	state: {},
+	bucket_id: '0'
 }
 
 //
@@ -22,7 +23,18 @@ site.setup_tables = function (that)
 site.table_sortable = function ()
 {
 	$('tbody').sortable({
-		containment: 'table'
+		containment: 'table',
+		stop: function(event, ui) {
+			var ids = [];
+			$('tbody tr').each(function () {
+				var id = $(this).attr('data-id');
+				ids.push(id);
+			});			
+			
+			$.post(site_url + 'api/get?type=bucket-reorder&bucket=' + site.bucket_id, { ids: ids }, function (json) {
+				//alert(json);
+			});
+		}
 	});
 }
 

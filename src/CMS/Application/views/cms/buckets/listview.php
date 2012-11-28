@@ -59,7 +59,7 @@ $add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_
 
 
 <script id="data-table-row" type="text/cloud-tmpl">
-<tr>
+<tr data-id="{{<?=$bucket['CMS_BucketsTable']?>Id}}">
 		
 	<?php if(isset($bucket['CMS_BucketsListview']['columns']) && (! empty($bucket['CMS_BucketsListview']['columns']))) : ?>
 		<?php foreach($bucket['CMS_BucketsListview']['columns'] AS $key2 => $row2) : ?>
@@ -77,6 +77,7 @@ $add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_
 </script>
 
 <script type="text/javascript">
+site.bucket_id = '<?=$bucket['CMS_BucketsId']?>';
 site.setup_tables();
 site.table_sortable();
 </script>

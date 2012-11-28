@@ -55,6 +55,20 @@ class BucketData_Model extends MY_Model
 		$this->db->where($where);
 	}
 	
+	//
+	// Reorder the bucket.
+	//
+	function reorder($ids)
+	{
+		$c = count($ids);
+		foreach($ids AS $key => $row)
+		{
+			$q[$this->table . 'Order'] = $c;
+			$this->update($q, $row);
+			$c--;
+		}
+	}
+	
  	//
  	// Add extra data to get request.
  	//
