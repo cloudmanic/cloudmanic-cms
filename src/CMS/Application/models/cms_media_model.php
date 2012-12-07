@@ -26,7 +26,7 @@ class CMS_Media_Model extends MY_Model
 			switch($data['CMS_MediaStore'])
 			{
 				case 'rackspace-cloud-files':
-					$this->load->spark('cloudmanic-storage/1.0.2');
+					$this->load->spark('cloudmanic-storage/1.0.4');
 					$this->storage->load_driver('rackspace-cf');
 					$this->storage->delete_file($this->data['cms']['cp_media_rackspace_container'], $data['CMS_MediaPath'] . $data['CMS_MediaFile']);
 					
@@ -38,7 +38,7 @@ class CMS_Media_Model extends MY_Model
 				break;
 				
 				case 'amazon-web-services-s3':
-					$this->load->spark('cloudmanic-storage/1.0.2');
+					$this->load->spark('cloudmanic-storage/1.0.4');
 					$this->storage->load_driver('amazon-s3');
 					$this->storage->delete_file($this->data['cms']['cp_media_amazon_s3_container'], $data['CMS_MediaPath'] . $data['CMS_MediaFile']);
 					

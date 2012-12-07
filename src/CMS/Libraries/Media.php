@@ -20,30 +20,30 @@ class Media extends Model
 		
  		switch($data['CMS_MediaStore'])
 		{
-/*
 			case 'rackspace-cloud-files':
-				$data['url'] = Config::get('cp_media_rackspace_url'] . $data['CMS_MediaPath'] . $data['CMS_MediaFile'];
-				$data['sslurl'] = Config::get('cp_media_rackspace_ssl_url'] . $data['CMS_MediaPath'] . $data['CMS_MediaFile'];
+				$data['url'] = Config::get('cp_media_rackspace_url') . $data['CMS_MediaPath'] . $data['CMS_MediaFile'];
+				$data['sslurl'] = Config::get('cp_media_rackspace_ssl_url') . $data['CMS_MediaPath'] . $data['CMS_MediaFile'];
 				$data['thumburl'] = '';
 				$data['thumbsslurl'] = '';
 				
 				// If image build a thumbnail
 				if($data['CMS_MediaIsImage'])
 				{
-					$data['thumburl'] = Config::get('cp_media_rackspace_url'] . $data['CMS_MediaPathThumb'] . $data['CMS_MediaFileThumb'];
-					$data['thumbsslurl'] = Config::get('cp_media_rackspace_ssl_url'] . $data['CMS_MediaPathThumb'] . $data['CMS_MediaFileThumb'];
+					$data['thumburl'] = Config::get('cp_media_rackspace_url') . $data['CMS_MediaPathThumb'] . $data['CMS_MediaFileThumb'];
+					$data['thumbsslurl'] = Config::get('cp_media_rackspace_ssl_url') . $data['CMS_MediaPathThumb'] . $data['CMS_MediaFileThumb'];
 				} else
 				{
 					if($data['CMS_MediaType'] == 'video')
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = Config::get('assets_base'] . '/images/v-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = Config::get('assets_base') . '/images/v-ico.png';
 					} else
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = Config::get('assets_base'] . '/images/doc-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = Config::get('assets_base') . '/images/doc-ico.png';
 					}
 				}
 			break;
-			
+
+/*
 			case 'amazon-web-services-s3':
 				$data['url'] = Config::get('cp_media_amazon_s3_url'] . $data['CMS_MediaPath'] . $data['CMS_MediaFile'];
 				$data['sslurl'] = Config::get('cp_media_amazon_s3_ssl_url'] . $data['CMS_MediaPath'] . $data['CMS_MediaFile'];

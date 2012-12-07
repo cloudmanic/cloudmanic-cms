@@ -310,7 +310,7 @@ class Media extends MY_Controller
 	//
 	private function _amazon_s3_upload($json, $q)
 	{
-		$this->load->spark('cloudmanic-storage/1.0.2');
+		$this->load->spark('cloudmanic-storage/1.0.4');
 		$this->storage->load_driver('amazon-s3');
 		
 		// Insert the file into the media database.
@@ -356,7 +356,7 @@ class Media extends MY_Controller
 	//
 	private function _rackspace_cf_upload($json, $q)
 	{
-		$this->load->spark('cloudmanic-storage/1.0.2');
+		$this->load->spark('cloudmanic-storage/1.0.4');
 		$this->storage->load_driver('rackspace-cf');
 		
 		// Insert the file into the media database.

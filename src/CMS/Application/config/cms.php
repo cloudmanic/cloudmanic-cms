@@ -25,12 +25,16 @@ $config['cp_media_local_url'] = base_url();
 $config['cp_media_local_ssl_url'] = base_url(); 
 
 // Amazon config
+$config['cp_media_amazon_s3_access_key'] = '';
+$config['cp_media_amazon_s3_secret_key'] = '';
 $config['cp_media_amazon_s3_container'] = '';
 $config['cp_media_amazon_s3_path'] = 'cms/';
 $config['cp_media_amazon_s3_url'] = ''; // trailing slash
 $config['cp_media_amazon_s3_ssl_url'] = ''; // trailing slash
 
 // Rackspace config
+$config['cp_media_rackspace_username'] = '';
+$config['cp_media_rackspace_key'] = '';
 $config['cp_media_rackspace_container'] = '';
 $config['cp_media_rackspace_path'] = 'cms/';
 $config['cp_media_rackspace_url'] = ''; // trailing slash
