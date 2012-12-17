@@ -137,6 +137,10 @@ class MY_Controller extends CI_Controller
 		// Refresh the session.
 		$this->load->model('cms_users_model');
 		$this->data['me'] = $this->cms_users_model->get_by_id($user['CMS_UsersId']);
+		
+		// Update last activity
+		$q['CMS_UsersLastActivity'] = date('Y-m-d G:i:s');
+		$this->cms_users_model->update($q, $this->data['me']['CMS_UsersId']);
 	}
 	
 	//

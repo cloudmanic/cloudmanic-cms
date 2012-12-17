@@ -47,6 +47,10 @@ class Login extends CI_Controller
 				{
 					if($user['CMS_UsersPassword'] == md5($this->input->post('CMS_UsersPassword') . $user['CMS_UsersSalt']))
 					{
+						// Update the last login col.
+						$q['CMS_UsersLastIn'] = date('Y-m-d G:i:s');
+						$this->cms_users_model->update($q, $user['CMS_UsersId']);
+					
 						// Success! Create session and reload the page to redirect.
 						unset($user['CMS_UsersPassword']);
 						unset($user['CMS_UsersSalt']);
