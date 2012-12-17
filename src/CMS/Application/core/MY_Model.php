@@ -110,11 +110,12 @@ class MY_Model extends CI_Model
  	//
  	function delete($id)
  	{
+	 	$data = $this->get_by_id($id);
  		$this->db->where($this->table . 'Id', $id);
  		$this->db->delete($this->table); 
 
 		// Fire after event.		
-		CMS\Libraries\Event::fire('after.delete', array($this->table, $id));
+		CMS\Libraries\Event::fire('after.delete', array($this->table, $id, 'data' => $data));
  	}
  
  	//

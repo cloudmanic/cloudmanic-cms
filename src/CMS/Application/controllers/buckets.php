@@ -50,12 +50,15 @@ class Buckets extends MY_Controller
 	function delete($bucket, $id)
 	{	
 		$this->db->where($this->data['table'] . 'Id', $id);
+		$data = $this->db->get($this->data['table'])->row_array();
+		
+		$this->db->where($this->data['table'] . 'Id', $id);
 		$this->db->delete($this->data['table']);
 		$this->_delete_relations($id, NULL, $this->data['bucket']['CMS_BucketsName']);
 		$this->_delete_relations(NULL, $this->data['bucket']['CMS_BucketsName'], NULL, $id);
 		
 		// Fire after event.		
-		CMS\Libraries\Event::fire('after.delete', array($this->data['table'], $id));
+		CMS\Libraries\Event::fire('after.delete', array($this->data['table'], $id, 'data' => $data));
 		
 		redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $bucket);
 	}
