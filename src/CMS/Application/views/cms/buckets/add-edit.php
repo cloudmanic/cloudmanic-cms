@@ -84,6 +84,9 @@
 							{
 								echo form_dropdown($row->name, $row->select_options, set_value($row->name, element($row->name, $data, '')));
 								echo form_error($row->name, '<span class="help-block">', '</span>');
+							} else
+							{
+								echo form_input($row->name, set_value($row->name, element($row->name, $data, '')));
 							}
 						break;
 						
