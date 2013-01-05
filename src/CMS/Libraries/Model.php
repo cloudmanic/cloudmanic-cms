@@ -83,6 +83,29 @@ class Model
 		return (isset($data[0])) ? $data[0] : 0;
 	}
 	
+	//
+	// Insert.
+	//
+	public static function insert($data)
+	{
+		$obj = ORM::for_table(self::$table)->create();
+		
+		// Set created at time.
+		$obj->set(self::$table . 'CreatedAt', date('Y-m-d G:i:s'));
+		
+		foreach($data AS $key => $row)
+		{
+			$obj->set($key, $row);
+		}
+		
+		// Make query
+		$obj->save();
+		$rt = $obj->as_array();
+		
+		// Return the Id of the query.
+		return $rt[self::$table . 'Id'];
+	}
+	
 	// ------------------ Helpers --------------------- //
 	
  	//

@@ -9,6 +9,7 @@ class CMS
 {
 	public static $env = 'production';
 	private static $_root_path = '';
+	private static $_db_loaded = false;
 	
 	//
 	// We call this when we want to access stuff outside
@@ -94,6 +95,24 @@ class CMS
 		}
 	}
 	
+	//
+	// Load default blocks. Blocks we want to ensure that are always 
+	// loaded into the database.
+	//
+	public static function load_default_blocks($path)
+	{
+		$blocks = require($path);
+	
+		// Load database.
+		self::setup_database();
+		
+		// Loop through the blocks and make sure we have them in the database.
+		foreach($blocks AS $key => $row)
+		{
+			CMS\Libraries\Blocks::create_block($key, $row);
+		}
+	}
+	
 	// ---------------- Public Helper Functions ------------------- //	 
 	
 	//
@@ -169,13 +188,17 @@ class CMS
 	//
 	private static function setup_database()
 	{
-		$host = CMS\Libraries\Config::get('db_host');
-		$database = CMS\Libraries\Config::get('db_database');
-		$username = CMS\Libraries\Config::get('db_username');
-		$password = CMS\Libraries\Config::get('db_password');
-		CMS\Libraries\ORM::configure("mysql:host=$host;dbname=$database");
-		CMS\Libraries\ORM::configure('username', $username);
-		CMS\Libraries\ORM::configure('password', $password);
+		if(! self::$_db_loaded)
+		{
+			$host = CMS\Libraries\Config::get('db_host');
+			$database = CMS\Libraries\Config::get('db_database');
+			$username = CMS\Libraries\Config::get('db_username');
+			$password = CMS\Libraries\Config::get('db_password');
+			CMS\Libraries\ORM::configure("mysql:host=$host;dbname=$database");
+			CMS\Libraries\ORM::configure('username', $username);
+			CMS\Libraries\ORM::configure('password', $password);
+			self::$_db_loaded = true;
+		}
 	}
 	
 	//
