@@ -8,6 +8,7 @@
 class CMS
 {
 	public static $env = 'production';
+	private static $_db_connection = null;
 	private static $_root_path = '';
 	private static $_db_loaded = false;
 	
@@ -106,6 +107,12 @@ class CMS
 		// Load database.
 		self::setup_database();
 		
+		// Make sure the Blocks table is setup
+		if(! self::is_table('CMS_Blocks'))
+		{
+			return false;
+		}
+		
 		// Loop through the blocks and make sure we have them in the database.
 		foreach($blocks AS $key => $row)
 		{
@@ -114,6 +121,37 @@ class CMS
 	}
 	
 	// ---------------- Public Helper Functions ------------------- //	 
+	
+	//
+	// Return true if a table exists.
+	//
+	public static function is_table($name)
+	{
+		foreach(self::list_tables() AS $key => $row)
+		{
+			if($row == $name)
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	//
+	// Return a list of tables that are part of the database connection.
+	//
+	public static function list_tables()
+	{
+		$tables = array();
+		$stmt = self::get_db()->query("SHOW TABLES");
+		$all = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		foreach($all AS $key => $row)
+		{
+			$tables[] = current($row);
+		}
+		return $tables;
+	}
 	
 	//
 	// Set external config file.
@@ -181,6 +219,14 @@ class CMS
 		return $media['url'];
 	}
 	
+	//
+	// Get the raw db connection.
+	//
+	public static function get_db()
+	{
+		return self::$_db_connection;
+	}
+	
 	// ---------------- Private Helper Functions ------------------- //
 	
 	//
@@ -198,6 +244,10 @@ class CMS
 			CMS\Libraries\ORM::configure('username', $username);
 			CMS\Libraries\ORM::configure('password', $password);
 			self::$_db_loaded = true;
+			
+			// At this point we are not in love with our ORM so we also create our own raw 
+			// connection. Some day we will do away with the ORM and just use our raw connection.
+			self::$_db_connection = new PDO("mysql:host=$host;dbname=$database", $username, $password);
 		}
 	}
 	

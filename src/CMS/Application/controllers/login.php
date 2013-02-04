@@ -18,6 +18,7 @@ class Login extends CI_Controller
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->library('session');
+		$this->load->library('CMS_Tables');
 	}
 
 	//
