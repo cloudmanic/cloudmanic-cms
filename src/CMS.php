@@ -150,8 +150,13 @@ class CMS
 		}
 		
 		// Get the current state of the export.
-		$stmt = self::get_db()->query("SELECT * FROM CMS_State WHERE CMS_StateName = 'import-hash'");
-		$entry = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($stmt = self::get_db()->query("SELECT * FROM CMS_State WHERE CMS_StateName = 'import-hash'"))
+		{
+			$entry = $stmt->fetch(PDO::FETCH_ASSOC);
+		} else
+		{
+			$entry = false;
+		}
 		
 		// Match the config state up with the current state to see if we have to do anything.
 		if($entry)
