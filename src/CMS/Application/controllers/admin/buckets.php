@@ -28,7 +28,8 @@ class Buckets extends MY_Controller
 		// Setup field types.
 		$this->data['field_types'] = array(
 			'default' => 'Default',
-			'cms-image' => 'Image'
+			'cms-image' => 'Image',
+			'cms-redactor' => 'Redactor'
 		);
 	}
 

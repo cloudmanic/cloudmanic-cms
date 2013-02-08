@@ -9,6 +9,7 @@
 	<link href="<?=$cms['assets_base']?>/css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/javascript/colorbox/example5/colorbox.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
+	<link href="<?=$cms['assets_base']?>/javascript/redactor/redactor.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/css/jquery.Jcrop.min.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/javascript/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/css/site.css" rel="stylesheet" type="text/css" />
@@ -26,6 +27,7 @@
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/jquery-ui-1.8.13.custom.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/colorbox/jquery.colorbox-min.js"></script>
+	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/redactor/redactor.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/tag-it.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/plupload.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/plupload.html5.js"></script>

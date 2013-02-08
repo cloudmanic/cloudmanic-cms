@@ -94,6 +94,10 @@
 							echo $this->load->view('cms/fields/cms-image', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
 						break;
 						
+						case 'cms-redactor':
+							echo $this->load->view('cms/fields/cms-redactor', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
+						break;
+						
 						case 'cms-image-crop':
 							echo $this->load->view('cms/fields/cms-image', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
 						break;

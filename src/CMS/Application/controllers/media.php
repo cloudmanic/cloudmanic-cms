@@ -194,6 +194,15 @@ class Media extends MY_Controller
 			$json['errors'][] = $this->upload->display_errors('', '');
 		}
 		
+		// If this is a redactor upload we do something different.
+		if($this->input->get('redactor'))
+		{
+			$this->output->set_content_type('application/json');
+			$this->output->set_output(stripslashes(json_encode(array('filelink' => $json['data']['url'], 'filename' => $json['data']['client_name']))));
+			return true;
+		}
+		
+		// Core response.
 		$this->output->set_content_type('application/json');
 		$this->output->set_output(json_encode($json));
 	}

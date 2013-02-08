@@ -30,7 +30,7 @@ class Export extends MY_Controller
 		
 		foreach($tables AS $key => $row)
 		{
-			$query = $this->db->get('CMS_Buckets');
+			$query = $this->db->get($row);
 
 			foreach($query->result_array() AS $key2 => $row2)
 			{
