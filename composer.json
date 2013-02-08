@@ -1,8 +1,15 @@
 {
 	"name": "cloudmanic/cloudmanic-cms",
-	
+	"description": "An easy CMS to drop in to help support your web application.",
+	"keywords": ["cms", "admin panel"],
+	"homepage": "https://cloudmanic.com",
+	"license": "MIT",
+	"authors": [
+	{
+		"name": "Spicer Matthews",
+		"homepage": "http://spicermatthews.com"
+ 	}],
 	"version": "1.0.0",
-	
 	"require": {
 		"php": ">=5.3"
 	},
