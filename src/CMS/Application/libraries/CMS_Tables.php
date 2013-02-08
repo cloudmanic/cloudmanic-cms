@@ -25,16 +25,41 @@ class CMS_Tables
 		$this->_media_check();
 		$this->_relations_check();
 		$this->_nav_check();
+		$this->_state_check();
 	}
 	
 	// ----------------- Manage All The DB Tables --------------------- //
+
+	//
+	// Build the state table for managing the state of the CMS.
+	//
+	private function _state_check()
+	{
+		// Setup State Table
+		if(! $this->_ci->db->table_exists('CMS_State')) 
+		{
+			$this->_ci->load->dbforge();
+			
+			$cols = array(
+				'CMS_StateId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),			
+				'CMS_StateName' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE),
+				'CMS_StateValue' => array('type' => 'TEXT', 'null' => FALSE)
+			);
+			
+			$this->_ci->dbforge->add_key('CMS_StateId', TRUE);
+    	$this->_ci->dbforge->add_field($cols);
+    	$this->_ci->dbforge->add_field("CMS_StateUpdatedAt TIMESTAMP DEFAULT now() ON UPDATE now()");
+    	$this->_ci->dbforge->add_field("CMS_StateCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
+    	$this->_ci->dbforge->create_table('CMS_State', TRUE);
+    }	
+	}
 
 	//
 	// Build the Control Panel nav table if it is not installed already.
 	//
 	private function _nav_check()
 	{	
-		// Setup Blocks Table
+		// Setup Nav Table
 		if(! $this->_ci->db->table_exists('CMS_Nav')) 
 		{
 			$this->_ci->load->dbforge();

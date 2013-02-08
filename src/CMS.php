@@ -102,6 +102,12 @@ class CMS
 	//
 	public static function load_default_blocks($path)
 	{
+		// Make sure the file if valid.
+		if(! is_file($path))
+		{
+			return false;
+		}
+	
 		$blocks = require($path);
 	
 		// Load database.
@@ -118,6 +124,70 @@ class CMS
 		{
 			CMS\Libraries\Blocks::create_block($key, $row);
 		}
+	}
+	
+	//
+	// Load configuration for the CMS from an export file.
+	//
+	public static function load_configuration_from_export($file)
+	{
+		// Make sure the file if valid.
+		if(! is_file($file))
+		{
+			return false;
+		}
+		
+		$config = require $file;
+		$config = json_decode($config, TRUE);
+		
+		// Load database.
+		self::setup_database();
+		
+		// Make sure the database is built first.
+		if(! self::is_table('CMS_Buckets'))
+		{
+			return false;
+		}
+		
+		// Get the current state of the export.
+		$stmt = self::get_db()->query("SELECT * FROM CMS_State WHERE CMS_StateName = 'import-hash'");
+		$entry = $stmt->fetch(PDO::FETCH_ASSOC);
+		
+		// Match the config state up with the current state to see if we have to do anything.
+		if($entry)
+		{
+			if($config['hash'] == $entry['CMS_StateValue'])
+			{
+				return false;
+			}
+		} else
+		{
+			// Build the state entry.
+			$q = array(
+				'CMS_StateName' => 'import-hash',
+				'CMS_StateValue' => '',
+				'CMS_StateUpdatedAt' => date('Y-m-d G:i:s'),
+				'CMS_StateCreatedAt' => date('Y-m-d G:i:s')
+			);
+			self::insert('CMS_State', $q);
+		}
+		
+		// Loop through the data, delete the old data and insert the new.
+		foreach($config['tables'] AS $key => $row)
+		{
+			self::get_db()->query("TRUNCATE TABLE $key");
+			
+			foreach($row AS $key2 => $row2)
+			{
+				self::insert($key, $row2);
+			}
+		}
+
+		// Update the hash in the state table. 
+		$q = self::get_db()->prepare("UPDATE CMS_State SET CMS_StateValue=? WHERE CMS_StateName = 'import-hash'");
+		$q->execute(array($config['hash']));
+
+		return true;
 	}
 	
 	// ---------------- Public Helper Functions ------------------- //	 
@@ -313,6 +383,26 @@ class CMS
 		CMS\Libraries\Config::set('db_database', $database['database']);
 		CMS\Libraries\Config::set('db_username', $database['username']);
 		CMS\Libraries\Config::set('db_password', $database['password']);
+	}
+	
+	// ---------------------- CRUD PDO Functions ---------------- //
+	
+	//
+	// A function to easily insert data into the database by array.
+	//
+	public static function insert($table, $arr = array())
+	{
+		// Check to make sure we pass in the correct magic. 
+		if( ! is_array($arr) || ! count($arr)) 
+		{
+			return false;
+		}
+
+		// Your pdo connection
+		$bind = ':'.implode(',:', array_keys($arr));
+		$sql = 'insert into ' . $table . '(' . implode(',', array_keys($arr)) . ') '.'values (' . $bind . ')';
+		$stmt = self::get_db()->prepare($sql);
+		$stmt->execute(array_combine(explode(',', $bind), array_values($arr)));
 	}
 }
 

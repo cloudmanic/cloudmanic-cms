@@ -40,6 +40,9 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small { color: #BFBFBF; }
 .image-crop-cont .crop-loader p { color: #0074CC; padding-top: 10px; margin-left: -34px; font-size: 14px; }
 .crop-overlay-page-header { margin-bottom: 0; padding-bottom: 10px; margin-right: 0; padding-right: 0; }
 
+/* Admin */ 
+.admin-config textarea { height: 500px; }
+
 /* Margins */
 .margin-left-100 { margin-left: 100px; }
 .margin-left-200 { margin-left: 200px; }
