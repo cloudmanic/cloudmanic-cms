@@ -148,6 +148,7 @@
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</ul>
+				
 				<script type="text/javascript">
 				$(document).ready(function () {
 					$('#tagit-<?=$row['table']?>').tagit({

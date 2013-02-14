@@ -173,8 +173,9 @@ class Buckets extends MY_Controller
 					$this->load->model('cms_relations_model');
 					$this->cms_relations_model->set_bucket($this->data['bucket']['CMS_BucketsName']);
 					$this->cms_relations_model->set_table($row['table']);
-					$this->cms_relations_model->set_entry($this->uri->segment(5));
+					$this->cms_relations_model->set_entry($this->uri->segment(4));
 					$d = $this->cms_relations_model->get();
+					
 					foreach($d AS $key2 => $row2)
 					{
 						$this->data['relations'][$key]['selected'][] = $row2['CMS_RelationsTableId'];
@@ -294,7 +295,7 @@ class Buckets extends MY_Controller
 		  // Delete old relations.
 		  if(isset($_POST['tags'][$row['table']]))
 		  {
-				$this->_delete_relations($id, $row['table'], $this->data['bucket']['BucketsName']);
+				$this->_delete_relations($id, $row['table'], $this->data['bucket']['CMS_BucketsName']);
 			}
 			
 			// Make sure we have a post.
@@ -308,20 +309,20 @@ class Buckets extends MY_Controller
 		  {
 				// See if the tag is already in the system.
 				$this->db->where($row['table'] . 'Title', $row2);
-				$t = $this->db->get($this->data['cms']['table_base'] . $row['table'])->row_array();
+				$t = $this->db->get($row['table'])->row_array();
 				if(! $t)
 				{
 					$p = array();
 					$p[$row['table'] . 'Title'] = $row2;
 					$p[$row['table'] . 'CreatedAt'] = date('Y-m-d G:i:s');
-					$this->db->insert($this->data['cms']['table_base'] . $row['table'], $p);
+					$this->db->insert($row['table'], $p);
 					$tagid = $this->db->insert_id();
 				}	else
 				{
 					$tagid = $t[$row['table'] . 'Id'];
 				}				
 
-		  	$r['CMS_RelationsBucket'] = $this->data['bucket']['BucketsName'];
+		  	$r['CMS_RelationsBucket'] = $this->data['bucket']['CMS_BucketsName'];
 		  	$r['CMS_RelationsTable'] = $row['table'];
 		  	$r['CMS_RelationsTableId'] = $tagid; 
 		  	$r['CMS_RelationsEntryId'] = $id;
