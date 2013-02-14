@@ -4,7 +4,7 @@
 	"keywords": ["cms", "admin panel"],
 	"homepage": "https://cloudmanic.com",
 	"license": "MIT",
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"authors": [
 	{
 		"name": "Spicer Matthews",
@@ -15,11 +15,6 @@
 		"php": ">=5.3",
 		"cloudmanic/database": "dev-master",
 		"rackspace/php-cloudfiles": "dev-master"
-	},
-	
-	"require-dev": {	
-		"cloudmanic/database": "dev-master",
-		"rackspace/php-cloudfiles": "dev-master"	
 	},
 	
 	"autoload": {
