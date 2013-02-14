@@ -159,7 +159,7 @@ class Buckets extends MY_Controller
 				// Get options to relationship.
 				$this->data['relations'][$key]['options'] = array();
 				$this->db->order_by($row['table'] . 'Title');
-				$o = $this->db->get($this->data['cms']['table_base'] . $row['table'])->result_array();
+				$o = $this->db->get($row['table'])->result_array();
 				foreach($o AS $key2 => $row2)
 				{ 
 					$this->data['relations'][$key]['options'][$row2[$row['table'] . 'Id']] = $row2[$row['table'] . 'Title'];
@@ -171,7 +171,7 @@ class Buckets extends MY_Controller
 				if($this->data['type'] == 'edit')
 				{
 					$this->load->model('cms_relations_model');
-					$this->cms_relations_model->set_bucket($this->data['bucket']['BucketsName']);
+					$this->cms_relations_model->set_bucket($this->data['bucket']['CMS_BucketsName']);
 					$this->cms_relations_model->set_table($row['table']);
 					$this->cms_relations_model->set_entry($this->uri->segment(5));
 					$d = $this->cms_relations_model->get();
