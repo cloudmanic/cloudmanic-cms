@@ -423,6 +423,15 @@ class CMS
 	}
 	
 	//
+	// Get by id.
+	//
+	public static function get_by_id($table, $id)
+	{
+		$d = static::get($table, $table . 'Id = ' . $id);
+		return (isset($d[0])) ? $d[0] : false;
+	}
+	
+	//
 	// A function to easily insert data into the database by array.
 	//
 	public static function insert($table, $arr = array())
