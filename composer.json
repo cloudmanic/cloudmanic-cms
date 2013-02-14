@@ -12,7 +12,8 @@
  	}],
 	"require": {
 		"php": ">=5.3",
-		"cloudmanic/database": "dev-master"
+		"cloudmanic/database": "dev-master",
+		"rackspace/php-cloudfiles": "dev-master"
 	},
 	
 	"autoload": {
