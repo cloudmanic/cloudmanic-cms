@@ -10,10 +10,16 @@
 		"name": "Spicer Matthews",
 		"homepage": "http://spicermatthews.com"
  	}],
+ 	
 	"require": {
 		"php": ">=5.3",
 		"cloudmanic/database": "dev-master",
 		"rackspace/php-cloudfiles": "dev-master"
+	},
+	
+	"require-dev": {	
+		"cloudmanic/database": "dev-master",
+		"rackspace/php-cloudfiles": "dev-master"	
 	},
 	
 	"autoload": {
