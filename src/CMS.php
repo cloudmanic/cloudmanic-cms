@@ -393,6 +393,36 @@ class CMS
 	// ---------------------- CRUD PDO Functions ---------------- //
 	
 	//
+	// A function to easily select from a table.
+	//
+	public static function get($table, $where = '', $order = '')
+	{
+		$data = array();
+		$sql = "SELECT * FROM $table";
+
+		// Set where		
+		if(! empty($where))
+		{
+			$sql .= " WHERE $where";
+		}
+		
+		// Set Order.
+		if(! empty($order))
+		{
+			$sql .= " ORDER BY $order";
+		}		
+		
+		$stmt = self::get_db()->query($sql);
+		
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			$data[] = $row;
+		}
+	
+		return $data;
+	}
+	
+	//
 	// A function to easily insert data into the database by array.
 	//
 	public static function insert($table, $arr = array())

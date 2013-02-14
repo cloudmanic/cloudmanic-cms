@@ -106,8 +106,14 @@
 							echo $this->load->view('cms/fields/cms-system-textarea', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
 						break;
 					}
+					
+					// Do we have a custom field?
+					if($path = CMS\Libraries\Fields::get_custom_path($row->type))
+					{
+						require($path);
+					}
 				?>
-				
+
 				<?=form_error($row->name, '<span class="help-block">', '</span>')?>
 		  </p>
 		<?php endif; ?>

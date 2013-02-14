@@ -31,6 +31,13 @@ class Buckets extends MY_Controller
 			'cms-image' => 'Image',
 			'cms-redactor' => 'Redactor'
 		);
+		
+		// Add custom fields. 
+		$custom = CMS\Libraries\Fields::get_all_custom_fields();
+		foreach($custom AS $key => $row)
+		{
+			$this->data['field_types'][$key] = $key;
+		}
 	}
 
 	//
