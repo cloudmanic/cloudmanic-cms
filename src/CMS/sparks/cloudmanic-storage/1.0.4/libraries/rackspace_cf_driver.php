@@ -25,8 +25,7 @@ class Rackspace_Cf_Driver extends Storage
 			show_error('Storage: In order to load the Rackspace CF Driver you must have an username and api key set.');	
 		}
 		
-		// Load libraries & Connection
-		$this->_CI->load->library('CF_Authentication');
+		// Load libraries & Connection (library comes in from composer)
 		$this->_auth = new CF_Authentication($this->_config['cf_username'], $this->_config['cf_api_key']);
 		$this->_auth->authenticate();
 		$this->_conn = new CF_Connection($this->_auth);
