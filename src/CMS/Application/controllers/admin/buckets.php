@@ -28,6 +28,8 @@ class Buckets extends MY_Controller
 		// Setup field types.
 		$this->data['field_types'] = array(
 			'default' => 'Default',
+			'disabled-text' => 'Disabled Text',
+			'ignore' => 'Ignore Field',
 			'cms-image' => 'Image',
 			'cms-redactor' => 'Redactor'
 		);

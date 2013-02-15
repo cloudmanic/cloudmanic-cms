@@ -16,12 +16,6 @@
 					continue; 
 				}
 				
-				// We skip anything with the key word format.
-				if(stripos($row->name, 'Format'))
-				{
-					continue;
-				}
-				
 				// See if this is a custom field. 
 				if(isset($bucket['CMS_BucketsFields'][$row->name]) && 
 					($bucket['CMS_BucketsFields'][$row->name]['type'] != 'default'))
@@ -40,45 +34,47 @@
 		?>
 	
 		<?php if($row->type != 'none') : ?>
-		  <p class="control-group <?=(form_error($row->name)) ? 'error' : ''?>">
-		  	<?=form_label($label, $row->name)?>
-		  	
-		  	<?php 
-		  		if($row->type == 'default')
-		  		{
-			  	
-		  		}
-		  	?>
-		  	
+		  <p class="control-group <?=(form_error($row->name)) ? 'error' : ''?>">		  	
 		  	<?php 
 		  		switch($row->type)
 		  		{ 
 						case 'decimal':
 						case 'string':
 						case 'varchar':
+							echo form_label($label, $row->name);
 							echo form_input($row->name, set_value($row->name, element($row->name, $data, '')));
 						break;
 						
 						case 'password':
+							echo form_label($label, $row->name);
 							echo form_password($row->name, set_value($row->name, element($row->name, $data, '')));
 						break;
 						
 						case 'text':
 						case 'blob':
+							echo form_label($label, $row->name);
 							echo form_textarea(array('name' => $row->name, 'value' => set_value($row->name, element($row->name, $data, '')), 'cols' => '44', 'rows' => '24'));
 						break;
 						
+						case 'disabled-text':
+							echo form_label($label, $row->name);
+							echo '<input name="' . $row->name . '" value="' . set_value($row->name, element($row->name, $data, '')) . '" disabled="disabled" />';
+						break;
+						
 						case 'date':
+							echo form_label($label, $row->name);
 							echo form_input($row->name, set_value($row->name, date('n/j/Y', strtotime(element($row->name, $data, date('n/j/Y'))))), 'class="datepicker"');
 							echo form_hidden('dates[]', $row->name);
 						break;
 						
 						case 'enum':
+							echo form_label($label, $row->name);
 							echo form_dropdown($row->name, $row->enums, set_value($row->name, element($row->name, $data, '')));
 							echo form_error($row->name, '<span class="help-block">', '</span>');
 						break;
 						
 						case 'int':
+							echo form_label($label, $row->name);
 							// This is a lookup to another table.
 							if(isset($row->select_options) && is_array($row->select_options))
 							{
@@ -91,19 +87,27 @@
 						break;
 						
 						case 'cms-image':
+							echo form_label($label, $row->name);
 							echo $this->load->view('cms/fields/cms-image', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
 						break;
 						
 						case 'cms-redactor':
+							echo form_label($label, $row->name);
 							echo $this->load->view('cms/fields/cms-redactor', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
 						break;
 						
 						case 'cms-image-crop':
+							echo form_label($label, $row->name);
 							echo $this->load->view('cms/fields/cms-image', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
 						break;
 						
 						case 'cms-system-textarea':
+							echo form_label($label, $row->name);
 							echo $this->load->view('cms/fields/cms-system-textarea', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
+						break;
+						
+						case 'ignore':
+							continue;
 						break;
 					}
 					
