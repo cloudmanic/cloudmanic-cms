@@ -21,6 +21,10 @@
 					($bucket['CMS_BucketsFields'][$row->name]['type'] != 'default'))
 				{
 					$row->type = $bucket['CMS_BucketsFields'][$row->name]['type'];
+					$row->field = $bucket['CMS_BucketsFields'][$row->name];
+				} else
+				{
+					$row->field = array();
 				}
 				
 				// Set label. We either have a custom label or a label from the db col name.
@@ -106,10 +110,15 @@
 							echo $this->load->view('cms/fields/cms-system-textarea', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
 						break;
 						
+						case 'cms-type-ahead':
+							echo form_label($label, $row->name);
+							echo $this->load->view('cms/fields/cms-type-ahead', array('row' => $row, 'data' => $data, 'bucket' => $bucket, 'field' => $row->field));
+						break;
+						
 						case 'ignore':
 							continue;
 						break;
-					}
+					}	
 					
 					// Do we have a custom field?
 					if($path = CMS\Libraries\Fields::get_custom_path($row->type))
