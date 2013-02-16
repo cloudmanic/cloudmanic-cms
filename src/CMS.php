@@ -150,7 +150,7 @@ class CMS
 		}
 		
 		// Get the current state of the export.
-		if($stmt = self::get_db()->query("SELECT * FROM CMS_State WHERE CMS_StateName = 'import-hash'"))
+		if($stmt = Cloudmanic\Database\DB::query("SELECT * FROM CMS_State WHERE CMS_StateName = 'import-hash'"))
 		{
 			$entry = $stmt->fetch(PDO::FETCH_ASSOC);
 		} else
@@ -174,22 +174,22 @@ class CMS
 				'CMS_StateUpdatedAt' => date('Y-m-d G:i:s'),
 				'CMS_StateCreatedAt' => date('Y-m-d G:i:s')
 			);
-			self::insert('CMS_State', $q);
+			Cloudmanic\Database\DB::set_table('CMS_State')->insert($q);
 		}
 		
 		// Loop through the data, delete the old data and insert the new.
 		foreach($config['tables'] AS $key => $row)
 		{
-			self::get_db()->query("TRUNCATE TABLE $key");
+			Cloudmanic\Database\DB::query("TRUNCATE TABLE $key");
 			
 			foreach($row AS $key2 => $row2)
 			{
-				self::insert($key, $row2);
+				Cloudmanic\Database\DB::set_table($key)->insert($row2);
 			}
 		}
 
 		// Update the hash in the state table. 
-		$q = self::get_db()->prepare("UPDATE CMS_State SET CMS_StateValue=? WHERE CMS_StateName = 'import-hash'");
+		$q = Cloudmanic\Database\DB::get_connection()->prepare("UPDATE CMS_State SET CMS_StateValue=? WHERE CMS_StateName = 'import-hash'");
 		$q->execute(array($config['hash']));
 
 		return true;
@@ -202,7 +202,7 @@ class CMS
 	//
 	public static function is_table($name)
 	{
-		foreach(self::list_tables() AS $key => $row)
+		foreach(Cloudmanic\Database\DB::list_tables() AS $key => $row)
 		{
 			if($row == $name)
 			{
@@ -211,21 +211,6 @@ class CMS
 		}
 		
 		return false;
-	}
-	
-	//
-	// Return a list of tables that are part of the database connection.
-	//
-	public static function list_tables()
-	{
-		$tables = array();
-		$stmt = self::get_db()->query("SHOW TABLES");
-		$all = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		foreach($all AS $key => $row)
-		{
-			$tables[] = current($row);
-		}
-		return $tables;
 	}
 	
 	//
@@ -320,9 +305,10 @@ class CMS
 			CMS\Libraries\ORM::configure('password', $password);
 			self::$_db_loaded = true;
 			
-			// At this point we are not in love with our ORM so we also create our own raw 
-			// connection. Some day we will do away with the ORM and just use our raw connection.
-			self::$_db_connection = new PDO("mysql:host=$host;dbname=$database", $username, $password);
+			// At this point we are not in love with our ORM so use the Cloudmanic database
+			// library which we included via composer. (TODO: We should get rid of the ORM above at 
+			// some point).
+			Cloudmanic\Database\DB::connection($host, $username, $password, $database);
 		}
 	}
 	
@@ -388,65 +374,6 @@ class CMS
 		CMS\Libraries\Config::set('db_database', $database['database']);
 		CMS\Libraries\Config::set('db_username', $database['username']);
 		CMS\Libraries\Config::set('db_password', $database['password']);
-	}
-	
-	// ---------------------- CRUD PDO Functions ---------------- //
-	
-	//
-	// A function to easily select from a table.
-	//
-	public static function get($table, $where = '', $order = '')
-	{
-		$data = array();
-		$sql = "SELECT * FROM $table";
-
-		// Set where		
-		if(! empty($where))
-		{
-			$sql .= " WHERE $where";
-		}
-		
-		// Set Order.
-		if(! empty($order))
-		{
-			$sql .= " ORDER BY $order";
-		}		
-		
-		$stmt = self::get_db()->query($sql);
-		
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-		{
-			$data[] = $row;
-		}
-	
-		return $data;
-	}
-	
-	//
-	// Get by id.
-	//
-	public static function get_by_id($table, $id)
-	{
-		$d = static::get($table, $table . 'Id = ' . $id);
-		return (isset($d[0])) ? $d[0] : false;
-	}
-	
-	//
-	// A function to easily insert data into the database by array.
-	//
-	public static function insert($table, $arr = array())
-	{
-		// Check to make sure we pass in the correct magic. 
-		if( ! is_array($arr) || ! count($arr)) 
-		{
-			return false;
-		}
-
-		// Your pdo connection
-		$bind = ':'.implode(',:', array_keys($arr));
-		$sql = 'insert into ' . $table . '(' . implode(',', array_keys($arr)) . ') '.'values (' . $bind . ')';
-		$stmt = self::get_db()->prepare($sql);
-		$stmt->execute(array_combine(explode(',', $bind), array_values($arr)));
 	}
 }
 
