@@ -90,6 +90,16 @@
 							}
 						break;
 						
+						case 'timestamp':
+							echo form_label($label, $row->name);
+							echo $this->load->view('cms/fields/cms-timestamp', array('row' => $row, 'data' => $data, 'bucket' => $bucket));						
+						break;
+						
+						case 'tinyint':
+							echo form_label($label, $row->name);
+							echo $this->load->view('cms/fields/cms-tinyint', array('row' => $row, 'data' => $data, 'bucket' => $bucket));						
+						break;	
+						
 						case 'cms-image':
 							echo form_label($label, $row->name);
 							echo $this->load->view('cms/fields/cms-image', array('row' => $row, 'data' => $data, 'bucket' => $bucket));
