@@ -11,6 +11,15 @@ class CMS
 	private static $_db_connection = null;
 	private static $_root_path = '';
 	private static $_db_loaded = false;
+	private static $_larvel_config = null;
+	
+	//
+	// Setup Env.
+	//
+	public static function set_env($env)
+	{
+		self::$env = $env;
+	}
 	
 	//
 	// We call this when we want to access stuff outside
@@ -87,7 +96,11 @@ class CMS
 		switch($framework)
 		{
 			case 'laravel3':
-				self::load_laravel($path);
+				self::load_laravel_3($path);
+			break;
+			
+			case 'laravel4':
+				self::load_laravel_4($path);
 			break;
 			
 			default:
@@ -287,6 +300,15 @@ class CMS
 		return self::$_db_connection;
 	}
 	
+	
+	//
+	// Get a laravel config.
+	//
+	public static function laravel_config($str)
+	{
+		return self::$_larvel_config->get($str);
+	}
+	
 	// ---------------- Private Helper Functions ------------------- //
 	
 	//
@@ -333,9 +355,31 @@ class CMS
 	}	
 	
 	//
+	// Check the config directory in laravel 4.
+	//
+	private static function load_laravel_4($lar_path)
+	{
+		// Load config
+		self::$_larvel_config = new Illuminate\Config\Repository(
+			new Illuminate\Config\FileLoader(new Illuminate\Filesystem\Filesystem, $lar_path . '/config'), 
+			self::$env
+		);	
+
+		// Database config.
+		$db = self::$_larvel_config['database'];
+		$database = $db['connections'][$db['default']];
+		
+		// Set the database configs we sucked out of Laravel
+		CMS\Libraries\Config::set('db_host', $database['host']);
+		CMS\Libraries\Config::set('db_database', $database['database']);
+		CMS\Libraries\Config::set('db_username', $database['username']);
+		CMS\Libraries\Config::set('db_password', $database['password']);	
+	}
+	
+	//
 	// Checkout the config directories in laravel and set our configs.
 	//
-	private static function load_laravel($lar_path)
+	private static function load_laravel_3($lar_path)
 	{
 		// ----------- Grab The Database Config ----------------- //
 	
