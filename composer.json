@@ -13,7 +13,8 @@
  	
 	"require": {
 		"php": ">=5.3",
-		"rackspace/php-cloudfiles": "dev-master"
+		"rackspace/php-cloudfiles": "dev-master",
+		"cloudmanic/database": "dev-master"
 	},
 	
 	"autoload": {
