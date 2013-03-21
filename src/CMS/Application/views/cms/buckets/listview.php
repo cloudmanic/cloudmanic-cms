@@ -8,7 +8,7 @@ $add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_
 	<div class="span12">
 		<div class="row">				
 			<div class="span6 pull-left">
-				<form class="tables-search-form" action="#" method="post">
+				<form class="tables-search-form" action="<?=current_url()?>" method="post">
 					<input type="text" id="table-search" style="width: 220px;" value="<?=(empty($state['search'])) ? '' :  $state['search']?>" placeholder="Search" /><span class="add-on" style="vertical-align: top;">
 				</form>
 			</div>

@@ -10,8 +10,9 @@ site.setup_tables = function (that)
 {
 	// On search form submit.
 	$('.tables-search-form').submit(function () {	
+		var url = $(this).attr('action');
 		site.state.search = $('#table-search').val();
-		site.load_state_page(cur_url);		
+		site.load_state_page(url);		
 		cloudjs.focus = 'table-search';
 		return false;
 	});
