@@ -22,6 +22,14 @@ class CMS
 	}
 	
 	//
+	// Get Env.
+	//
+	public static function get_env()
+	{
+		return self::$env;
+	}
+	
+	//
 	// We call this when we want to access stuff outside
 	// the CMS. For example we might want to access CMS
 	// data from within our parent framework. We pass
