@@ -80,7 +80,13 @@ class Plugins extends Model
 	//
 	public function view($path, $data = array())
 	{
-		echo $this->view_path;
+		$file = $this->view_path . '/' . $path . '.php';
+	
+		ob_start() and extract($data, EXTR_SKIP);
+		
+		include($file);
+		
+		return ob_get_clean();
 	}
 }
 
