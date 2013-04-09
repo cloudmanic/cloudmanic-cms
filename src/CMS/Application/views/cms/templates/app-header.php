@@ -41,7 +41,7 @@
 </head>
 
 <body>
-	<div class="navbar topbar">
+	<div class="navbar navbar-inverse topbar">
 	  <div class="navbar-inner">
 	    <div class="container">
 	  		<a class="brand" href="<?=site_url($cms['cp_base'] . '/blocks')?>"><?=$cms['site_name']?></a>

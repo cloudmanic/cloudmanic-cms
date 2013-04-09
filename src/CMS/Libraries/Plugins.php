@@ -7,9 +7,10 @@
 
 namespace CMS\Libraries;
 
-class Plugins extends Model
+class Plugins
 {
 	public $view_path = '';
+	private static $_redirects = array();
 	private static $_registered = array();
 	
 	//
@@ -37,6 +38,10 @@ class Plugins extends Model
 		}
 	
 		self::$_registered[$name] = array('class' => $class, 'instance' => null);
+		
+		// Create an instance of this plugin so we can call the 
+		// instructor on first list. 
+		self::get($name);
 	}
 	
 	//
@@ -72,6 +77,24 @@ class Plugins extends Model
 		
 		return false;
 	}
+	
+	//
+	// Register a redirect. This is usefull for when you want to override the default
+	// behavior of the CMS. 
+	//
+	public static function set_redirect($type, $page, $id, $url)
+	{
+		self::$_registered[$type][$page][$id] = $url;
+	}
+	
+	//
+	// Has redirect?
+	//
+	public static function has_redirect($type, $page, $id)
+	{
+		return (isset(self::$_registered[$type][$page][$id])) ? self::$_registered[$type][$page][$id] : false;
+	}
+	
 	
 	// ------------------ Non- Static Functions ------------------- //
 	

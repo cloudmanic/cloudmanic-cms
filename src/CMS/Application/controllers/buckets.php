@@ -39,6 +39,19 @@ class Buckets extends MY_Controller
 	//
 	function listview()
 	{					
+		// Did we register a plugin to override this?
+		if($url = \CMS\Libraries\Plugins::has_redirect('buckets', 'listview', $this->uri->segment(3)))
+		{
+			if(! $this->input->is_ajax_request())
+			{
+				redirect($this->data['cms']['cp_base'] . str_ireplace('/cp', '', $url));
+			} else
+			{
+				echo "<script>cloudjs.history.pushState('', '', '$url'); </script>";			
+			}
+			return false;
+		}
+	
 		$this->load->view('cms/templates/app-header', $this->data);
 		$this->load->view("cms/buckets/listview", $this->data);
 		$this->load->view('cms/templates/app-footer', $this->data);
