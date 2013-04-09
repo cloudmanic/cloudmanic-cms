@@ -409,7 +409,7 @@ class Buckets extends MY_Controller
 	// Manage lookups. 
 	//
 	private function _do_looksup($r, $row, $key)
-	{	
+	{		
 		// Set name
 		$this->db->select($r['tablevalue'] . " AS value", false);
 		$this->db->select($r['tablename'] . " AS name", false);
@@ -431,10 +431,16 @@ class Buckets extends MY_Controller
 		{
 		  $this->db->group_by($r['tablegroup']);
 		}
+	
+		// Setup start.
+		$this->data['fields'][$key]->select_options = array();
+		if(isset($r['start']) && (! empty($r['start'])))
+		{
+			$this->data['fields'][$key]->select_options[0] = $r['start'];
+		}
 		
 		// Make query and get look up array.
 		$d = $this->db->get($r['table'])->result_array();
-		$this->data['fields'][$key]->select_options = array();
 		foreach($d AS $key2 => $row2)
 		{
 		  $this->data['fields'][$key]->select_options[$row2['value']] = $row2['name'];
