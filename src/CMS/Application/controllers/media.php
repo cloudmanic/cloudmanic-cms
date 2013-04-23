@@ -175,7 +175,7 @@ class Media extends MY_Controller
 	{
 		$json = array('status' => 0, 'data' => array(), 'errors' => array());
 		$config['upload_path'] = CMS\Libraries\Config::get('cp_tmp_dir');
-		$config['allowed_types'] = $this->data['cms']['cp_media_file_types'];
+		$config['allowed_types'] = CMS\Libraries\Config::get('cp_media_file_types');
 		$config['max_size']	= $this->data['cms']['cp_media_file_max_size'];
 		$this->load->library('upload', $config);
 
@@ -410,13 +410,13 @@ class Media extends MY_Controller
 		$ostore = $connection->ObjectStore();
 		$cont = $ostore->Container($container);
 		$obj = $cont->DataObject();
-		$obj->Create(array('name' => $q['CMS_MediaPath'] . $d['CMS_MediaFile']), $json['data']['full_path']);
+		$obj->Create(array('name' => $q['CMS_MediaPath'] . $json['data']['id'] . '_' . $d['CMS_MediaFile']), $json['data']['full_path']);
 
 		unlink($json['data']['full_path']);		
 		  													
 		// Build FQDN
-		$json['data']['url'] = CMS\Libraries\Config::get('cp_media_rackspace_url') . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
-		$json['data']['sslurl'] = CMS\Libraries\Config::get('cp_media_rackspace_ssl_url') . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
+		$json['data']['url'] = CMS\Libraries\Config::get('cp_media_rackspace_url') . $q['CMS_MediaPath'] . $json['data']['id'] . '_' . $d['CMS_MediaFile'];
+		$json['data']['sslurl'] = CMS\Libraries\Config::get('cp_media_rackspace_ssl_url') . $q['CMS_MediaPath'] . $json['data']['id'] . '_' . $d['CMS_MediaFile'];
 				
 		return $json;
 	}
