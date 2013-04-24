@@ -65,6 +65,7 @@
 							echo '<input name="' . $row->name . '" value="' . set_value($row->name, element($row->name, $data, '')) . '" disabled="disabled" />';
 						break;
 						
+						case 'datetime':
 						case 'date':
 							echo form_label($label, $row->name);
 							echo form_input($row->name, set_value($row->name, date('n/j/Y', strtotime(element($row->name, $data, date('n/j/Y'))))), 'class="datepicker"');
