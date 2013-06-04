@@ -64,3 +64,22 @@ site.on_new_page = function ()
 		delay: { show: 500, hide: 100 } 
 	});
 }
+
+//
+// Setup a add / edit page.
+//
+site.add_edit_init = function ()
+{	
+	// Delete entry.
+	$('[data-action="entry-delete"]').click(function () {
+		var url = $(this).attr('href');
+		var cc = confirm('Are you sure you want to delete this entry?');
+		
+		if(cc)
+		{
+			window.location = url;
+		}
+		
+		return false;
+	});
+}

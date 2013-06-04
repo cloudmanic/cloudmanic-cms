@@ -9,7 +9,7 @@
 			</p>
 		<?php endif; ?>
 
-		<?php 
+		<?php 		
 			foreach($fields AS $key => $row) : 
 				if(in_array(str_ireplace($table, '', $row->name), $skip)) 
 				{ 
@@ -199,6 +199,12 @@
 		<?php endif; ?>
 	  
 		<div class="row">
+			<?php if(isset($data['PagesId'])) : ?>
+			<div class="pull-left margin-left-20">
+				<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'] . '/' . $data['PagesId'])?>" data-action="entry-delete">Delete Entry</a>
+			</div>
+			<?php endif; ?>
+		  
 		  <div class="pull-right">		  
 		  	<button type="submit" class="btn btn-primary">Save</button> or
 		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link">Cancel</a>
@@ -210,6 +216,7 @@
 </div>
 
 <script type="text/javascript">
+site.add_edit_init();
 media.max_file_size = '<?=($cms['cp_media_file_max_size'] * 0.0009765625)?>mb';
 media.filter = '<?=str_ireplace('|', ',', $cms['cp_media_file_types'])?>';
 media.init();
