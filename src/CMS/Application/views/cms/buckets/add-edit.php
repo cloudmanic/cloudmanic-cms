@@ -201,7 +201,7 @@
 		<div class="row">
 			<?php if(isset($data[$table . 'Id'])) : ?>
 			<div class="pull-left margin-left-20">
-				<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'] . '/' . $data['PagesId'])?>" data-action="entry-delete">Delete Entry</a>
+				<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'] . '/' . $data[$table . 'Id'])?>" data-action="entry-delete">Delete Entry</a>
 			</div>
 			<?php endif; ?>
 		  
