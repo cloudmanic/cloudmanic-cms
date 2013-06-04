@@ -174,6 +174,13 @@
 				</ul>
 				
 				<script type="text/javascript">
+				<?php 
+				if(! isset($row['tags']))
+				{
+					$row['tags'] = array();
+				}
+				?>
+				
 				$(document).ready(function () {
 					$('#tagit-<?=$row['table']?>').tagit({
 						availableTags: <?=json_encode($row['tags'])?>,
