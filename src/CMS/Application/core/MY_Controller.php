@@ -169,11 +169,11 @@ class MY_Controller extends CI_Controller
 	private function _cont_init()
 	{
 		// Set defaults.
-		//$this->data['state']['limit'] = ($this->input->get('limit')) ? $this->input->get('limit') : 200;
-		//$this->data['state']['offset'] = ($this->input->get('offset')) ? $this->input->get('offset') : 0;
+		$this->data['state']['limit'] = ($this->input->get('limit')) ? $this->input->get('limit') : 50;
+		$this->data['state']['offset'] = ($this->input->get('offset')) ? $this->input->get('offset') : 0;
 		$this->data['state']['search'] = ($this->input->get('search')) ? $this->input->get('search') : '';
-		//$this->data['state']['order'] = ($this->input->get('order')) ? $this->input->get('order') : '';
-		//$this->data['state']['sort'] = ($this->input->get('sort')) ? $this->input->get('sort') : 'asc';
+		$this->data['state']['order'] = ($this->input->get('order')) ? $this->input->get('order') : '';
+		$this->data['state']['sort'] = ($this->input->get('sort')) ? $this->input->get('sort') : 'asc';
 	}
 }
 

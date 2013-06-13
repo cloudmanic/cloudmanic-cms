@@ -4,6 +4,28 @@ var site = {
 }
 
 //
+// List view page.
+//
+site.listview = function ()
+{
+	// Setup paging.
+	cloudjs.api.after_api = function (json) {
+		if(json.paging)
+		{
+			$('#paging').html(json.paging);
+		
+			$('#paging a').click(function () {
+				var url = $('.tables-search-form').attr('action');
+				site.state.search = $('#table-search').val();
+				site.state.offset = $(this).attr('href').replace("&offset=", '');
+				site.load_state_page(url);
+				return false;
+			});
+		}
+	}
+}
+
+//
 // Setup generic search tables.
 //
 site.setup_tables = function (that)
@@ -12,6 +34,7 @@ site.setup_tables = function (that)
 	$('.tables-search-form').submit(function () {	
 		var url = $(this).attr('action');
 		site.state.search = $('#table-search').val();
+		site.state.offset = $('#table-offset').val();
 		site.load_state_page(url);		
 		cloudjs.focus = 'table-search';
 		return false;
