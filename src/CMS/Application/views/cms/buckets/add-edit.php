@@ -54,6 +54,7 @@
 							echo form_password($row->name, set_value($row->name, element($row->name, $data, '')));
 						break;
 						
+						case 'mediumtext':
 						case 'text':
 						case 'blob':
 							echo form_label($label, $row->name);
