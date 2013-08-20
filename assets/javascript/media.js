@@ -167,7 +167,7 @@ media.add_edit_init = function ()
 	$("#uploader").pluploadQueue({
 	  runtimes: 'html5,flash',
 	  max_file_size: media.max_file_size,
-	  url: cp_base + '/media/upload',
+	  url: cp_base + 'media/upload',
 	  flash_swf_url: assets_base + '/javascript/plupload/plupload.flash.swf',
 		filters : [
 			{title: "Allowed Files", extensions: media.filter},
@@ -211,7 +211,7 @@ media.add_edit_init = function ()
 					{
 						console.log(media.mediafiles[0]);
 						// Make an ajax call and bring up the cropper.
-						$.post(cp_base + '/media/crop/', { media: media.mediafiles[0], width: media.target_width, height: media.target_height, aspect: media.target_aspect }, function(html) {
+						$.post(cp_base + 'media/crop/', { media: media.mediafiles[0], width: media.target_width, height: media.target_height, aspect: media.target_aspect }, function(html) {
 							$('#colorbox-body').html(html);
 						}, 'html');
 					} else
