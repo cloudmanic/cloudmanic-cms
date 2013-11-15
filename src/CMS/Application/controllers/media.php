@@ -391,10 +391,12 @@ class Media extends MY_Controller
 		  $d['CMS_MediaPathThumb'] = CMS\Libraries\Config::get('cp_media_rackspace_path');
 		  
 		  // Upload to rackspace
-		  $ostore = $connection->ObjectStore();
-		  $cont = $ostore->Container($container);
-		  $obj = $cont->DataObject();
-		  $obj->Create(array('name' => $d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb']), $tmpdir . '/' . $thumb);
+		  $ostore = $connection->objectStoreService();
+		  $cont = $ostore->getContainer($container);
+			$data = fopen($tmpdir . '/' . $thumb, 'r+');
+			$cont->uploadObject($d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'], $data, array(
+			  'Content-Type' => mime_content_type($tmpdir . '/' . $thumb)
+			));		  
 
 		  unlink($tmpdir . '/' . $thumb);
 		
@@ -407,16 +409,18 @@ class Media extends MY_Controller
 		$this->cms_media_model->update($d, $id);
 		
 		// Upload to rackspace
-		$ostore = $connection->ObjectStore();
-		$cont = $ostore->Container($container);
-		$obj = $cont->DataObject();
-		$obj->Create(array('name' => $q['CMS_MediaPath'] . $json['data']['id'] . '_' . $d['CMS_MediaFile']), $json['data']['full_path']);
+		$ostore = $connection->objectStoreService();
+		$cont = $ostore->getContainer($container);
+		$data = fopen($json['data']['full_path'], 'r+');
+		$cont->uploadObject($q['CMS_MediaPath'] . $d['CMS_MediaFile'], $data, array(
+		  'Content-Type' => mime_content_type($json['data']['full_path'])
+		));			
 
 		unlink($json['data']['full_path']);		
 		  													
 		// Build FQDN
-		$json['data']['url'] = CMS\Libraries\Config::get('cp_media_rackspace_url') . $q['CMS_MediaPath'] . $json['data']['id'] . '_' . $d['CMS_MediaFile'];
-		$json['data']['sslurl'] = CMS\Libraries\Config::get('cp_media_rackspace_ssl_url') . $q['CMS_MediaPath'] . $json['data']['id'] . '_' . $d['CMS_MediaFile'];
+		$json['data']['url'] = CMS\Libraries\Config::get('cp_media_rackspace_url') . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
+		$json['data']['sslurl'] = CMS\Libraries\Config::get('cp_media_rackspace_ssl_url') . $q['CMS_MediaPath'] . $d['CMS_MediaFile'];
 				
 		return $json;
 	}
