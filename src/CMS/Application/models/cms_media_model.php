@@ -94,10 +94,10 @@ class CMS_Media_Model extends MY_Model
 				{
 					if($data['CMS_MediaType'] == 'video')
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/images/v-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/img/v-ico.png';
 					} else
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/images/doc-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/img/doc-ico.png';
 					}
 				}
 			break;
@@ -117,10 +117,10 @@ class CMS_Media_Model extends MY_Model
 				{
 					if($data['CMS_MediaType'] == 'video')
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/images/v-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/img/v-ico.png';
 					} else
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/images/doc-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/img/doc-ico.png';
 					}
 				}
 			break;
@@ -140,10 +140,10 @@ class CMS_Media_Model extends MY_Model
 				{
 					if($data['CMS_MediaType'] == 'video')
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/images/v-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/img/v-ico.png';
 					} else
 					{
-						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/images/doc-ico.png';
+						$data['thumburl'] = $data['thumbsslurl'] = $this->data['cms']['assets_base'] . '/img/doc-ico.png';
 					}
 				}
 			break;

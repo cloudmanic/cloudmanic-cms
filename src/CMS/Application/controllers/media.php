@@ -172,11 +172,11 @@ class Media extends MY_Controller
 	// Upload media assets.
 	//
 	function upload()
-	{
+	{	
 		$json = array('status' => 0, 'data' => array(), 'errors' => array());
 		$config['upload_path'] = CMS\Libraries\Config::get('cp_tmp_dir');
 		$config['allowed_types'] = CMS\Libraries\Config::get('cp_media_file_types');
-		$config['max_size']	= $this->data['cms']['cp_media_file_max_size'];
+		$config['max_size']	= CMS\Libraries\Config::get('cp_media_file_max_size');
 		$this->load->library('upload', $config);
 
 		// If upload was successful
@@ -237,20 +237,20 @@ class Media extends MY_Controller
 				
 				if($json['data']['image_width'] >= $json['data']['image_height'])
 				{
-					$width = $this->data['cms']['cp_image_resize'];
+					$width = CMS\Libraries\Config::get('cp_image_resize');
 					$height = null;
 				} else
 				{
 					$width = null;
-					$height = $this->data['cms']['cp_image_resize'];
+					$height = CMS\Libraries\Config::get('cp_image_resize');
 				}
 				
 				$this->wideimage->load($json['data']['full_path'])->resize($width, $height)->saveToFile($json['data']['full_path']);
 			}
 		}
 	
-		// Upload the file to the storage driver.
-		switch($this->data['cms']['cp_media_driver'])
+		// Upload the file to the storage driver.		
+		switch(CMS\Libraries\Config::get('cp_media_driver'))
 		{
 		  // Upload file to rackspace
 		  case 'rackspace-cloud-files':

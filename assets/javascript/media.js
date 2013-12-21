@@ -209,7 +209,6 @@ media.add_edit_init = function ()
 				{
 					if(media.crop)
 					{
-						console.log(media.mediafiles[0]);
 						// Make an ajax call and bring up the cropper.
 						$.post(cp_base + 'media/crop/', { media: media.mediafiles[0], width: media.target_width, height: media.target_height, aspect: media.target_aspect }, function(html) {
 							$('#colorbox-body').html(html);

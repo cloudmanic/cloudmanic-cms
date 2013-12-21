@@ -4,8 +4,8 @@
 $(document).ready(function () {
 	$('.redactor').redactor({
 		minHeight: 300,
-		imageUpload: cp_base + '/media/upload?redactor=true',
-		fileUpload: cp_base + '/media/upload?redactor=true'
+		imageUpload: cp_base + 'media/upload?redactor=true',
+		fileUpload: cp_base + 'media/upload?redactor=true'
 	});
 });
 </script>
