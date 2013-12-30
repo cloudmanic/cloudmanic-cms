@@ -38,6 +38,15 @@
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/cloudjs-config.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/site.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/media.js"></script>
+	
+	<?php 
+		foreach(CMS\Libraries\Config::get('app-header-files') AS $key => $row)
+		{
+			include($row);
+		}
+	?>
+
+	
 	<?=CMS\Libraries\Config::get('app-header-head')?>
 </head>
 

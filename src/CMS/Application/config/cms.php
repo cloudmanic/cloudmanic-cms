@@ -11,6 +11,10 @@ $config['cp_tmp_dir'] = '/tmp'; // no trailing slash.
 $config['cp_thumb_width'] = '300';
 $config['cp_thumb_height'] = '300';
 $config['cp_clear_ci_page_cache'] = TRUE;
+$config['app-header-head'] = '';
+$config['app-footer-body'] = '';
+$config['app-header-files'] = array();
+$config['app-footer-files'] = array();	
 
 // Uploading media.
 $config['cp_media_driver'] = 'local-files'; // local-files / amazon-web-services-s3 / rackspace-cloud-files;

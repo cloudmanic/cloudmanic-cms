@@ -16,6 +16,13 @@ $('title').text('<?=$page_title?>');
 			<footer class="footer"><p>&copy; Cloudmanic Labs, LLC 2012</p></footer>
     </div>
 	<?=CMS\Libraries\Config::get('app-footer-body')?>
+	
+	<?php 
+		foreach(CMS\Libraries\Config::get('app-footer-files') AS $key => $row)
+		{
+			include($row);
+		}
+	?>	
   </body>
 </html>
 <?php endif; ?>
