@@ -14,7 +14,8 @@ $config['cp_clear_ci_page_cache'] = TRUE;
 $config['app-header-head'] = '';
 $config['app-footer-body'] = '';
 $config['app-header-files'] = array();
-$config['app-footer-files'] = array();	
+$config['app-footer-files'] = array();
+$config['status-options'] = array('Active' => 'Active', 'Disabled' => 'Disabled');		
 
 // Uploading media.
 $config['cp_media_driver'] = 'local-files'; // local-files / amazon-web-services-s3 / rackspace-cloud-files;

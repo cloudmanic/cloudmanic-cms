@@ -201,7 +201,7 @@
 		<?php else : ?>
 			<p class="control-group <?=(form_error($table . 'Status')) ? 'error' : ''?>">
 		  	<?=form_label('Status:', $table . 'Status')?>
-				<?=form_dropdown($table . 'Status', array('Active' => 'Active', 'Disabled' => 'Disabled'), set_value($table . 'Status', element($table . 'Status', $data, '')))?>
+				<?=form_dropdown($table . 'Status', CMS\Libraries\Config::get('status-options'), set_value($table . 'Status', element($table . 'Status', $data, '')))?>
 				<?=form_error($table . 'Status', '<span class="help-block">', '</span>')?>	
 			</p>
 		<?php endif; ?>
