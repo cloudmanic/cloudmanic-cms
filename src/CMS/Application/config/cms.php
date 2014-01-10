@@ -41,6 +41,7 @@ $config['cp_media_amazon_s3_ssl_url'] = ''; // trailing slash
 $config['cp_media_rackspace_username'] = '';
 $config['cp_media_rackspace_key'] = '';
 $config['cp_media_rackspace_container'] = '';
+$config['cp_media_rackspace_region'] = 'DFW'; 
 $config['cp_media_rackspace_path'] = 'cms/';
 $config['cp_media_rackspace_url'] = ''; // trailing slash
 $config['cp_media_rackspace_ssl_url'] = ''; // trailing slash

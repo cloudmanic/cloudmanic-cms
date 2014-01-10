@@ -5,9 +5,6 @@
 // Website: http://cloudmanic.com
 //
 
-define('RAXSDK_OBJSTORE_NAME','cloudFiles');
-define('RAXSDK_OBJSTORE_REGION','DFW');
-
 class Media extends MY_Controller
 {	
 	//
@@ -374,6 +371,7 @@ class Media extends MY_Controller
 		$container = CMS\Libraries\Config::get('cp_media_rackspace_container');
 		$path = CMS\Libraries\Config::get('cp_media_rackspace_path');
 		$url = CMS\Libraries\Config::get('cp_media_rackspace_ssl_url');
+		$region = CMS\Libraries\Config::get('cp_media_rackspace_region');
 		$tmpdir = CMS\Libraries\Config::get('cp_tmp_dir');
 		$connection = new \OpenCloud\Rackspace(RACKSPACE_US, array('username' => $username, 'apiKey' => $key));
 		
@@ -391,7 +389,7 @@ class Media extends MY_Controller
 		  $d['CMS_MediaPathThumb'] = CMS\Libraries\Config::get('cp_media_rackspace_path');
 		  
 		  // Upload to rackspace
-		  $ostore = $connection->objectStoreService();
+		  $ostore = $connection->objectStoreService('cloudFiles', $region);
 		  $cont = $ostore->getContainer($container);
 			$data = fopen($tmpdir . '/' . $thumb, 'r+');
 			$cont->uploadObject($d['CMS_MediaPathThumb'] . $d['CMS_MediaFileThumb'], $data, array(
@@ -409,7 +407,7 @@ class Media extends MY_Controller
 		$this->cms_media_model->update($d, $id);
 		
 		// Upload to rackspace
-		$ostore = $connection->objectStoreService();
+		$ostore = $connection->objectStoreService('cloudFiles', $region);
 		$cont = $ostore->getContainer($container);
 		$data = fopen($json['data']['full_path'], 'r+');
 		$cont->uploadObject($q['CMS_MediaPath'] . $d['CMS_MediaFile'], $data, array(
