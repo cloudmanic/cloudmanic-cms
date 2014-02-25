@@ -239,6 +239,20 @@ class Buckets extends MY_Controller
 			  }
 			}
 			
+			// Deal with any datetimes options.
+			if($this->input->post('datetimes') && is_array($_POST['datetimes']))
+			{
+			  foreach($_POST['datetimes'] AS $key => $row)
+			  {
+			  	if(! isset($_POST[$row]))
+			  	{
+			  		continue;
+			  	}
+			  	
+			  	$q[$row] = date('Y-m-d G:i:s', strtotime($_POST[$row]));
+			  }
+			}			
+			
 			// Deal with any pre validation formatting. 
 			$q = $this->_do_pre_validation_formatting($q);
 			
@@ -259,7 +273,7 @@ class Buckets extends MY_Controller
 					$this->db->update($this->data['table'], $q);
 					$this->_do_relation($this->uri->segment(4));
 					$this->_do_tags($this->uri->segment(4));
-					
+
 					// Fire after event.		
 					CMS\Libraries\Event::fire('after.update', array($this->data['table'], $this->uri->segment(4), 'data' => $q));
 				} else
