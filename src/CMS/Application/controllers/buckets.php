@@ -251,7 +251,7 @@ class Buckets extends MY_Controller
 			  	
 			  	$q[$row] = date('Y-m-d G:i:s', strtotime($_POST[$row]));
 			  }
-			}			
+			}				
 			
 			// Deal with any pre validation formatting. 
 			$q = $this->_do_pre_validation_formatting($q);
@@ -466,6 +466,10 @@ class Buckets extends MY_Controller
 	//
 	private function _do_pre_validation_formatting($data)
 	{
+		// Make sure the title is trimmed.
+		$data[$this->data['table'] . 'Title'] =	trim($data[$this->data['table'] . 'Title']);		
+		
+		// Loop through the fields and do extra formatting.
 		foreach($data AS $key => $row)
 		{
 		  if(isset($data[$key . 'Format']) && ($data[$key . 'Format'] == 'auto'))
