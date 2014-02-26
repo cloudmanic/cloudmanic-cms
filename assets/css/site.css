@@ -25,6 +25,9 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small { color: #BFBFBF; }
 .control-group.error > label { color: #333; }
 .control-group.error input, .control-group.error select, .control-group.error textarea { color: #333; }
 
+/* Pop Overs */
+.popover-content { padding: 9px 14px; font-size: 12px !important; line-height: 18px; font-weight: normal; }
+
 /* Login Pages */
 .login-form { position: relative; margin: 100px auto; float: none; }
 .login-form input { width: 98%; }

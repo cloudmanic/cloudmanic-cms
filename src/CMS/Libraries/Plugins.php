@@ -12,6 +12,7 @@ class Plugins
 	public $view_path = '';
 	private static $_redirects = array();
 	private static $_registered = array();
+	private static $_api_calls = array();	
 	
 	//
 	// Construct.
@@ -25,6 +26,28 @@ class Plugins
 	}
 	
 	// ------------------ Static Functions ------------------- //
+	
+	//
+	// Set a custom api return function.
+	//	
+	public static function set_custom_api_call($type, $bucketid, $function)
+	{
+		static::$_api_calls[$bucketid][$type] = $function;
+	}
+	
+	//
+	// Run custom function for an API call.
+	//
+	public static function run_custom_api_call($type, $bucketid)
+	{	
+		if(! isset(static::$_api_calls[$bucketid][$type]))
+		{
+			return null;
+		}
+	
+		$fuct = static::$_api_calls[$bucketid][$type];
+		return $fuct();
+	}
 	
 	//
 	// Register a plugin. Pass in an optional path so we can include.

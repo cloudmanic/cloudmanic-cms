@@ -51,6 +51,15 @@ class Api extends MY_Controller
 			break;
 			
 			case 'bucket':
+				// See if we have assigned a custom function to handle this data return.
+				$cust = CMS\Libraries\Plugins::run_custom_api_call('get', $this->input->get_post('bucket'));
+				if(! is_null($cust))
+				{	
+					$this->_return_data($cust);
+					return;
+				}
+			
+				// Default API return.
 				$this->load->model('bucketdata_model');
 				$this->load->model('cms_buckets_model');
 						
