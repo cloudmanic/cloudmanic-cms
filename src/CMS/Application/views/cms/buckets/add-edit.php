@@ -215,7 +215,7 @@
 		  
 		  <div class="pull-right">		  
 		  	<button type="submit" class="btn btn-primary">Save</button> or
-		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link">Cancel</a>
+		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link no-deep-true">Cancel</a>
 		  </div>	
 		</div>
 	  

@@ -1,6 +1,6 @@
 <?php if(! $this->input->is_ajax_request()) : ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="cloudcms">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="robots" content="noindex,nofollow" />
@@ -24,6 +24,7 @@
 	</script> 
 	
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/angular/angular.min.js"></script>	
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/jquery-ui-1.8.13.custom.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/colorbox/jquery.colorbox-min.js"></script>
@@ -48,6 +49,10 @@
 
 	
 	<?=CMS\Libraries\Config::get('app-header-head')?>
+	
+	<script type="text/javascript">
+		var app = angular.module('cloudcms', []);
+	</script>
 </head>
 
 <body>
