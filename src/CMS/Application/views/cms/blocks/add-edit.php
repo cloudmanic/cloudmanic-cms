@@ -3,14 +3,18 @@
 <?php
 $raw = 'selected';
 $raw_show = 'block';
+$raw_name = 'CMS_BlocksBody';
 $redact = '';
 $redact_show = 'none';
-if((! isset($data['CMS_BlocksEditor'])) || ($data['CMS_BlocksEditor'] != 'raw'))
+$redact_name = 'no';
+if(isset($data['CMS_BlocksEditor']) && ($data['CMS_BlocksEditor'] != 'raw'))
 {
 	$raw = '';
 	$raw_show = 'none';
+	$raw_name = 'no';
 	$redact = 'selected';
 	$redact_show = 'block';
+	$redact_name = 'CMS_BlocksBody';
 }
 ?>
 
@@ -45,13 +49,13 @@ if((! isset($data['CMS_BlocksEditor'])) || ($data['CMS_BlocksEditor'] != 'raw'))
 	
 	  <p id="block-raw" class="control-group <?=(form_error('CMS_BlocksBody')) ? 'error' : ''?>" style="display: <?=$raw_show?>;">
 	  	<?=form_label('Body:', 'CMS_BlocksBody')?>
-	  	<?=form_textarea(array('name' => 'CMS_BlocksBody', 'value' => set_value('CMS_BlocksBody', element('CMS_BlocksBody', $data, '')), 'cols' => '44', 'rows' => '24'))?>
+	  	<?=form_textarea(array('name' => $raw_name, 'value' => set_value('CMS_BlocksBody', element('CMS_BlocksBody', $data, '')), 'cols' => '44', 'rows' => '24'))?>
 			<?=form_error('CMS_BlocksBody', '<span class="help-block">', '</span>')?>
 	  </p>
 	  
 		<div id="block-redactor" class="control-group <?=(form_error('CMS_BlocksBody')) ? 'error' : ''?>" style="display: <?=$redact_show?>;">
 			<?=form_label('Body:', 'CMS_BlocksBody')?>
-			<textarea class="redactor" name="CMS_BlocksBody"><?=element('CMS_BlocksBody', $data, '')?></textarea>	  
+			<textarea class="redactor" name="<?=$redact_name?>"><?=element('CMS_BlocksBody', $data, '')?></textarea>	  
 		</div>
 	  
 	  <div class="row">
@@ -75,10 +79,14 @@ $(document).ready(function () {
 		{
 			$('#block-raw').show();
 			$('#block-redactor').hide();
+			$('#block-redactor').find('textarea').attr('name', 'no');
+			$('#block-raw').find('textarea').attr('name', 'CMS_BlocksBody');			
 		} else
 		{
 			$('#block-raw').hide();
-			$('#block-redactor').show();			
+			$('#block-redactor').show();	
+			$('#block-redactor').find('textarea').attr('name', 'CMS_BlocksBody');
+			$('#block-raw').find('textarea').attr('name', 'no');						
 		}
 	});
 
