@@ -1,5 +1,7 @@
 <?php
 $add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_BucketsDisplay']['add-button'] : 'Add ' . cms_depluralize($table);
+
+$search = (empty($state['search'])) ? '' :  $state['search'];
 ?>
 
 <?=$this->load->view('cms/buckets/section-header')?>
@@ -8,8 +10,8 @@ $add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_
 	<div class="span12">
 		<div class="row">				
 			<div class="span6 pull-left">
-				<form class="tables-search-form" action="<?=current_url()?>" method="post">
-					<input type="text" id="table-search" style="width: 220px;" value="<?=(empty($state['search'])) ? '' :  $state['search']?>" placeholder="Search" /><span class="add-on" style="vertical-align: top;">
+				<form class="tables-search-form" action="<?=current_url()?>" method="get">
+					<input type="text" id="table-search" name="search" style="width: 220px;" value="<?=(empty($state['search'])) ? '' :  $state['search']?>" placeholder="Search" /><span class="add-on" style="vertical-align: top;">
 				</form>
 			</div>
 			
@@ -39,7 +41,7 @@ $add_name = (isset($bucket['CMS_BucketsDisplay']['add-button'])) ? $bucket['CMS_
 				</tr>
 			</thead>
 			
-			<tbody cloud-api-url="<?=site_url('api/get?type=bucket&bucket=' . $bucket['CMS_BucketsId'] . '&order=' . $table . 'Order&sort=DESC&search={{search}}&limit={{limit}}&offset={{offset}}&format=json&base=' . current_url())?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search" cloud-api-offset="<?=(empty($state['offset'])) ? '0' :  $state['offset']?>" cloud-api-limit="<?=(empty($state['limit'])) ? '50' :  $state['limit']?>"></tbody>
+			<tbody cloud-api-url="<?=site_url('api/get?type=bucket&bucket=' . $bucket['CMS_BucketsId'] . '&order=' . $table . 'Order&sort=DESC&search=' . $search . '&limit={{limit}}&offset={{offset}}&format=json&base=' . current_url())?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search" cloud-api-offset="<?=(empty($state['offset'])) ? '0' :  $state['offset']?>" cloud-api-limit="<?=(empty($state['limit'])) ? '50' :  $state['limit']?>"></tbody>
 		</table>
 		
 		<div id="paging"></div>		
