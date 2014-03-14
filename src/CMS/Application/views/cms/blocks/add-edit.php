@@ -5,7 +5,7 @@ $raw = 'selected';
 $raw_show = 'block';
 $redact = '';
 $redact_show = 'none';
-if($data['CMS_BlocksEditor'] != 'raw')
+if((! isset($data['CMS_BlocksEditor'])) || ($data['CMS_BlocksEditor'] != 'raw'))
 {
 	$raw = '';
 	$raw_show = 'none';
