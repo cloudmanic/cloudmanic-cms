@@ -185,6 +185,7 @@ class ORM {
             $username = self::$_config['username'];
             $password = self::$_config['password'];
             $driver_options = self::$_config['driver_options'];
+            $driver_options[PDO::MYSQL_ATTR_INIT_COMMAND] = "SET NAMES 'utf8'";
             $db = new PDO($connection_string, $username, $password, $driver_options);
             $db->setAttribute(PDO::ATTR_ERRMODE, self::$_config['error_mode']);
             self::set_db($db);
