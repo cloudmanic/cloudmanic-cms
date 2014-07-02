@@ -206,7 +206,11 @@ class Buckets extends MY_Controller
 			foreach($this->data['fields'] AS $key => $row)
 			{	
 				if(in_array(str_ireplace($this->data['table'], '', $row->name), $this->data['skip'])) { continue; }
-				$q[$row->name] = $this->input->post($row->name);
+				
+				if($this->input->post($row->name))
+				{
+					$q[$row->name] = $this->input->post($row->name);
+				}
 				
 				if($row->name == $this->data['table'] . 'Title')
 				{
