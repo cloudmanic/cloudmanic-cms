@@ -50,6 +50,34 @@ class Api extends MY_Controller
 				return;
 			break;
 			
+			case 'bucket-next':
+				$this->load->model('bucketdata_model');
+				$this->load->model('cms_buckets_model');
+				
+				// Get bucket.
+				if(! $bucket = $this->cms_buckets_model->get_by_id($this->input->get_post('bucket')))
+				{
+					die('Nothing to see here.');
+				}				
+				
+				// Set table.
+				$table = $bucket['CMS_BucketsTable'];
+				$id = $table . 'Id';
+				$current = $this->input->get_post('current');
+				
+				$data = $this->db->query("SELECT $id FROM $table WHERE $id > $current ORDER BY $id LIMIT 1")->result_array();
+				
+				if(isset($data[0]))
+				{
+					$this->_return_data(array('Id' => $data[0][$id]));
+				} else
+				{
+					$this->_return_data(array());					
+				}
+				
+				return;
+			break;
+			
 			case 'bucket':
 				// See if we have assigned a custom function to handle this data return.
 				$cust = CMS\Libraries\Plugins::run_custom_api_call('get', $this->input->get_post('bucket'));

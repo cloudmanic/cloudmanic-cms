@@ -201,7 +201,7 @@
 		<?php else : ?>
 			<p class="control-group <?=(form_error($table . 'Status')) ? 'error' : ''?>">
 		  	<?=form_label('Status:', $table . 'Status')?>
-				<?=form_dropdown($table . 'Status', CMS\Libraries\Config::get('status-options'), set_value($table . 'Status', element($table . 'Status', $data, '')))?>
+				<?=form_dropdown($table . 'Status', CMS\Libraries\Config::get('status-options'), set_value($table . 'Status', element($table . 'Status', $data, CMS\Libraries\Config::get('status-default'))))?>
 				<?=form_error($table . 'Status', '<span class="help-block">', '</span>')?>	
 			</p>
 		<?php endif; ?>
@@ -214,7 +214,8 @@
 			<?php endif; ?>
 		  
 		  <div class="pull-right">		  
-		  	<button type="submit" class="btn btn-primary">Save</button> or
+		  	<button type="submit" class="btn btn-primary" name="btn" value="save">Save</button> or
+		  	<!-- <button type="submit" class="btn btn-primary" name="btn" value="save_continue">Save &amp; Continue</button> -->
 		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link no-deep-true">Cancel</a>
 		  </div>	
 		</div>

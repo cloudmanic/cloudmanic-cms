@@ -129,7 +129,7 @@ class Buckets extends MY_Controller
 	// Shared functionality between add / edit.
 	//
 	private function _add_edit_shared_func($update = FALSE)
-	{
+	{	
 		// Get the fields for table.
 		$this->data['fields'] = $this->db->field_data($this->data['table']);
 		$this->data['skip'] = array('Id', 'UpdatedAt', 'CreatedAt', 'Status', 'Order');
@@ -199,7 +199,7 @@ class Buckets extends MY_Controller
 	
 		// Manage posted data.
 		if($this->input->post('submit'))
-		{
+		{				
 			$this->load->library('form_validation');
 			
 			// Set validation
@@ -307,7 +307,14 @@ class Buckets extends MY_Controller
 					CMS\Libraries\Event::fire('after.insert', array($this->data['table'], $id, 'data' => $q));
 				}
 				
-				redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $this->uri->segment(3));
+				// Where do we redirect?
+				if($this->input->post('btn') == 'save_continue')
+				{
+					
+				} else
+				{
+					redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $this->uri->segment(3));
+				}
 			}
 		}
 		
