@@ -310,7 +310,13 @@ class Buckets extends MY_Controller
 				// Where do we redirect?
 				if($this->input->post('redirect_url'))
 				{
-					redirect($this->input->post('redirect_url'));
+					if($this->input->post('btn') == 'save_add')
+					{
+						redirect($this->input->post('redirect_url'));
+					} else
+					{
+						redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $this->uri->segment(3));
+					}
 				} else
 				{
 					redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $this->uri->segment(3));

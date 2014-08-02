@@ -219,6 +219,9 @@
 		  	<?php if($this->uri->segment(2) == 'edit') : ?>
 		  	<input type="hidden" name="redirect_url" value="" id="redirect_url" />
 				<button type="submit" class="btn btn-primary" name="btn" value="save_continue" id="save_cont">Save &amp; Continue</button>
+				<?php else: ?>
+				<input type="hidden" name="redirect_url" value="<?=current_url()?>" id="redirect_url" />
+				<button type="submit" class="btn btn-primary" name="btn" value="save_add" id="save_add">Save &amp; Add Another</button>				
 		  	<?php endif; ?>
 		  	
 		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link no-deep-true">Cancel</a>
