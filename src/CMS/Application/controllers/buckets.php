@@ -313,6 +313,9 @@ class Buckets extends MY_Controller
 					if($this->input->post('btn') == 'save_add')
 					{
 						redirect($this->input->post('redirect_url'));
+					} else if($this->input->post('btn') == 'save_continue')
+					{ 
+						redirect($this->input->post('redirect_url'));
 					} else
 					{
 						redirect($this->data['cms']['cp_base'] . '/buckets/listview/' . $this->uri->segment(3));
