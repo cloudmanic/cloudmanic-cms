@@ -217,11 +217,26 @@
 		  	<button type="submit" class="btn btn-primary" name="btn" value="save">Save</button> or
 		  	
 		  	<?php if($this->uri->segment(2) == 'edit') : ?>
-		  	<input type="hidden" name="redirect_url" value="" id="redirect_url" />
-				<button type="submit" class="btn btn-primary" name="btn" value="save_continue" id="save_cont">Save &amp; Continue</button>
+		  	
+		  		<?php if(CMS\Libraries\Config::get('edit-continue-button') == 'Save_And_Continue') : ?>
+		  			<input type="hidden" name="redirect_url" value="" id="redirect_url" />
+						<button type="submit" class="btn btn-primary" name="btn" value="save_continue" id="save_cont">Save &amp; Continue</button>
+					<?php endif; ?>
+					
+					<?php if(CMS\Libraries\Config::get('edit-continue-button') == 'Save_And_Continue_Editing') : ?>
+						<button type="submit" class="btn btn-primary" name="btn" value="save_continue_editing" id="save_cont_editing">Save &amp; Continue Editing</button>					
+					<?php endif; ?>
+					
 				<?php else: ?>
-				<input type="hidden" name="redirect_url" value="<?=current_url()?>" id="redirect_url" />
-				<button type="submit" class="btn btn-primary" name="btn" value="save_add" id="save_add">Save &amp; Add Another</button>				
+				
+					<?php if(CMS\Libraries\Config::get('edit-continue-button') == 'Save_And_Continue') : ?>
+						<input type="hidden" name="redirect_url" value="<?=current_url()?>" id="redirect_url" />
+						<button type="submit" class="btn btn-primary" name="btn" value="save_add" id="save_add">Save &amp; Add Another</button>
+					<?php endif; ?>
+					
+					<?php if(CMS\Libraries\Config::get('edit-continue-button') == 'Save_And_Continue_Editing') : ?>
+						<button type="submit" class="btn btn-primary" name="btn" value="save_continue_editing" id="save_cont_editing">Save &amp; Continue Editing</button>					
+					<?php endif; ?>					
 		  	<?php endif; ?>
 		  	
 		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link no-deep-true">Cancel</a>

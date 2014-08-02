@@ -108,6 +108,31 @@ site.add_edit_init = function (type, bucket_id, entry_id)
 			}
 		});
 	}
+	
+	// Save and continue editing
+	$('#save_cont_editing').click(function () {
+		var url = $('form').attr('action');
+		
+		$.post(url, $('form').serialize(), function (json) {		
+			if(json.Id)
+			{
+				$('.control-group').removeClass('error');
+				$('.help-block').html('');
+				$('#saved').fadeIn('slow', function () { $(this).fadeOut('slow'); });
+				
+				if(type == 'add')
+				{
+					var newurl = site_url + 'buckets/edit/' + bucket_id + '/' + json.Id;
+					$('form').attr('action', newurl);
+				}
+			} else
+			{
+				$('#cloud-body').html(json);
+			}
+		});
+		
+		return false;
+	});
 
 	// Delete entry.
 	$('[data-action="entry-delete"]').click(function () {

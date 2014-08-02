@@ -56,6 +56,10 @@
 </head>
 
 <body>
+	<div id="saved">
+		<p>Saved.</p>
+	</div>
+	
 	<div class="navbar navbar-inverse topbar">
 	  <div class="navbar-inner">
 	    <div class="container">

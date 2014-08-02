@@ -21,6 +21,12 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small { color: #BFBFBF; }
 .page-header small { cursor: pointer; }
 .bump-up-10 { margin-top: -10px; }
 
+#saved { position: fixed; background-color: #fcbe14; z-index: 100; left: 50%; 
+					border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; 
+					display: none; height: 30px; }
+#saved p { font-size: 14px; padding: 5px 15px; }
+
+
 /* Bootstrap overrides */
 .control-group.error > label { color: #333; }
 .control-group.error input, .control-group.error select, .control-group.error textarea { color: #333; }

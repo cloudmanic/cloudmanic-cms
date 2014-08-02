@@ -307,6 +307,25 @@ class Buckets extends MY_Controller
 					CMS\Libraries\Event::fire('after.insert', array($this->data['table'], $id, 'data' => $q));
 				}
 				
+				// See if this is an ajax request.
+				if($this->input->is_ajax_request())
+				{
+					if($update)
+					{
+						$this->output
+							->set_content_type('application/json')
+							->set_output(json_encode(array('Id' => $this->uri->segment(4))));					
+						return true;
+					} else
+					{
+						$this->output
+							->set_content_type('application/json')
+							->set_output(json_encode(array('Id' => $id)));					
+						return true;
+					}
+				}
+				
+				
 				// Where do we redirect?
 				if($this->input->post('redirect_url'))
 				{
@@ -327,9 +346,15 @@ class Buckets extends MY_Controller
 			}
 		}
 		
-		$this->load->view('cms/templates/app-header', $this->data);
-		$this->load->view('cms/buckets/add-edit', $this->data);
-		$this->load->view('cms/templates/app-footer', $this->data);
+		if($this->input->is_ajax_request())
+		{
+			$this->load->view('cms/buckets/add-edit', $this->data);
+		} else
+		{
+			$this->load->view('cms/templates/app-header', $this->data);
+			$this->load->view('cms/buckets/add-edit', $this->data);
+			$this->load->view('cms/templates/app-footer', $this->data);
+		}
 	}
 
 	//
@@ -487,7 +512,10 @@ class Buckets extends MY_Controller
 	private function _do_pre_validation_formatting($data)
 	{
 		// Make sure the title is trimmed.
-		$data[$this->data['table'] . 'Title'] =	trim($data[$this->data['table'] . 'Title']);		
+		if(isset($data[$this->data['table'] . 'Title']))
+		{
+			$data[$this->data['table'] . 'Title'] =	trim($data[$this->data['table'] . 'Title']);		
+		}
 		
 		// Loop through the fields and do extra formatting.
 		foreach($data AS $key => $row)
