@@ -91,8 +91,21 @@ site.on_new_page = function ()
 //
 // Setup a add / edit page.
 //
-site.add_edit_init = function ()
-{	
+site.add_edit_init = function (type, bucket_id, entry_id)
+{		
+	// Make Ajax call to get the next bucket entry (if any).
+	$.get(site_url + 'api/get?type=bucket-next&format=json&bucket=' + bucket_id + '&current=' + entry_id, function (json) {
+		if(json.data.Id)
+		{
+			var url = site_url + 'buckets/edit/' + bucket_id + '/' + json.data.Id;
+			$('#redirect_url').val(url);
+			$('#save_cont').show();
+		} else
+		{
+			$('#save_cont').hide();			
+		}
+	});	
+
 	// Delete entry.
 	$('[data-action="entry-delete"]').click(function () {
 		var url = $(this).attr('href');

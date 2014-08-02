@@ -8,14 +8,6 @@
 class Api extends MY_Controller
 {	
 	//
-	// Constructor …
-	//
-	function __construct()
-	{
-		parent::__construct();
-	}
-	
-	//
 	// Returns data based on what we pass in.
 	//
 	function get()
@@ -50,7 +42,7 @@ class Api extends MY_Controller
 				return;
 			break;
 			
-			case 'bucket-next':
+			case 'bucket-next':			
 				$this->load->model('bucketdata_model');
 				$this->load->model('cms_buckets_model');
 				
@@ -64,8 +56,13 @@ class Api extends MY_Controller
 				$table = $bucket['CMS_BucketsTable'];
 				$id = $table . 'Id';
 				$current = $this->input->get_post('current');
+				$order = $table . 'Order';
 				
-				$data = $this->db->query("SELECT $id FROM $table WHERE $id > $current ORDER BY $id LIMIT 1")->result_array();
+				// Get the order of the current entry.
+				$curr_entry = $this->db->query("SELECT $order AS Ord FROM $table WHERE $id = $current")->row_array();
+				
+				// Get next entry.
+				$data = $this->db->query("SELECT * FROM $table WHERE $order > $curr_entry[Ord] ORDER BY $order LIMIT 1")->result_array();
 				
 				if(isset($data[0]))
 				{

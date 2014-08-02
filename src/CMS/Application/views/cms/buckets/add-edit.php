@@ -215,7 +215,12 @@
 		  
 		  <div class="pull-right">		  
 		  	<button type="submit" class="btn btn-primary" name="btn" value="save">Save</button> or
-		  	<!-- <button type="submit" class="btn btn-primary" name="btn" value="save_continue">Save &amp; Continue</button> -->
+		  	
+		  	<?php if($this->uri->segment(2) == 'edit') : ?>
+		  	<input type="hidden" name="redirect_url" value="" id="redirect_url" />
+				<button type="submit" class="btn btn-primary" name="btn" value="save_continue" id="save_cont">Save &amp; Continue</button>
+		  	<?php endif; ?>
+		  	
 		  	<a href="<?=site_url($cms['cp_base'] . '/buckets/listview/' . $bucket['CMS_BucketsId'])?>" class="cancel-link no-deep-true">Cancel</a>
 		  </div>	
 		</div>
@@ -225,7 +230,14 @@
 </div>
 
 <script type="text/javascript">
-site.add_edit_init();
+
+<?php if(isset($data[$table . 'Id'])) : ?>
+site.add_edit_init('<?=$this->uri->segment(2)?>', <?=$bucket['CMS_BucketsId']?>, <?=$data[$table . 'Id']?>);
+<?php else : ?>
+site.add_edit_init('<?=$this->uri->segment(2)?>', <?=$bucket['CMS_BucketsId']?>, null);
+<?php endif; ?>
+
+
 media.max_file_size = '<?=($cms['cp_media_file_max_size'] * 0.0009765625)?>mb';
 media.filter = '<?=str_ireplace('|', ',', $cms['cp_media_file_types'])?>';
 media.init();
