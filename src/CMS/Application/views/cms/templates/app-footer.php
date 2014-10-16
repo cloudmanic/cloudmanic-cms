@@ -13,7 +13,7 @@ $('title').text('<?=$page_title?>');
 
 <?php if(! $this->input->is_ajax_request()) : ?>
 			</div>
-			<footer class="footer"><p>&copy; Cloudmanic Labs, LLC 2012</p></footer>
+			<footer class="footer"><p>&copy; Cloudmanic Labs, LLC 2014 - Version <?=CMS::get_version()?></p></footer>
     </div>
 	<?=CMS\Libraries\Config::get('app-footer-body')?>
 	
