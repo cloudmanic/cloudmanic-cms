@@ -92,7 +92,7 @@ class Buckets extends MY_Controller
 	// Edit a bucket entry.
 	//
 	function edit($bucket, $id)
-	{
+	{		
 		$this->data['widgettext'] = 'Edit ' . cms_depluralize($this->data['table']);
 		$this->data['helpertext'] = 'To edit a the ' . cms_depluralize($this->data['table']) . ' fill out the field below and click "save"';
 		$this->data['type'] = 'edit';
@@ -207,7 +207,7 @@ class Buckets extends MY_Controller
 			{	
 				if(in_array(str_ireplace($this->data['table'], '', $row->name), $this->data['skip'])) { continue; }
 				
-				if($this->input->post($row->name))
+				if(isset($_POST[$row->name]))
 				{
 					$q[$row->name] = $this->input->post($row->name);
 				}
@@ -272,7 +272,7 @@ class Buckets extends MY_Controller
 				}
 					
 				if($update)
-				{
+				{					
 					$this->db->where($this->data['table'] . 'Id', $this->uri->segment(4));
 					$this->db->update($this->data['table'], $q);
 					$this->_do_relation($this->uri->segment(4));
