@@ -93,6 +93,12 @@ class BucketData_Model extends MY_Model
  			$data['CreatedAtColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'CreatedAt']));
  		}
  		
+		// Hack for NCDB (should find a better way)
+		if(isset($data['JobsExpireDate']))
+		{
+			$data['JobsExpireDateDateFormat1'] = date('n/j/Y', strtotime($data['JobsExpireDate']));
+		}	 		
+ 		
  		return $data;
  	}
 }
