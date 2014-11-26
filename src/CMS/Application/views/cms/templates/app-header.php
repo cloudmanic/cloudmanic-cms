@@ -12,7 +12,11 @@
 	<link href="<?=$cms['assets_base']?>/javascript/redactor/redactor.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/css/jquery.Jcrop.min.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/javascript/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css" rel="stylesheet" type="text/css" />
+	<link href="<?=$cms['assets_base']?>/javascript/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
 	<link href="<?=$cms['assets_base']?>/css/site.css" rel="stylesheet" type="text/css" />
+	
+	
+	
 	
 	<script type="text/javascript"> 
 	  var base_url = '<?=base_url()?>';
@@ -34,6 +38,9 @@
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/plupload.html5.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/plupload.flash.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/fullcalendar/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/fullcalendar/lib/moment.min.js"></script>
+	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/fullcalendar/fullcalendar.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/jquery.Jcrop.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/cloudjs.2012.4.20.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/cloudjs-config.js"></script>

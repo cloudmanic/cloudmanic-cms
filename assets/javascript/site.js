@@ -4,6 +4,34 @@ var site = {
 }
 
 //
+// Deal with the calendar view.
+//
+site.calview = function ()
+{
+	// Setup the calendar view.
+	$('#calendar').fullCalendar({
+		events: '/cp/calendar/pricing/' + site.bucket_id,
+    
+    eventClick: function(calEvent, jsEvent, view) { 
+			var price = prompt('Enter price for this date.', calEvent.price);
+			
+			if(price != null) 
+			{
+				calEvent.price = price;
+				calEvent.title = calEvent.unit + ' $' + price;
+				$('#calendar').fullCalendar('updateEvent', calEvent);
+				
+				// Send Ajax call to server to update price.
+				$.post('/cp/calendar/pricing_update/' + site.bucket_id, { id: calEvent.id, price: price, unit: calEvent.unit }, function (json) {
+					//console.log(json);
+				});
+				
+			}
+    }    
+	});
+}
+
+//
 // List view page.
 //
 site.listview = function ()
