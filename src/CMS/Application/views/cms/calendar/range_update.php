@@ -25,7 +25,7 @@
 	</div>
 	
 	<div class="control-group">
-		<label>Week Price</label>
+		<label>Weekday Price</label>
 		<input type="text" name="week" value="" placeholder="150.00" />	
 	</div>
 	
