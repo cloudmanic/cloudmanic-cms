@@ -38,7 +38,6 @@
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/plupload.html5.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/plupload.flash.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/plupload/jquery.plupload.queue/jquery.plupload.queue.js"></script>
-	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/fullcalendar/lib/jquery.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/fullcalendar/lib/moment.min.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/fullcalendar/fullcalendar.js"></script>
 	<script type="text/javascript" src="<?=$cms['assets_base']?>/javascript/jquery.Jcrop.js"></script>
