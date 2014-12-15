@@ -66,7 +66,7 @@ class Calendar extends MY_Controller
 			{
 				// Is weekend?
 				$weekDay = date('w', strtotime($row['PricingDate']));
-				if(($weekDay == 0) || ($weekDay == 6))
+				if(($weekDay == 5) || ($weekDay == 6))
 				{
 					$price = $this->input->post('weekend');
 				} else
