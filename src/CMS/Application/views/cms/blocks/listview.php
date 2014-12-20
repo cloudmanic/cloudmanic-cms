@@ -1,11 +1,12 @@
+<?php $search = (isset($_GET['search'])) ? $_GET['search'] : ''; ?>
 <?=$this->load->view('cms/blocks/section-header')?>
 
 <div class="row">
 	<div class="span12">
 		<div class="row">				
 			<div class="span6 pull-left">
-				<form class="tables-search-form" action="<?=current_url()?>"  method="post">
-					<input type="text" id="table-search" style="width: 220px;" value="<?=(empty($state['search'])) ? '' :  $state['search']?>" placeholder="Search" /><span class="add-on" style="vertical-align: top;">
+				<form class="tables-search-form" action="<?=current_url()?>"  method="get">
+					<input type="text" id="table-search" name="search" style="width: 220px;" value="<?=$search?>" placeholder="Search" /><span class="add-on" style="vertical-align: top;">
 				</form>
 			</div>
 			
@@ -23,7 +24,7 @@
 				</tr>
 			</thead>
 			
-			<tbody cloud-api-url="<?=site_url('api/get?type=blocks&search={{search}}&format=json&order=CMS_BlocksName&sort=ASC')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
+			<tbody cloud-api-url="<?=site_url('api/get?type=blocks&search=' . $search . '&format=json&order=CMS_BlocksName&sort=ASC')?>" cloud-tmpl-cont="data-table-row" cloud-api-search="table-search"></tbody>
 		</table>
 		
 		<?php /*
