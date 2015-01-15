@@ -20,6 +20,9 @@ class CMS_Media_Model extends MY_Model
 	//
 	function delete($id)
 	{
+/*
+		TODO: This code does not work anymore. We should fix.
+	
 		// Delete files from the file host.
 		if($data = $this->get_by_id($id))
 		{
@@ -55,6 +58,7 @@ class CMS_Media_Model extends MY_Model
 				break;
 			}
 		}
+*/
 		
 		return parent::delete($id);
 	}
