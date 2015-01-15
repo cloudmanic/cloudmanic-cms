@@ -664,7 +664,7 @@ var RLANG = {
 			}
 
 			function afterBuild()
-			{
+			{				
 	      		// air enable
 				this.enableAir();
 
@@ -676,10 +676,14 @@ var RLANG = {
 				{
 					$.each(this.opts.plugins, $.proxy(function(i,s)
 					{
+
+						
 						if (typeof RedactorPlugins[s] !== 'undefined')
 						{
+													
+							
 							$.extend(this, RedactorPlugins[s]);
-
+ 
 							if (typeof RedactorPlugins[s].init !== 'undefined')
 							{
 								this.init();

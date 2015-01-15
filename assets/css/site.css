@@ -80,3 +80,14 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small { color: #BFBFBF; }
 .margin-bottom-700 { margin-bottom: 700px; }
 .margin-bottom-800 { margin-bottom: 800px; }
 .margin-bottom-900 { margin-bottom: 900px; }
+
+/* Image Selector */
+body .redactor_toolbar li a.redactor_btn_media_picker	{ 
+	background-position: 0px;
+	background-image: url(/cp/assets/css/img/newspaper11.png); 
+}
+
+.media-selector { height: 500px; overflow: scroll; padding: 5px; }
+.media-selector ul { list-style: none; padding: 0; margin: 0; }
+.media-selector ul li { float: left; margin-left: 8px; margin-top: 8px; border: 2px solid transparent;  }
+.media-selector ul li:hover { border: 2px solid #f7590b; }

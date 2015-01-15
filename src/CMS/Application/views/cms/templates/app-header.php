@@ -17,7 +17,6 @@
 	
 	
 	
-	
 	<script type="text/javascript"> 
 	  var base_url = '<?=base_url()?>';
 	  var site_url = '<?=site_url()?>';

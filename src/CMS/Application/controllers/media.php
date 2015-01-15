@@ -20,6 +20,16 @@ class Media extends MY_Controller
 	}
 	
 	//
+	// HTML for media selector overlay.
+	//
+	function overlay_media_select()
+	{
+		$this->cms_media_model->set_order('CMS_MediaId desc');
+		$this->data['media'] = $this->cms_media_model->get();		
+		$this->load->view('cms/media/overlay-media-select', $this->data);
+	}
+	
+	//
 	// Add new media to the system.
 	//
 	function add()
