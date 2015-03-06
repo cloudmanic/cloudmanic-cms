@@ -80,6 +80,7 @@ class Users extends MY_Controller
 			{
 				$q['CMS_UsersFirstName'] = $this->input->post('CMS_UsersFirstName');
 				$q['CMS_UsersLastName'] = $this->input->post('CMS_UsersLastName');
+				$q['CMS_UsersUrl'] = $this->input->post('CMS_UsersUrl');				
 				
 				if($this->input->post('CMS_UsersPassword'))
 				{

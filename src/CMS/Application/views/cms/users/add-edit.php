@@ -35,6 +35,12 @@
 	  </p>
 	  <?php endif; ?>
 	  
+	  <p class="control-group <?=(form_error('CMS_UsersUrl')) ? 'error' : ''?>">
+	  	<?=form_label('Url:', 'CMS_UsersUrl')?>
+	  	<?=form_input('CMS_UsersUrl', set_value('CMS_UsersLastName', element('CMS_UsersUrl', $data, '')))?>
+			<?=form_error('CMS_UsersUrl', '<span class="help-block">', '</span>')?>
+	  </p>	  
+	  
 	  <p class="control-group <?=(form_error('CMS_UsersPassword')) ? 'error' : ''?>">
 	  	<?=form_label('Password:', 'CMS_UsersPassword')?>
 	  	<?=form_password('CMS_UsersPassword', '')?>
