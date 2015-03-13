@@ -81,6 +81,7 @@ class Buckets extends MY_Controller
 	//
 	function add()
 	{			
+		$this->data['data'] = $_POST;
 		$this->data['widgettext'] = 'Add New ' . cms_depluralize($this->data['table']);
 		$this->data['helpertext'] = 'To add a new ' . cms_depluralize($this->data['table']) . ' fill out the field below and click "save"';
 		$this->data['type'] = 'add';
