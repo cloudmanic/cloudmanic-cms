@@ -74,23 +74,31 @@ class BucketData_Model extends MY_Model
  	//
  	function _format_get($data)
  	{ 	
+    $this->load->helper('url');   	
+   	
+		// Build Slug
+		if(isset($data[$this->table . 'Title']))
+		{
+			$data['TitleSlug'] = url_title($data[$this->table . 'Title'], '-', true);
+		}	   	
+   	
  		// Give a nicely formated version.
  		if(isset($data[$this->table . 'CreatedAt']))
  		{
  			$data['CreateDateFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'CreatedAt']));
  		}
  		
+ 		// Format any column named UpdatedAt
+ 		if(isset($data[$this->table . 'UpdatedAt']))
+ 		{
+ 			$data['UpdatedAtColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'UpdatedAt']));
+ 		} 		
+ 		
  		// Format any column named Date
  		if(isset($data[$this->table . 'Date']))
  		{
  			$data['DateColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'Date']));
  			$data['DateColFormat2'] = date('n/j/Y', strtotime($data[$this->table . 'Date']));
- 		}
- 		
- 		// Format any column named CreateAt
- 		if(isset($data[$this->table . 'CreatedAt']))
- 		{
- 			$data['CreatedAtColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'CreatedAt']));
  		}
  		
 		// Hack for NCDB (should find a better way)

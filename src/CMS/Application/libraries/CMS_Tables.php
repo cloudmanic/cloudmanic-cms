@@ -246,6 +246,13 @@ class CMS_Tables
     	$this->_ci->dbforge->add_field("CMS_BucketsCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
     	$this->_ci->dbforge->create_table('CMS_Buckets', TRUE);
 		}
+		
+		// Add fields (CMS_BlocksEditor).
+		if($this->_ci->db->table_exists('CMS_Buckets') && 
+			(! $this->_ci->db->field_exists('CMS_BucketsViewUrl', 'CMS_Buckets')))
+		{
+			$this->_ci->db->query("ALTER TABLE  `CMS_Buckets` ADD  `CMS_BucketsViewUrl` VARCHAR( 500 ) NOT NULL DEFAULT  '' AFTER  `CMS_BucketsDescription`");
+		}		
 	}
 	
 	//

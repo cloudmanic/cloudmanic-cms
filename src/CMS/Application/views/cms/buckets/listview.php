@@ -60,9 +60,21 @@ $search = (empty($state['search'])) ? '' :  $state['search'];
 		<td>{{<?=$bucket['CMS_BucketsTable']?>Title}}</td>	
 		<td>{{CreateDateFormat1}}</td>
 	<?php endif; ?>
-	<td>
+	<td <?=(! empty($bucket['CMS_BucketsViewUrl'])) ? 'style="width: 120px;"' : 'style="width: 80px;"'?>>
 		<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsTable']?>Id}}" class="no-deep-false" cloud-api-delete="{{<?=$bucket['CMS_BucketsTable']?>Id}}:remove-fade:confirm:tr:slow">Delete</a> |
+		
 		<a href="<?=site_url($cms['cp_base'] . '/buckets/edit/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsTable']?>Id}}">Edit</a>
+		
+		<?php 
+  		if(! empty($bucket['CMS_BucketsViewUrl'])) : 
+        $url = $bucket['CMS_BucketsViewUrl'];
+        
+        // Replace tags
+        $url = str_replace('{id}', '{{' . $bucket['CMS_BucketsTable'] . 'Id}}', $url);
+        $url = str_replace('{slug}', '{{TitleSlug}}', $url);        
+    ?>
+    | <a href="<?=$url?>" target="_blank">View</a>
+    <?php endif; ?>
 	</td>
 </tr>
 </script>

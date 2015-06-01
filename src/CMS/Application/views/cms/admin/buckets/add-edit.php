@@ -36,6 +36,12 @@
 				<?=form_error('CMS_BucketsHeadline', '<span class="help-block">', '</span>')?>
 		  </p>
 		  
+		  <p class="control-group <?=(form_error('CMS_BucketsViewUrl')) ? 'error' : ''?>">
+		  	<?=form_label('View URL:', 'CMS_BucketsViewUrl')?>
+		  	<?=form_input('CMS_BucketsViewUrl', set_value('CMS_BucketsViewUrl', element('CMS_BucketsViewUrl', $data, '')))?>
+				<?=form_error('CMS_BucketsViewUrl', '<span class="help-block">', '</span>')?>
+		  </p>		  
+		  
 		  <p class="control-group <?=(form_error('CMS_BucketsDescription')) ? 'error' : ''?>">
 		  	<?=form_label('Description:', 'CMS_BucketsDescription')?>
 		  	<?=form_textarea(array('name' => 'CMS_BucketsDescription', 'value' => set_value('CMS_BucketsDescription', element('CMS_BucketsDescription', $data, '')), 'cols' => '44', 'rows' => '24'))?>
