@@ -57,6 +57,11 @@ if(isset($data['CMS_BlocksEditor']) && ($data['CMS_BlocksEditor'] != 'raw'))
 			<?=form_label('Body:', 'CMS_BlocksBody')?>
 			<textarea class="redactor" name="<?=$redact_name?>"><?=element('CMS_BlocksBody', $data, '')?></textarea>	  
 		</div>
+
+		<div id="block-redactor" class="control-group <?=(form_error('CMS_BlocksNote')) ? 'error' : ''?>">
+			<?=form_label('Note:', 'CMS_BlocksNote')?>
+			<textarea class="redactor" name="CMS_BlocksNote" placeholder="Some text to help you remember where and how this block is used."><?=element('CMS_BlocksNote', $data, '')?></textarea>	  
+		</div>
 	  
 	  <div class="row">
 	  	<div class="pull-right">		  

@@ -266,6 +266,12 @@ class MY_Model extends CI_Model
 			$data['DateFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'UpdatedAt']));
 		}
 		
+		// Add some date formats.
+		if(isset($data[$this->table . 'CreatedAt']))
+		{
+			$data['DateFormat2'] = date('n/j/Y', strtotime($data[$this->table . 'CreatedAt']));
+		}		
+		
  		return $data;
  	}
 }

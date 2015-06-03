@@ -19,7 +19,8 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Date</th>
+					<th>Created</th>
+					<th>Updated</th>					
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -46,7 +47,8 @@
 <script id="data-table-row" type="text/cloud-tmpl">
 <tr>
 	<td>{{CMS_BlocksName}}</td>
-	<td>{{DateFormat1}}</td>
+	<td>{{DateFormat2}}</td>
+	<td>{{DateFormat1}}</td>	
 	<td>
 		<a href="<?=site_url($cms['cp_base'] . '/blocks/delete/id/')?>/{{CMS_BlocksId}}" class="no-deep-false" cloud-api-delete="{{CMS_BlocksId}}:remove-fade:confirm:tr:slow">Delete</a> |
 		<a href="<?=site_url($cms['cp_base'] . '/blocks/edit')?>/{{CMS_BlocksId}}">Edit</a>

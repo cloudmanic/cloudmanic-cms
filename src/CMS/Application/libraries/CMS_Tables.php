@@ -337,6 +337,13 @@ class CMS_Tables
 		{
 			$this->_ci->db->query("ALTER TABLE  `CMS_Blocks` ADD  `CMS_BlocksEditor` VARCHAR( 50 ) NOT NULL DEFAULT  'raw' AFTER  `CMS_BlocksBody`");
 		}
+		
+		// Add fields (CMS_BlocksNote).
+		if($this->_ci->db->table_exists('CMS_Blocks') && 
+			(! $this->_ci->db->field_exists('CMS_BlocksNote', 'CMS_Blocks')))
+		{
+			$this->_ci->db->query("ALTER TABLE  `CMS_Blocks` ADD  `CMS_BlocksNote` TEXT NOT NULL DEFAULT  '' AFTER  `CMS_BlocksBody`");
+		}		
 	}
 }
 

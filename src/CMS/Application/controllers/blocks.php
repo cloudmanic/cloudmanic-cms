@@ -68,6 +68,7 @@ class Blocks extends MY_Controller
 				$q['CMS_BlocksName'] = $this->input->post('CMS_BlocksName');
 				$q['CMS_BlocksBody'] = $this->input->post('CMS_BlocksBody');
 				$q['CMS_BlocksEditor'] = $this->input->post('CMS_BlocksEditor');
+				$q['CMS_BlocksNote'] = $this->input->post('CMS_BlocksNote');				
 				
 				if($update)
 				{
