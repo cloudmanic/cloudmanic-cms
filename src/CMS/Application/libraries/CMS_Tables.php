@@ -318,9 +318,9 @@ class CMS_Tables
 			
 			$cols = array(
 				'CMS_BlocksId' => array('type' => 'INT', 'constraint' => 9, 'unsigned' => TRUE, 'auto_increment' => TRUE),		
-				'CMS_BlocksName' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE),
+				'CMS_BlocksName' => array('type' => 'VARCHAR', 'constraint' => '200', 'null' => FALSE),
 				'CMS_BlocksEditor' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => FALSE, 'default' => 'raw'),
-				'CMS_BlocksName' => array('type' => 'VARCHAR', 'constraint' => '500', 'null' => FALSE)
+				'CMS_BlocksBody' => array('type' => 'TEXT', 'null' => FALSE)
 			);
 			
 			$this->_ci->dbforge->add_key('CMS_BlocksId', TRUE);
@@ -330,7 +330,7 @@ class CMS_Tables
     	$this->_ci->dbforge->add_field("CMS_BlocksCreatedAt TIMESTAMP DEFAULT '0000-00-00 00:00:00'");
     	$this->_ci->dbforge->create_table('CMS_Blocks', TRUE);
 		}
-		
+				
 		// Add fields (CMS_BlocksEditor).
 		if($this->_ci->db->table_exists('CMS_Blocks') && 
 			(! $this->_ci->db->field_exists('CMS_BlocksEditor', 'CMS_Blocks')))
@@ -342,8 +342,8 @@ class CMS_Tables
 		if($this->_ci->db->table_exists('CMS_Blocks') && 
 			(! $this->_ci->db->field_exists('CMS_BlocksNote', 'CMS_Blocks')))
 		{
-			$this->_ci->db->query("ALTER TABLE  `CMS_Blocks` ADD  `CMS_BlocksNote` TEXT NOT NULL DEFAULT  '' AFTER  `CMS_BlocksBody`");
-		}		
+			$this->_ci->db->query("ALTER TABLE  `CMS_Blocks` ADD  `CMS_BlocksNote` TEXT NOT NULL AFTER  `CMS_BlocksBody`");
+		}			
 	}
 }
 

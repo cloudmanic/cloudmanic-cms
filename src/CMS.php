@@ -8,7 +8,7 @@
 class CMS
 {
 	public static $env = 'production';
-	private static $_version = '1.0.6';
+	private static $_version = '1.0.7';
 	private static $_db_connection = null;
 	private static $_root_path = '';
 	private static $_db_loaded = false;
@@ -119,6 +119,10 @@ class CMS
 			case 'laravel4':
 				self::load_laravel_4($path);
 			break;
+			
+			case 'laravel5':
+				self::load_laravel_5($path);
+			break;			
 			
 			default:
 				die('Sorry, unknown framework.');
@@ -388,6 +392,36 @@ class CMS
 			}
 		}
 	}	
+
+	//
+	// Check the config directory in laravel 5.
+	//
+	private static function load_laravel_5($lar_path)
+	{
+    $config = [];
+  	
+  	// Get config file.
+    $env_file = $lar_path . '/../.env';
+    $env_cont = file_get_contents($env_file);
+    
+    // Parse config file.
+    foreach(explode("\n", $env_cont) AS $key => $row)
+    {
+      if(empty($row))
+      {
+        continue;
+      }
+      
+      list($_key, $_val) = explode('=', $row);
+      $config[$_key] = $_val;
+    }
+		
+		// Set the database configs we sucked out of Laravel
+		CMS\Libraries\Config::set('db_host', $config['DB_HOST']);
+		CMS\Libraries\Config::set('db_database', $config['DB_DATABASE']);
+		CMS\Libraries\Config::set('db_username', $config['DB_USERNAME']);
+		CMS\Libraries\Config::set('db_password', $config['DB_PASSWORD']);	
+	}
 	
 	//
 	// Check the config directory in laravel 4.
