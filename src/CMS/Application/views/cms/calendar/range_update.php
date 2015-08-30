@@ -10,7 +10,9 @@
 		<label>Unit</label>
 		<select name="unit">
 			<option value="High Gear">High Gear</option>
-			<option value="Low Gear">Low Gear</option>			
+			<option value="Low Gear">Low Gear</option>	
+			<option value="Front Break">Front Break</option>	
+			<option value="Rear Break">Rear Break</option>									
 		</select>
 	</div>
 
