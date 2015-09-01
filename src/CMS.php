@@ -8,7 +8,7 @@
 class CMS
 {
 	public static $env = 'production';
-	private static $_version = '1.0.7';
+	private static $_version = '1.0.8';
 	private static $_db_connection = null;
 	private static $_root_path = '';
 	private static $_db_loaded = false;

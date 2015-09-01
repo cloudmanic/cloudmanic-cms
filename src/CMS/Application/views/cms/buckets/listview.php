@@ -35,7 +35,8 @@ $search = (empty($state['search'])) ? '' :  $state['search'];
 						<?php endforeach; ?>
 					<?php else : ?>
 					<th>Title</th>
-					<th>Date</th>					
+					<th>Created</th>	
+					<th>Updated</th>										
 					<?php endif; ?>
 					<th>&nbsp;</th>
 				</tr>
@@ -59,6 +60,7 @@ $search = (empty($state['search'])) ? '' :  $state['search'];
 	<?php else : ?>
 		<td>{{<?=$bucket['CMS_BucketsTable']?>Title}}</td>	
 		<td>{{CreateDateFormat1}}</td>
+		<td>{{UpdatedAtColFormat1}}</td>		
 	<?php endif; ?>
 	<td <?=(! empty($bucket['CMS_BucketsViewUrl'])) ? 'style="width: 120px;"' : 'style="width: 80px;"'?>>
 		<a href="<?=site_url($cms['cp_base'] . '/buckets/delete/' . $bucket['CMS_BucketsId'])?>/{{<?=$bucket['CMS_BucketsTable']?>Id}}" class="no-deep-false" cloud-api-delete="{{<?=$bucket['CMS_BucketsTable']?>Id}}:remove-fade:confirm:tr:slow">Delete</a> |
