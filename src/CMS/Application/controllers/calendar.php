@@ -48,7 +48,7 @@ class Calendar extends MY_Controller
 	// Update pricing range.
 	//
 	function range_update()
-	{
+	{  	
 		// Did we post back?
 		if($this->input->post('unit'))
 		{
@@ -118,6 +118,26 @@ class Calendar extends MY_Controller
 		// Build object.
 		foreach($data AS $key => $row)
 		{
+  		// Figure out color
+  		switch($row['PricingUnit'])
+  		{
+        case 'Low Gear':
+          $color = '#3a87ad';
+        break;
+        
+        case 'Front Break':
+          $color = '#00A3D6';
+        break;
+        
+        case 'Rear Break':
+          $color = '#257e4a';
+        break;
+        
+        default:
+          $color = 'rgb(248, 58, 34)';        
+        break;
+  		}
+  		
 			$obj[] = [
 				'id' => $row['PricingId'],
 				'title' => $row['PricingTitle'],
@@ -126,7 +146,7 @@ class Calendar extends MY_Controller
 				'price' => $row['PricingPrice'],
 				'unit' => $row['PricingUnit'],
 				'allDay' => true,
-				'color' => ($row['PricingUnit'] == 'Low Gear') ? '#3a87ad' : 'rgb(248, 58, 34)'
+				'color' => $color
 			];
 		}
 		
