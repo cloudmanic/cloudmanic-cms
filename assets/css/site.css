@@ -20,6 +20,7 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small { color: #BFBFBF; }
 .table-showing { display: inline-block; line-height: 30px; }
 .page-header small { cursor: pointer; }
 .bump-up-10 { margin-top: -10px; }
+.clickable th { cursor: pointer; }
 
 #saved { position: fixed; background-color: #fcbe14; z-index: 100; left: 50%; 
 					border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; 
