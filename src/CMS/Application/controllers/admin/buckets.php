@@ -32,7 +32,7 @@ class Buckets extends MY_Controller
 			'disabled-text' => 'Disabled Text',
 			'ignore' => 'Ignore Field',
 			'cms-image' => 'Image',
-			'cms-redactor' => 'Redactor'
+			'us-timezones' => 'US Timezones'
 		);
 		
 		// Add custom fields. 

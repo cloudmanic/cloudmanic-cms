@@ -148,6 +148,18 @@ class Api extends MY_Controller
 			$this->{$model}->set_search($this->input->get_post('search'));
 		}
 
+		// No expired
+		if($this->input->get_post('no_end_expired'))
+		{
+      $this->{$model}->set_no_end_expired();
+		}
+
+		// Only expired
+		if($this->input->get_post('only_end_expired'))
+		{
+      $this->{$model}->set_only_end_expired();
+		}
+
 		// Return data.
 		$data = $this->{$model}->get();
 

@@ -73,9 +73,23 @@
 							echo form_hidden('dates[]', $row->name);
 						break;
 						
-						case 'enum':
+						case 'enum':						
 							echo form_label($label, $row->name);
 							echo form_dropdown($row->name, $row->enums, set_value($row->name, element($row->name, $data, '')));
+							echo form_error($row->name, '<span class="help-block">', '</span>');
+						break;
+
+						case 'us-timezones':
+              $zones = [
+                'EST' => 'Eastern Time Zone',
+                'CST' => 'Central Time Zone',
+                'MST' => 'Mountain Time Zone',
+                'PST' => 'Pacific Time Zone',                                                                  
+                'HST' => 'Hawaii Time Zone', 
+                'AKST' => 'Alaska Time Zone'                
+              ];
+							echo form_label($label, $row->name);
+							echo form_dropdown($row->name, $zones, set_value($row->name, element($row->name, $data, '')));
 							echo form_error($row->name, '<span class="help-block">', '</span>');
 						break;
 						

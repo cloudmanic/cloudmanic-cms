@@ -15,6 +15,22 @@ class BucketData_Model extends MY_Model
 		$this->db->like($this->table . 'Title', $term);
 	}
 
+  //
+  // Set No end Expire.
+  //
+  function set_no_end_expired()
+  {
+    $this->db->where($this->table . 'End >=', date('Y-m-d 23:59:59'));
+  }
+
+  //
+  // Set Only end Expire.
+  //
+  function set_only_end_expired()
+  {
+    $this->db->where($this->table . 'End <=', date('Y-m-d 23:59:59'));
+  }
+
 	//
 	// Set Join.
 	//	
@@ -100,6 +116,27 @@ class BucketData_Model extends MY_Model
  			$data['DateColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'Date']));
  			$data['DateColFormat2'] = date('n/j/Y', strtotime($data[$this->table . 'Date']));
  		}
+ 		
+ 		// Format any column named Start
+ 		if(isset($data[$this->table . 'Start']))
+ 		{
+ 			$data['StartColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'Start']));
+ 		} 		
+
+ 		// Format any column named End
+ 		if(isset($data[$this->table . 'End']))
+ 		{
+ 			$data['EndColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'End']));
+ 			
+ 			// A little hack to see if end dates have passed
+ 			if(time() > strtotime($data[$this->table . 'End']))
+ 			{
+   			$data['EndColExpired'] = 'Yes';
+ 			} else
+ 			{
+   			$data['EndColExpired'] = 'No';   			
+ 			}
+ 		} 
  		
 		// Hack for NCDB (should find a better way)
 		if(isset($data['JobsExpireDate']))
