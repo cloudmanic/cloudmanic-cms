@@ -20,7 +20,7 @@ class BucketData_Model extends MY_Model
   //
   function set_no_end_expired()
   {
-    $this->db->where($this->table . 'End >=', date('Y-m-d 23:59:59'));
+    $this->db->where("(" . $this->table . 'End >= "' . date('Y-m-d 23:59:59') . '" OR ' . $this->table . 'End = "0000-00-00 00:00:00")');
   }
 
   //
@@ -120,13 +120,25 @@ class BucketData_Model extends MY_Model
  		// Format any column named Start
  		if(isset($data[$this->table . 'Start']))
  		{
- 			$data['StartColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'Start']));
+   		if($data[$this->table . 'Start'] == '0000-00-00 00:00:00')
+   		{
+        $data['StartColFormat1'] = '---';
+   		} else
+   		{
+        $data['StartColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'Start']));
+      }
  		} 		
 
  		// Format any column named End
  		if(isset($data[$this->table . 'End']))
  		{
- 			$data['EndColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'End']));
+   		if($data[$this->table . 'End'] == '0000-00-00 00:00:00')
+   		{
+        $data['EndColFormat1'] = '---';
+   		} else
+   		{
+        $data['EndColFormat1'] = date('n/j/Y', strtotime($data[$this->table . 'End']));
+ 			}
  			
  			// A little hack to see if end dates have passed
  			if(time() > strtotime($data[$this->table . 'End']))
@@ -137,6 +149,15 @@ class BucketData_Model extends MY_Model
    			$data['EndColExpired'] = 'No';   			
  			}
  		} 
+ 		
+		// Format End Dates With not Time. - NCDB Special Case
+		if(isset($data['EventsEnd']))
+		{
+  		if($data['EventsEnd'] == '0000-00-00 00:00:00')
+  		{
+			  $data['EventsEnd'] = '---';
+      }
+		}	 		
  		
 		// Hack for NCDB (should find a better way)
 		if(isset($data['JobsExpireDate']))
